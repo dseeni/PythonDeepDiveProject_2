@@ -5,3 +5,8 @@ def test_widget_functions_as_expected():
 
 def test_widget_fail():
     assert False
+
+def test_printfunction():
+    print('This is a string')
+    print('This is a string for the sake of printing')
+
