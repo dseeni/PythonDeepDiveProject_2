@@ -3,86 +3,7 @@ from random import randint, uniform
 from copy import deepcopy
 from P2_Proj2_Temp import Poly
 
-
-def checkparameters (icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2):
-
-    """ Check Parameters takes in the input from
-    PolyFactory(icount,clones,clneamount,siderange,radrage,sig)
-    Returns verified parametrs or the least modified viable parameters
-    """
-
-
-    def frange(start, stop=None, step=None):
-        # Returns floating point numbers in a step range (sig)
-        if stop == None:
-            stop = start + 0.0
-            start = 0.0
-        if step == None:
-            step = 1.0
-        while True:
-
-            if step > 0 and start >= stop:
-                break
-            elif step < 0 and start <= stop:
-                break
-            yield ("%g" % start)  # return float number
-            start = start + step
-    if not isinstance(sig, int) or sig < 0:
-        raise TypeError('Significant Digits (sig) must be of type Integer only')
-
-    # set default values of s/zero
-    s = '1'
-    zeros = '0'
-    zeros = zeros * sig
-    s = int(s + zeros)
-    incrementor = len(str(sig)) / s
-    floatrandomtotal = len(list(frange(incrementor, radrange[1] - radrange[0], incrementor)))
-    # this function verifies the that icount amount of unique samples
-    # are possible within specified radius range/sig
-
-    # capture the original significant digits
-
-    # r can never be 0 or negative
-    if radrange[0] <= 0:
-        raise ValueError('radius sample range start must be greater than 0')
-
-    # enforce a positive radius sample range
-    if round(radrange[1] - radrange[0], sig) <= 0:
-        raise ValueError('rounded radrange length must be a positive number')
-
-    # how many digits for sig
-    # 1 + sig amount of 0
-    s = '0'
-    # these amount of 0's to add
-    s = str(s * sig)
-    floatrange = '{0}'.format(round(radrange[1] - radrange[0], sig))
-    floatrange = floatrange.replace('.','')
-    # strip the decimal from the float to create a ""
-    randomspossible = int(floatrange + s)
-    # print('randomspossible=',randomspossible)
-
-    if siderange[0] < 3:
-        raise ValueError('Sampling of siderange (sides) must begin at 3')
-
-    if not all(isinstance(i, int) for i in siderange):
-        raise ValueError('Side range sampling start/end must be integer type only')
-
-    possibleside = siderange[1] - siderange[0]
-    if icount > possibleside:
-        siderange = (siderange[0], siderange[1] + (icount - possibleside + 1))
-
-    # ensures input parameter for unique numbers / elements to clone / clone amount are integers
-    if not all(isinstance(i, int) for i in [icount, clones, cloneamount]):
-        raise TypeError('icount/clones/cloneamount must all be integers')
-
-    while icount >= floatrandomtotal:
-        sig+=1
-        return checkparameters(icount,clones,cloneamount,siderange,radrange, sig)
-
-    if icount <= randomspossible:
-        return (icount, clones, cloneamount, siderange, radrange, sig)
-
-
+# TODO: Move PolyFactory to a new file
 
 class PolyFactory:
 
@@ -184,6 +105,7 @@ class PolyFactory:
             seen.add(x)
             result.append(x)
         return result
+
     @property
     def nrfinal(self):
         """ nrfinal generates instances of Poly(n,r,sig) objects from specified parameters"""
@@ -326,12 +248,13 @@ class PolyFactory:
         return self.finalcount
     #
     def __repr__(self):
-        return 'PolyFactory(icount={0},clones={1},cloneamount={2},siderange={3},radrange={4},sig={5})'.format(self._icount,
-                                                             self._clones,
-                                                             self._cloneamount,
-                                                             self._siderange,
-                                                             self._radrange,
-                                                             self._sig)
+        return 'PolyFactory(icount={0},clones={1},cloneamount={2},siderange={3},radrange={4},sig={5})'\
+            .format(self._icount,
+                    self._clones,
+                    self._cloneamount,
+                    self._siderange,
+                    self._radrange,
+                    self._sig)
 
     def __setitem__(self, icount=None, clones=None, cloneamount=None, siderange=None, radrange=None, sig=None):
 
@@ -355,41 +278,3 @@ class PolyFactory:
             raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.nrfinal
 
-
-
-
-# gen_polys = PolyFactory()
-
-# print(gen_polys.nrfinal)
-# # print(gen_polys.finallist)
-# # print(gen_polys.polynames)
-# # help(gen_polys)
-# # gen_polys.__setitem__(cloneamount=50, sig=3)
-# # print(gen_polys)
-# # gen_polys.nrfinal
-# # print(gen_polys.polynames)
-# # print(gen_polys.allcalc)
-# # gen_polys.nrfinal
-# # gen_polys.polynames
-# #
-# # print(gen_polys)
-# # print(gen_polys.polynames)
-# # gen_polys.nrfinal
-# # print(gen_polys.polynames)
-# # gen_polys.apothemcalc
-# #
-# # help(checkparameters)
-# # help(PolyFactory)
-# #
-# # print(len(gen_polys))
-# # gen_polys.__setitem__(siderange=(100,300))
-# # gen_polys.allcalc
-# # gen_polys.__setitem__(sig=5)
-# # print(gen_polys.polynames)
-# # # gen_polys.__setitem__(radrange=(100,200),siderange=(200,400),sig=3)
-# # # gen_polys.allcalc
-# # print(gen_polys)
-# # gen_polys.__setitem__(sig=5)
-# # print(gen_polys)
-# # # gen_polys.__setitem__(sig=1000)
-# print(gen_polys.instancerepr)

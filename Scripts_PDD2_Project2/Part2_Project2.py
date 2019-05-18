@@ -1,4 +1,4 @@
-#Part2_Project2.py
+# Part2_Project2.py
 import math
 from fractions import Fraction
 from decimal import Decimal

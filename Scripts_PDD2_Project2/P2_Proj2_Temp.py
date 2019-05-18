@@ -5,16 +5,15 @@ from collections import OrderedDict
 from random import randint, uniform
 from copy import deepcopy
 
+##############################################################################################################
+# TODO nrsdictglobal maybe in a separate file as a seperate global cache
 # This is a global dictionary for key:(n,r,s) value(dict): (interior_angle, edge_length, apothem, area, perimeter)
 # nrsdictglobal = { (n,r,s):{interior_angle: value, edge_length: value, apothem: value, area: value, perimeter: value}
 #                   (n1,r1,s1):{interior_angle: value, edge_length: value, apothem: value, area: value, perimeter: value
 #                   }
-
-
 nrsdictglobal = {}
-
 # dictglobal = {:[]}
-
+##############################################################################################################
 
 class Poly:
     # These are temp default values to pass into polycheck(n,r,sig) / __init__:
@@ -319,7 +318,7 @@ class Polygons:
         print('Max Efficeny polygon:', sorted_polygons[0])
         return sorted_polygons[0].area / sorted_polygons[0].perimeter
 
-#
+# TODO nrsdictglobal maybe in a seperate file as a seperate global cache
 # # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 # # UNIT TESTING #######################################################
 # # ####################################################################
@@ -545,20 +544,20 @@ class Polygons:
 # print(type(g3))
 
 g2 = Poly()
-# print(g2)
-# print(g2.nrskey)
-# # print(g2)
-# # print(g2.calcproperties)
-# # print(g2.calcproperties)
-#
-# # g2.circumradius = None
-# # print(g2.calcproperties)
-#
-# g2.circumradius = 21312
-# print(g2)
-# g2.side_count = 12
-# print(g2)
-# g2.sigvalue = 0
-# print(g2)
-# print(g2.calcproperties)
-# print(g2.nrskey)
+print(g2)
+print(g2.nrskey)
+print(g2)
+print(g2.calcproperties)
+print(g2.calcproperties)
+
+g2.circumradius = None
+print(g2.calcproperties)
+
+g2.circumradius = 21312
+print(g2)
+g2.side_count = 12
+print(g2)
+g2.sigvalue = 0
+print(g2)
+print(g2.calcproperties)
+print(g2.nrskey)
