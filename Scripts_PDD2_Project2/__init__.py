@@ -1,1 +1,1 @@
-import Scripts_PDD2_Project2
+from Scripts_PDD2_Project2 import *

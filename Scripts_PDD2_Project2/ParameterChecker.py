@@ -8,25 +8,23 @@ def frange(start=0, stop=0, step=1.0):
         yield ("%g" % start)  # return float number
         start = start + step
 
-def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2):
+def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2) :
     """ check parameters takes in the input from
-    polyfactory(icount,clones,clneamount,siderange,radrage,sig)
+    Polyfactory(icount,clones,clneamount,siderange,radrage,sig)
     returns verified parameters or the least modified viable parameters
     """
     if not isinstance(sig, int) or sig < 0:
         raise TypeError('significant digits (sig) must be of type integer only')
 
     # set default values of str(s)/str(zeros)
-    s = '1'
-    zeros = '0'
     # increase zeros variable by sig
     zeros = '0' * sig
     # int(s) = concatenated strings of s/zeros
-    s = int(s + zeros)
+    s = int('1' + zeros)
 
-    incrementor = len(str(sig)) / s
-    # incrementor is the start/step values for frange(start=incrementor, stop=radrange[1], step=incrementor)
-    floatrandomtotal = len(list(frange(incrementor, radrange[1] - radrange[0], incrementor)))
+    # incrementer is the start/step values for frange(start=incrementer , stop=radrange[1], step=incrementer )
+    incrementer = len(str(sig)) / s
+    floatrandomtotal = len(list(frange(incrementer, radrange[1] - radrange[0], incrementer)))
 
     # this function verifies the that icount amount of unique samples
     # are possible within specified radius range/sig
@@ -41,16 +39,18 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
 
     # how many digits for sig
     # 1 + sig amount of 0
-    s = '0'
 
     # these amount of 0's to add
-    s = str(s * sig)
-    floatrange = '{0}'.format(round(radrange[1] - radrange[0], sig))
-    floatrange = floatrange.replace('.','')
+    s = str('0' * sig)
 
-    # strip the decimal from the float to create a ""
+    # float range computes the total possible floating point radii
+    # float range is limited by significant digits (sig)
+    floatrange = str(round(radrange[1] - radrange[0], sig))
+    # we want to strip out any potential decimal values
+    floatrange = floatrange.replace('.','')
+    # randoms possible
     randomspossible = int(floatrange + s)
-    # print('randomspossible=',randomspossible)"
+    print('randomspossible=', randomspossible)
     if siderange[0] < 3:
         raise ValueError('Sampling of siderange (sides) must begin at 3')
 
@@ -71,3 +71,5 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
 
     if icount <= randomspossible:
         return (icount, clones, cloneamount, siderange, radrange, sig)
+
+check_parameters()
