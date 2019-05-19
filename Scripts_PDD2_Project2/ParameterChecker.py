@@ -1,14 +1,15 @@
-def frange(start=0, stop=0, step=1.0):
+def frange(start=0.0, stop=0.0, step=1.0):
     """returns floating point numbers in a (stepped) range generator object"""
     while True:
         if step > 0 and start >= stop:
             break
         elif step < 0 and start <= stop:
             break
-        yield ("%g" % start)  # return float number
+        yield ("%g" % start)  # return formatted float number
         start = start + step
 
-def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2) :
+
+def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2):
     """ check parameters takes in the input from
     Polyfactory(icount,clones,clneamount,siderange,radrage,sig)
     returns verified parameters or the least modified viable parameters
@@ -24,13 +25,13 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
 
     # incrementer is the start/step values for frange(start=incrementer , stop=radrange[1], step=incrementer )
     incrementer = len(str(sig)) / s
+    # print(incrementer)
     floatrandomtotal = len(list(frange(incrementer, radrange[1] - radrange[0], incrementer)))
-
+    # print(list(frange(incrementer, radrange[1] - radrange[0], incrementer)))
     # this function verifies the that icount amount of unique samples
     # are possible within specified radius range/sig
     # capture the original significant digits
     # r can never be 0 or negative
-
     if radrange[0] <= 0:
         raise ValueError('radius sample range start must be greater than 0')
     # enforce a positive radius sample range
@@ -50,7 +51,7 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
     floatrange = floatrange.replace('.','')
     # randoms possible
     randomspossible = int(floatrange + s)
-    print('randomspossible=', randomspossible)
+    # print('randomspossible=', randomspossible)
     if siderange[0] < 3:
         raise ValueError('Sampling of siderange (sides) must begin at 3')
 
@@ -67,9 +68,8 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
 
     while icount >= floatrandomtotal:
         sig+=1
-        return checkparameters(icount,clones,cloneamount,siderange,radrange, sig)
+        return check_parameters(icount,clones,cloneamount,siderange,radrange, sig)
 
     if icount <= randomspossible:
         return (icount, clones, cloneamount, siderange, radrange, sig)
 
-check_parameters()

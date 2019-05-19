@@ -21,7 +21,6 @@ class Poly:
     r = None
     sig = 3
 
-
     def __init__(self, n=n, r=r, sig=sig):
 
         # These are temp variables to pass into polycheck()

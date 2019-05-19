@@ -2,9 +2,7 @@ from collections import OrderedDict
 from random import randint, uniform
 from copy import deepcopy
 from P2_Proj2_Temp import Poly
-
-# TODO: Move PolyFactory to a new file
-
+from Scripts_PDD2_Project2 import ParameterChecker as pm
 class PolyFactory:
 
     """
@@ -36,7 +34,7 @@ class PolyFactory:
 
     def __init__(self, icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2):
 
-        params = checkparameters(icount,clones,cloneamount,siderange,radrange,sig)
+        params = pm.check_parameters(icount,clones,cloneamount,siderange,radrange,sig)
 
         self._icount = params[0]
         self._clones = params[1]
@@ -265,7 +263,7 @@ class PolyFactory:
         radrange = radrange if radrange is not None else self._radrange
         sig = sig if sig is not None else self._sig
 
-        params = checkparameters(icount, clones, cloneamount, siderange, radrange, sig)
+        params = pm.check_parameters(icount, clones, cloneamount, siderange, radrange, sig)
 
         self._icount = params[0]
         self._clones = params[1]
