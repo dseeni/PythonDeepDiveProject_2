@@ -2,8 +2,9 @@ from pytest import fixture
 from Scripts_PDD2_Project2 import Poly_and_Polygons as p
 from collections import OrderedDict
 
-@fixture(scope='session', autouse=True)
-def poly_objs():
+
+# @fixture(scope='session', autouse=True)
+def test_polys():
 
     n = [i for i in range(3, 13)]
     r = [i for i in range(13, 23)]
