@@ -1,13 +1,16 @@
-from Scripts_PDD2_Project2 import Poly_and_Polygons as p
+from Scripts_PDD2_Project2 import Poly_and_Polygons as Pp
 import math
+from conftest import test_polys
 
+globals().update(test_polys())
 # https://www.oalculatorsoup.com/calculators/geometry-plane/polygon.php
-def test_polygon_repr(poly_objs):
 
-    globals().update(poly_objs)    # unit test: __repr__
+
+def test_polygon_repr():
     assert str(poly100) == 'Poly(3,13)', 'actual:{0}'.format(poly100)
 
-def test_polygon_rich_comparisons(poly_objs):
+
+def test_polygon_rich_comparisons():
     # unit test: rich comparisons
     assert poly103 < poly104, 'actual:{0}'.format(poly101 < poly104)
     assert poly106 > poly103, 'actual:{0}'.format(poly106 > poly103)
@@ -15,13 +18,14 @@ def test_polygon_rich_comparisons(poly_objs):
     assert poly104 >= poly101, 'actual:{0}'.format(poly104 >= poly101)
     assert poly107 != poly108, 'actual:{0}'.format(poly107 != poly108)
 
-def test_polygon_specific_value(poly_objs):
+
+def test_polygon_specific_value():
     # specific value unit test
-    poly9 = p.Poly(6, 2)
-    poly10 = p.Poly(4, 1)
-    poly11 = p.Poly(4, 1)
-    poly12 = p.Poly(4, 1)
-    poly13 = p.Poly(1000, 1)
+    poly9 = Pp.Poly(6, 2)
+    poly10 = Pp.Poly(4, 1)
+    poly11 = Pp.Poly(4, 1)
+    poly12 = Pp.Poly(4, 1)
+    poly13 = Pp.Poly(1000, 1)
 
     assert math.isclose(poly9.apothem, 1.732, rel_tol=.0001, abs_tol=.0001)
     assert math.isclose(poly9.area, 10.392, rel_tol=.0001, abs_tol=.0001)
@@ -34,15 +38,17 @@ def test_polygon_specific_value(poly_objs):
     assert math.isclose(poly12.edge_length, math.sqrt(2), rel_tol=.0001, abs_tol=.0001)
     assert math.isclose(poly13.area, math.pi, rel_tol=.0001, abs_tol=.0001)
 
+
 def test_polygon_set_item():
     # set item and recalculate of poly1
-    poly1 = p.Poly(4, 5)
+    poly1 = Pp.Poly(4, 5)
     poly1.__setitem__(10, 13.1)
     assert str(poly1) == 'Poly(10,13.1)', 'actual:{0}'.format(poly1)
 
+
 def test_polygon_list_properties():
     # poly1 list properties
-    poly1 = p.Poly(4, 5)
+    poly1 = Pp.Poly(4, 5)
     assert poly1.listproperties
 
 
