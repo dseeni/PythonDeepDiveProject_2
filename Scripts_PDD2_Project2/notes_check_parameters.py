@@ -1,3 +1,5 @@
+# This file is notes
+
 from random import randint, uniform
 from copy import deepcopy
 
@@ -24,7 +26,6 @@ def sample_ints(low, high, k=1):
     result = []
     seen = set()
     for i in range(k):
-        x = randint(low, high)
         while x in seen:
             x = randint(low, high)
         seen.add(x)
