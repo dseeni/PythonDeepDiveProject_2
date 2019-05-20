@@ -1,43 +1,45 @@
 from Scripts_PDD2_Project2 import Poly_and_Polygons as p
 import math
-from collections import OrderedDict
+# from pytest import fixture
+# from collections import OrderedDict
 
-def test_polygon():
-
-    n = [i for i in range(3, 13)]
-    r = [i for i in range(13, 23)]
-
-    nr = tuple(zip(n, r))
-
-    name = tuple(('poly{0}'.format(n)) for n in range(100, 100+len(n)))
-
-    # same as the for loop below
-    polylist = [p.Poly(n, r) for n, r in nr]
-    # print('name = ', name)
-    # print('polylist = ', polylist)
-    # print('n = ', n)
-    # print('r = ', r)
-    # print('nr = ', nr)
-    test_polygon.polydict = OrderedDict(zip(name, polylist))
-
-    globals().update(test_polygon.polydict)
-
-    # for k, v in test_polygon.polydict.items():
-    #     print(k, v,
-    #           'perimeter =', v.perimeter,
-    #     'apothem =', v.apothem,
-    #     'interior angle =', v.interior_angle,
-    #     'edge_length =', v.edge_length,
-    #     'area =', v.area
-    #     )
+# def test_polygon():
+#
+#     n = [i for i in range(3, 13)]
+#     r = [i for i in range(13, 23)]
+#
+#     nr = tuple(zip(n, r))
+#
+#     name = tuple(('poly{0}'.format(n)) for n in range(100, 100+len(n)))
+#
+#     # same as the for loop below
+#     polylist = [p.Poly(n, r) for n, r in nr]
+#     # print('name = ', name)
+#     # print('polylist = ', polylist)
+#     # print('n = ', n)
+#     # print('r = ', r)
+#     # print('nr = ', nr)
+#     test_polygon.polydict = OrderedDict(zip(name, polylist))
+#
+#     globals().update(test_polygon.polydict)
+#
+#     # for k, v in test_polygon.polydict.items():
+#     #     print(k, v,
+#     #           'perimeter =', v.perimeter,
+#     #     'apothem =', v.apothem,
+#     #     'interior angle =', v.interior_angle,
+#     #     'edge_length =', v.edge_length,
+#     #     'area =', v.area
+#     #     )
 
 
 # https://www.oalculatorsoup.com/calculators/geometry-plane/polygon.php
-def test_polygon_repr():
-    # unit test: __repr__
+def test_polygon_repr(poly_objs):
+
+    globals().update(poly_objs)    # unit test: __repr__
     assert str(poly100) == 'Poly(3,13)', 'actual:{0}'.format(poly100)
 
-def test_polygon_rich_comparisons():
+def test_polygon_rich_comparisons(poly_objs):
     # unit test: rich comparisons
     assert poly103 < poly104, 'actual:{0}'.format(poly101 < poly104)
     assert poly106 > poly103, 'actual:{0}'.format(poly106 > poly103)
@@ -45,7 +47,7 @@ def test_polygon_rich_comparisons():
     assert poly104 >= poly101, 'actual:{0}'.format(poly104 >= poly101)
     assert poly107 != poly108, 'actual:{0}'.format(poly107 != poly108)
 
-def test_polygon_specific_value():
+def test_polygon_specific_value(poly_objs):
     # specific value unit test
     poly9 = p.Poly(6, 2)
     poly10 = p.Poly(4, 1)
@@ -64,7 +66,7 @@ def test_polygon_specific_value():
     assert math.isclose(poly12.edge_length, math.sqrt(2), rel_tol=.0001, abs_tol=.0001)
     assert math.isclose(poly13.area, math.pi, rel_tol=.0001, abs_tol=.0001)
 
-def test_polygon_list_properties():
+def test_polygon_set_item():
     # set item and recalculate of poly1
     poly1 = p.Poly(4, 5)
     poly1.__setitem__(10, 13.1)
