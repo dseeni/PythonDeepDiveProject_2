@@ -1,4 +1,4 @@
-from Scripts_PDD2_Project2 import Poly_and_Polygons as Pp
+from src import poly_and_polygons as pp
 import math
 from conftest import test_polys
 
@@ -21,11 +21,11 @@ def test_polygon_rich_comparisons():
 
 def test_polygon_specific_value():
     # specific value unit test
-    poly9 = Pp.Poly(6, 2)
-    poly10 = Pp.Poly(4, 1)
-    poly11 = Pp.Poly(4, 1)
-    poly12 = Pp.Poly(4, 1)
-    poly13 = Pp.Poly(1000, 1)
+    poly9 = pp.Poly(6, 2)
+    poly10 = pp.Poly(4, 1)
+    poly11 = pp.Poly(4, 1)
+    poly12 = pp.Poly(4, 1)
+    poly13 = pp.Poly(1000, 1)
 
     assert math.isclose(poly9.apothem, 1.732, rel_tol=.0001, abs_tol=.0001)
     assert math.isclose(poly9.area, 10.392, rel_tol=.0001, abs_tol=.0001)
@@ -41,14 +41,14 @@ def test_polygon_specific_value():
 
 def test_polygon_set_item():
     # set item and recalculate of poly1
-    poly1 = Pp.Poly(4, 5)
+    poly1 = pp.Poly(4, 5)
     poly1.__setitem__(10, 13.1)
     assert str(poly1) == 'Poly(10,13.1)', 'actual:{0}'.format(poly1)
 
 
 def test_polygon_list_properties():
     # poly1 list properties
-    poly1 = Pp.Poly(4, 5)
+    poly1 = pp.Poly(4, 5)
     assert poly1.listproperties
 
 
