@@ -1,9 +1,9 @@
 from collections import OrderedDict
 from random import randint, uniform
 from copy import deepcopy
-from P2_Proj2_Temp import Poly
-from Scripts_PDD2_Project2 import ParameterChecker as pm
-class PolyFactory:
+from poly_and_polygons import Poly
+from src import parameter_checker as pm
+class Poly_Factory:
 
     """
     This class generates randomized instances of Poly(n,r,sig):

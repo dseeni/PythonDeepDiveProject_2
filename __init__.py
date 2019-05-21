@@ -1,2 +1,2 @@
-import tests
-import src
+from src import *
+from tests import *
