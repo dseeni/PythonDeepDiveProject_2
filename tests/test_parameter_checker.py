@@ -1,4 +1,4 @@
-from Scripts_PDD2_Project2 import ParameterChecker as pm
+from src import parameter_checker as pm
 
 # check_parameters tests
 def test_check_parameters_docstring():
