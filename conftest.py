@@ -1,9 +1,9 @@
 from pytest import fixture
-from Scripts_PDD2_Project2 import Poly_and_Polygons as p
+from src import poly_and_polygons as p
 from collections import OrderedDict
 
 
-# @fixture(scope='function')
+@fixture(scope='function')
 def test_poly():
     n = [i for i in range(3, 13)]
     r = [i for i in range(13, 23)]
@@ -33,19 +33,4 @@ def test_polygons():
     two_iterables = (polys,polys2)
     return two_iterables
 
-# @fixture(scope='function')
-# def make_customer_record():
-#
-#     def _make_customer_record(name):
-#         return {
-#             "name": name,
-#             "orders": []
-#         }
-#
-#     return _make_customer_record
-#
-#
-# def test_customer_records(make_customer_record):
-#     customer_1 = make_customer_record("Lisa")
-#     customer_2 = make_customer_record("Mike")
-#     customer_3 = make_customer_record("Meredith")
+

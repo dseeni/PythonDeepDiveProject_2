@@ -1,16 +1,16 @@
 from src import poly_and_polygons as pp
-import math
+# import math
 from conftest import test_poly
 
-globals().update(test_poly())
+# globals().update(test_poly())
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 
 
-def test_polygon_repr():
-    assert str(poly100) == 'Poly(3,13)', 'actual:{0}'.format(poly100)
+def test_polygon_repr(test_poly):
+    assert(test_poly['poly100']) == pp.Poly(3,13), 'actual:{0}'.format(test_poly['poly100'])
 
 
-def test_polygon_rich_comparisons():
+def test_polygon_rich_comparisons(test_poly):
     # unit test: rich comparisons
     assert poly103 < poly104, 'actual:{0}'.format(poly101 < poly104)
     assert poly106 > poly103, 'actual:{0}'.format(poly106 > poly103)
