@@ -1,6 +1,5 @@
 from src import poly_and_polygons as pp
-# import math
-from conftest import test_poly
+import math
 
 # globals().update(test_poly())
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
@@ -12,11 +11,16 @@ def test_polygon_repr(test_poly):
 
 def test_polygon_rich_comparisons(test_poly):
     # unit test: rich comparisons
-    assert poly103 < poly104, 'actual:{0}'.format(poly101 < poly104)
-    assert poly106 > poly103, 'actual:{0}'.format(poly106 > poly103)
-    assert poly103 >= poly102, 'actual:{0}'.format(poly103 >= poly102)
-    assert poly104 >= poly101, 'actual:{0}'.format(poly104 >= poly101)
-    assert poly107 != poly108, 'actual:{0}'.format(poly107 != poly108)
+    assert test_poly['poly103'] < test_poly['poly104'], 'actual:{0}'\
+            .format(test_poly['poly103'] < test_poly['poly104'])
+    assert test_poly['poly106'] > test_poly['poly103'], 'actual:{0}'\
+           .format(test_poly['poly106'] > test_poly['poly103'])
+    assert test_poly['poly103'] >= test_poly['poly102'], 'actual:{0}'\
+           .format(test_poly['poly103'] >= test_poly['poly102'])
+    assert test_poly['poly104'] >= test_poly['poly101'], 'actual:{0}'\
+           .format(test_poly['poly104'] >= test_poly['poly101'])
+    assert test_poly['poly107'] != test_poly['poly108'], 'actual:{0}'\
+            .format(test_poly['poly107'] != test_poly['poly108'])
 
 
 def test_polygon_specific_value():
