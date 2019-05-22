@@ -3,7 +3,7 @@ import math
 from conftest import test_polys
 
 globals().update(test_polys())
-# https://www.oalculatorsoup.com/calculators/geometry-plane/polygon.php
+# https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 
 
 def test_polygon_repr():
@@ -46,41 +46,40 @@ def test_polygon_set_item():
     assert str(poly1) == 'Poly(10,13.1)', 'actual:{0}'.format(poly1)
 
 
-def test_polygon_list_properties():
+def test_polygon_list_properties_method():
     # poly1 list properties
     poly1 = pp.Poly(4, 5)
     assert poly1.listproperties
 
 
-# def test_polygons():
-#     # Unit Tests for p.Polygons Class
-#     print('POLYGONS CLASS TESTING:')
-#
-#     polys = p.Polygons(10, 6.35)
-#     polys2 = p.Polygons(500, 1)
-#
-#     # p.Polygons Class __repr__ test
-#     assert str(polys) == 'Polygons(10,6.35)', '{0}'.format(polys)
-#
-#     # test the max efficacy formula
-#     assert max([p.area/p.perimeter for p in polys]) == polys.max_efficiency
-#
-#     print('Iterable Type Check:')
-#
-#     print('get the 2nd item in polys........{0}'.format(polys[3]))
-#     print('get the third item polys2........{0}'.format(polys2[4]))
-#
-#     if math.isclose(polys2[-1].area, math.pi, abs_tol=.0001, rel_tol=.0001):
-#         print('p.Polygons Class Pi test passed')
-#
-#     print('p.Polygons Class setitem method testing...')
-#
-#     polys2 = p.Polygons(4, 20)
-#     print('polys2', polys2)
-#
-#     print('polys2 changing sides and radius...')
-#     if not polys2.__setitem__(400, 1):
-#         print('polys2', polys2)
-#         print('p.Polygons Class setitem method working')
-#     print('Unit Testing Complete')
+def test_polygons_repr(test_polygons):
+    # Polygons Class __repr__ test
+    assert str(test_polygons[0]) == 'Polygons(10,6.35)', '{0}'.format(polys)
 
+
+def test_polygons_max_efficencey_method(test_polygons):
+    # test the max efficacy formula
+    assert max([p.area/p.perimeter for p in test_polygons[1]]) == test_polygons[1].max_efficiency
+
+
+def test_polygons_sequence(test_polygons):
+    # Access the sequence type
+    assert test_polygons[0][1]
+
+
+def test_polygon_sequence_pi_area(test_polygons):
+    if math.isclose(test_polygons[1][497].area, math.pi, abs_tol=.0001, rel_tol=.0001):
+        print('pp.Polygons Class Pi test passed')
+    else:
+        assert False
+
+    # print('pp.Polygons Class setitem method testing...')
+    #
+    # polys2 = pp.Polygons(4, 20)
+    # print('polys2', polys2)
+    #
+    # print('polys2 changing sides and radius...')
+    # if not polys2.__setitem__(400, 1):
+    #     print('polys2', polys2)
+    #     print('pp.Polygons Class setitem method working')
+    # print('Unit Testing Complete')
