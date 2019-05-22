@@ -164,9 +164,10 @@ class Polygons:
         if not (isinstance(r, self._ptype) and r > 0):
             raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
 
-        self._m = int(m)
-        self._r = float(r)
-        self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
+        else:
+            self._m = int(m)
+            self._r = float(r)
+            self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
 
     @property
     def max_efficiency(self):

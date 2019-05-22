@@ -6,12 +6,15 @@ from random import randint, uniform
 from copy import deepcopy
 
 ##############################################################################################################
-# TODO nrsdictglobal maybe in a separate file as a seperate global cache
+# TODO NrsGlobalCache maybe in a separate file as a seperate global cache
+# TODO NrsGlobalCache is a singleton?
 # This is a global dictionary for key:(n,r,s) value(dict): (interior_angle, edge_length, apothem, area, perimeter)
 # nrsdictglobal = { (n,r,s):{interior_angle: value, edge_length: value, apothem: value, area: value, perimeter: value}
 #                   (n1,r1,s1):{interior_angle: value, edge_length: value, apothem: value, area: value, perimeter: value
 #                   }
-nrsdictglobal = {}
+class NrsGlobalCache:
+
+    : = {}
 # dictglobal = {:[]}
 ##############################################################################################################
 
@@ -42,25 +45,15 @@ class Poly:
 
         # query global dictionary if (n,r,sig) have been assigned:
         if self.nrskey:
-            nrsdictglobal[self.nrskey]['perimeter']
-            nrsdictglobal[self.nrskey]['area']
-            nrsdictglobal[self.nrskey]['apothem']
-            nrsdictglobal[self.nrskey]['edge_length']
-            nrsdictglobal[self.nrskey]['interior_ange']
+            NrsGlobalCache[self.nrskey]['perimeter']
+            NrsGlobalCache[self.nrskey]['area']
+            NrsGlobalCache[self.nrskey]['apothem']
+            NrsGlobalCache[self.nrskey]['edge_length']
+            NrsGlobalCache[self.nrskey]['interior_ange']
 
-
-
-
-
-
-
-
-
-
-    @staticmethod
+    @classmethod
     def polycheck(n=n,r=r,sig=sig):
         ptype = (int, float, Decimal, Fraction)
-        # if all(v for v in (self.n, self.r, self.sig)):
 
         if n:
             if not (isinstance(n, ptype) and float(n).is_integer()):
@@ -267,55 +260,55 @@ class Poly:
             return False
 
 
-class Polygons:
-    """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
-    def __init__(self, m, r):
-
-        ptype = (int, float, Decimal, Fraction)
-
-        if not (isinstance(m, ptype) and float(m).is_integer()):
-            raise TypeError('Sides (m) = positive integer type Int/Float/Decimal/Fraction only')
-        if m < 3:
-            raise ValueError('At least 3 sides required')
-        if not (isinstance(r, ptype) and r > 0):
-            raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-
-        self._m = int(m)
-        self._r = float(r)
-        self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
-        self._ptype = ptype
-
-    def __len__(self):
-        return self._m - 2
-
-    def __repr__(self):
-        if self._r.is_integer():
-            return 'Polygons({0},{1})'.format(self._m, int(self._r))
-        return 'Polygons({0},{1})'.format(self._m, self._r)
-
-    def __getitem__(self, s):
-        return self._polygons[s]
-
-    def __setitem__(self, m, r):
-
-        if not (isinstance(m, self._ptype) and float(m).is_integer()):
-            raise TypeError('Sides (m) = positive integer type Int/Float/Decimal/Fraction only')
-        if m < 3:
-            raise ValueError('At least 3 sides required')
-        if not (isinstance(r, self._ptype) and r > 0):
-            raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-
-        self._m = int(m)
-        self._r = float(r)
-        self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
-
-    @property
-    def max_efficiency(self):
-        sorted_polygons = sorted(self._polygons,
-                                 key=lambda i: i.area/i.perimeter,
-                                 reverse=True)
-        print('Max Efficeny polygon:', sorted_polygons[0])
-        return sorted_polygons[0].area / sorted_polygons[0].perimeter
+# class Polygons:
+#     """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
+#     def __init__(self, m, r):
+#
+#         ptype = (int, float, Decimal, Fraction)
+#
+#         if not (isinstance(m, ptype) and float(m).is_integer()):
+#             raise TypeError('Sides (m) = positive integer type Int/Float/Decimal/Fraction only')
+#         if m < 3:
+#             raise ValueError('At least 3 sides required')
+#         if not (isinstance(r, ptype) and r > 0):
+#             raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
+#
+#         self._m = int(m)
+#         self._r = float(r)
+#         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
+#         self._ptype = ptype
+#
+#     def __len__(self):
+#         return self._m - 2
+#
+#     def __repr__(self):
+#         if self._r.is_integer():
+#             return 'Polygons({0},{1})'.format(self._m, int(self._r))
+#         return 'Polygons({0},{1})'.format(self._m, self._r)
+#
+#     def __getitem__(self, s):
+#         return self._polygons[s]
+#
+#     def __setitem__(self, m, r):
+#
+#         if not (isinstance(m, self._ptype) and float(m).is_integer()):
+#             raise TypeError('Sides (m) = positive integer type Int/Float/Decimal/Fraction only')
+#         if m < 3:
+#             raise ValueError('At least 3 sides required')
+#         if not (isinstance(r, self._ptype) and r > 0):
+#             raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
+#
+#         self._m = int(m)
+#         self._r = float(r)
+#         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
+#
+#     @property
+#     def max_efficiency(self):
+#         sorted_polygons = sorted(self._polygons,
+#                                  key=lambda i: i.area/i.perimeter,
+#                                  reverse=True)
+#         print('Max Efficeny polygon:', sorted_polygons[0])
+#         return sorted_polygons[0].area / sorted_polygons[0].perimeter
 
 # TODO nrsdictglobal maybe in a seperate file as a seperate global cache
 # # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
@@ -542,21 +535,19 @@ class Polygons:
 
 # print(type(g3))
 
-g2 = Poly()
-print(g2)
-print(g2.nrskey)
-print(g2)
-print(g2.calcproperties)
-print(g2.calcproperties)
-
-g2.circumradius = None
-print(g2.calcproperties)
-
-g2.circumradius = 21312
-print(g2)
-g2.side_count = 12
-print(g2)
-g2.sigvalue = 0
-print(g2)
-print(g2.calcproperties)
-print(g2.nrskey)
+# g2 = Poly()
+# print(g2)
+# print(g2.nrskey)
+# print(g2)
+# print(g2.calcproperties)
+# print(g2.calcproperties)
+#
+# g2.circumradius = None
+# print(g2.calcproperties)
+#
+# g2.circumradius = 21312
+# print(g2)
+# g2.side_count = 12
+# print(g2)
+# g2.sigvalue = 0
+# print(g2)
