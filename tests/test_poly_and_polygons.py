@@ -1,8 +1,8 @@
 from src import poly_and_polygons as pp
 import math
-from conftest import test_polys
+from conftest import test_poly
 
-globals().update(test_polys())
+globals().update(test_poly())
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 
 
@@ -52,13 +52,14 @@ def test_polygon_list_properties_method():
     assert poly1.listproperties
 
 
+# Testing for Polygons Class #
 def test_polygons_repr(test_polygons):
     # Polygons Class __repr__ test
     assert str(test_polygons[0]) == 'Polygons(10,6.35)', '{0}'.format(polys)
 
 
 def test_polygons_max_efficencey_method(test_polygons):
-    # test the max efficacy formula
+    # test the max efficencey formula
     assert max([p.area/p.perimeter for p in test_polygons[1]]) == test_polygons[1].max_efficiency
 
 
@@ -68,10 +69,8 @@ def test_polygons_sequence(test_polygons):
 
 
 def test_polygon_sequence_pi_area(test_polygons):
-    if math.isclose(test_polygons[1][497].area, math.pi, abs_tol=.0001, rel_tol=.0001):
-        print('pp.Polygons Class Pi test passed')
-    else:
-        assert False
+    # calculate area of Pi
+    assert math.isclose(test_polygons[1][497].area, math.pi, abs_tol=.0001, rel_tol=.0001)
 
     # print('pp.Polygons Class setitem method testing...')
     #
