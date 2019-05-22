@@ -8,14 +8,32 @@ from copy import deepcopy
 ##############################################################################################################
 # TODO NrsGlobalCache maybe in a separate file as a seperate global cache
 # TODO NrsGlobalCache is a singleton?
-# This is a global dictionary for key:(n,r,s) value(dict): (interior_angle, edge_length, apothem, area, perimeter)
-# nrsdictglobal = { (n,r,s):{interior_angle: value, edge_length: value, apothem: value, area: value, perimeter: value}
-#                   (n1,r1,s1):{interior_angle: value, edge_length: value, apothem: value, area: value, perimeter: value
-#                   }
+# This is a global nested dictionary for (n,r,s):calculated_properties:value
+# NrsGlobalCache= { (n,r,s):
+#                   {interior_angle: value,
+#                   edge_length: value,
+#                   apothem: value,
+#                   area: value,
+#                   perimeter: value}
+#                  }
 class NrsGlobalCache:
+    _instance = None
+    # @staticmethod
+    # def getInstance():
+    #     """ Static access method. """
+    #     if  NrsGlobalCache._instance == None:
+    #         NrsGlobalCache()
+    #     return NrsGlobalCache._instance
 
-    : = {}
-# dictglobal = {:[]}
+    def __init__(self):
+        pass
+        # """ Virtually private constructor. """
+        # if NrsGlobalCache._instance != None:
+        #     raise Exception("This class is a singleton!")
+        # else:
+        #     NrsGlobalCache._instance = self
+        # return self
+
 ##############################################################################################################
 
 class Poly:
