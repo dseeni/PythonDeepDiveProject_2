@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from random import randint, uniform
 from copy import deepcopy
-from poly_and_polygons import Poly
+from src import poly_and_polygons as pp
 from src import parameter_checker as pm
 class Poly_Factory:
 
@@ -142,7 +142,7 @@ class Poly_Factory:
         print('Newly Created Object Names:', len(name), name)
 
         # polylist instantiates Poly objects
-        polylist = [Poly(n, r, s) for n, r, s in finallistsig]
+        polylist = [pp.Poly(n, r, s) for n, r, s in finallistsig]
         polydict = OrderedDict(zip(name, polylist))
 
         self.polydict = polydict
@@ -275,4 +275,3 @@ class Poly_Factory:
         if self._finalcount < clones * cloneamount and all(x > 0 for x in (icount, clones, cloneamount)):
             raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.nrfinal
-
