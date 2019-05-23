@@ -1,7 +1,7 @@
 from pytest import fixture
 from src import poly_and_polygons as p
 from collections import OrderedDict
-
+from src.WIP_p2_proj2_temp import NrsGlobalCache as Ngc
 
 @fixture(scope='function')
 def test_poly():
@@ -33,4 +33,24 @@ def test_polygons():
     two_iterables = (polys,polys2)
     return two_iterables
 
+
+
+@fixture(autouse=True)
+# auto-run function fixture to clear singleton
+def reset_test_global_cache_singletons():
+    # move this to the root conftest.py file
+    Ngc._instance = None
+
+@fixture(scope='function')
+def test_global_cache():
+    global_cache = Ngc()
+    return global_cache
+#
+# @pytest.fixture
+# def mocked_key_response(mocker):
+#   mocker.patch.object(credentials.KeyHandler, '_retrieve_parameter', return_value=key_response)
+#
+# def test_keys_initialize(mocked_key_response):
+#   key_handler = credentials.KeyHandler('some_key')
+#
 
