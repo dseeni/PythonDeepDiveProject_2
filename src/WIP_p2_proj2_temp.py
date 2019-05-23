@@ -5,18 +5,44 @@ from collections import OrderedDict
 from random import randint, uniform
 from copy import deepcopy
 
-##############################################################################################################
+
 # TODO NrsGlobalCache maybe in a separate file as a seperate global cache
 # TODO NrsGlobalCache is a singleton?
-# This is a global dictionary for key:(n,r,s) value(dict): (interior_angle, edge_length, apothem, area, perimeter)
-# nrsdictglobal = { (n,r,s):{interior_angle: value, edge_length: value, apothem: value, area: value, perimeter: value}
-#                   (n1,r1,s1):{interior_angle: value, edge_length: value, apothem: value, area: value, perimeter: value
-#                   }
+# This is a global nested dictionary for {(n,r,sig):calculated_properties:value}
+# NrsGlobalCache= { (n,r,sig):
+#                   {interior_angle: value,
+#                   edge_length: value,
+#                   apothem: value,
+#                   area: value,
+#                   perimeter: value}
+#                  }
 class NrsGlobalCache:
 
-    : = {}
-# dictglobal = {:[]}
-##############################################################################################################
+    _instance = None
+
+    @staticmethod
+    def get_instance():
+        """ Static access method. """
+        if NrsGlobalCache._instance is None:
+            NrsGlobalCache()
+        return NrsGlobalCache._instance
+
+    def __init__(self):
+        """ Virtually private constructor. """
+        if NrsGlobalCache._instance is not None:
+            raise Exception("This class is a singleton!")
+        else:
+            NrsGlobalCache._instance = self
+            self._cache = OrderedDict({})
+
+    @property
+    def cache_size(self):
+        return len(self._cache.keys())
+
+    @property
+    def cache_view(self):
+        return list(self._cache.keys())
+
 
 class Poly:
     # These are temp default values to pass into polycheck(n,r,sig) / __init__:
