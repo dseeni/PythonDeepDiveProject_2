@@ -5,11 +5,11 @@ from collections import OrderedDict
 from random import randint, uniform
 from copy import deepcopy
 
-##############################################################################################################
+
 # TODO NrsGlobalCache maybe in a separate file as a seperate global cache
 # TODO NrsGlobalCache is a singleton?
-# This is a global nested dictionary for (n,r,s):calculated_properties:value
-# NrsGlobalCache= { (n,r,s):
+# This is a global nested dictionary for {(n,r,sig):calculated_properties:value}
+# NrsGlobalCache= { (n,r,sig):
 #                   {interior_angle: value,
 #                   edge_length: value,
 #                   apothem: value,
@@ -17,24 +17,32 @@ from copy import deepcopy
 #                   perimeter: value}
 #                  }
 class NrsGlobalCache:
+
     _instance = None
-    # @staticmethod
-    # def getInstance():
-    #     """ Static access method. """
-    #     if  NrsGlobalCache._instance == None:
-    #         NrsGlobalCache()
-    #     return NrsGlobalCache._instance
+
+    @staticmethod
+    def get_instance():
+        """ Static access method. """
+        if NrsGlobalCache._instance is None:
+            NrsGlobalCache()
+        return NrsGlobalCache._instance
 
     def __init__(self):
-        pass
-        # """ Virtually private constructor. """
-        # if NrsGlobalCache._instance != None:
-        #     raise Exception("This class is a singleton!")
-        # else:
-        #     NrsGlobalCache._instance = self
-        # return self
+        """ Virtually private constructor. """
+        if NrsGlobalCache._instance is not None:
+            raise Exception("This class is a singleton!")
+        else:
+            NrsGlobalCache._instance = self
+            self._cache = OrderedDict({})
 
-##############################################################################################################
+    @property
+    def cache_size(self):
+        return len(self._cache.keys())
+
+    @property
+    def cache_view(self):
+        return list(self._cache.keys())
+
 
 class Poly:
     # These are temp default values to pass into polycheck(n,r,sig) / __init__:
