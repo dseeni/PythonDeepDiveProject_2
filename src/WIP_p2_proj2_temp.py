@@ -40,7 +40,7 @@ class NrsGlobalCache:
         return len(self._cache.keys())
 
     @property
-    def cache_view(self):
+    def key_view(self):
         return list(self._cache.keys())
 
 
