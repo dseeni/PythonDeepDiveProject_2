@@ -6,42 +6,67 @@ from random import randint, uniform
 from copy import deepcopy
 
 
-# TODO NrsGlobalCache maybe in a separate file as a seperate global cache
-# TODO NrsGlobalCache is a singleton?
-# This is a global nested dictionary for {(n,r,sig):calculated_properties:value}
-# NrsGlobalCache= { (n,r,sig):
-#                   {interior_angle: value,
-#                   edge_length: value,
-#                   apothem: value,
-#                   area: value,
-#                   perimeter: value}
-#                  }
 class NrsGlobalCache:
+    """This is a global nested dictionary for {(n,r,sig):calculated_properties:value}
+        NrsGlobalCache= {(n,r,sig):
+                          {interior_angle: value,
+                           edge_length: value,
+                           apothem: value,
+                           area: value,
+                           perimeter: value}
+                        }
+    """
 
     _instance = None
 
     @staticmethod
     def get_instance():
-        """ Static access method. """
+        """Static access method."""
         if NrsGlobalCache._instance is None:
             NrsGlobalCache()
         return NrsGlobalCache._instance
 
     def __init__(self):
-        """ Virtually private constructor. """
+        """Virtually private constructor."""
         if NrsGlobalCache._instance is not None:
             raise Exception("This class is a singleton!")
         else:
             NrsGlobalCache._instance = self
-            self._cache = OrderedDict({})
+            self._cache = OrderedDict(dict())
+            self._cache_limit = 100
 
     @property
     def cache_size(self):
+        # current size of the cache
         return len(self._cache.keys())
 
     @property
+    def cache_limit(self):
+        # maximum cache size
+        return self._cache_limit
+
+    @property
     def key_view(self):
+        # view cached (n,r,Sig) keys
         return list(self._cache.keys())
+
+    @cache_limit.setter
+    def cache_limit(self, limit):
+        # set maximum cache size
+        self._cache_limit = limit
+        # if len(self._cache.kes()) < self._cache_size:
+
+    def add_item(self, key, calc_prop, value):
+        self._cache[key] ={calc_prop: value}
+
+        # if self.cache_size > self.cache_limit:
+        while self.cache_size > self.cache_limit:
+            # last=True -> FIFO remove the oldest items in the cache
+            self._cache.popitem(last=False)
+
+
+    # test_global_cache._cache['poly100'] = {'apothem': 100}
+
 
 
 class Poly:
