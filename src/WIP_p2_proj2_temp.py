@@ -55,24 +55,22 @@ class NrsGlobalCache(OrderedDict):
     def cache_limit(self, limit):
         # set maximum cache size
         self._cache_limit = limit
-        # if len(self._cache.kes()) < self._cache_size:
 
-    def add_item(self, key, calc_prop, value):
-        self[key] = {calc_prop: value}
-
+    def __setitem__(self, key, calc_prop, value):
+        # let calc_prop be a dictionary {}
+        self[key][calc_prop] = value
         # if self.cache_size > self.cache_limit:
         while self.cache_size > self.cache_limit:
             # last=True -> FIFO remove the oldest items in the cache
             self.popitem(last=False)
 
-    def get_item(self, key, calc_prop=None):
+    def __getitem__(self, key, calc_prop=None):
         # return all calculated properties for a given (n,r,Sig) key
         if calc_prop is None:
             return self[key]
         # return specific calculated property for a given (n,r,Sig) key
         else:
             return self[key[calc_prop]]
-
 
 
 class Poly:
