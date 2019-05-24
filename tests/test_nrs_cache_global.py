@@ -6,18 +6,55 @@ from src.WIP_p2_proj2_temp import NrsGlobalCache as NCacheGlobal
 
 # xfail = "expected to fail test"
 @mark.xfail(reason="NrsGlobalCache is not a Singleton!")
-def test_nrsg_cache_is_singleton(test_global_cache):
+def test_global_cache_is_singleton(test_global_cache):
     Another_Singleton = NCacheGlobal()
 
 
-def test_nrsg_cache_size(test_global_cache):
-    assert test_global_cache.cache_size == len(test_global_cache._cache.keys())
+def test_global_cache_subclassed_ordered_dict(test_global_cache):
+    # confirm NrsGlobalCache is a subclass of OrderedDict
+    assert issubclass(NCacheGlobal, OrderedDict)
 
-def test_nrsg_cache_view(test_global_cache):
+
+def test_global_cache_size(test_global_cache):
+    # working size w/add, change, pop
+    test_global_cache[(20,20,.001)]: {'apothem': 100}
+    assert test_global_cache.cache_size == len(test_global_cache.key_view)
+
+
+def test_global_cache_key_view(test_global_cache):
     # viewable cached (n,r,sig) keys
-    assert isinstance(test_global_cache.cache_view, list)
+    assert isinstance(test_global_cache.key_view, list)
+    assert len(test_global_cache.key_view) == len(test_global_cache.keys())
 
-def test_nrsg_key_caclculated_property(test_global_cache):
+
+def test_global_cache_contains_dict(test_global_cache):
     # key contains a nested dictionary as a value
-    assert all(isinstance(i,dict) for i in (test_global_cache._cache.values()))
+    assert all(isinstance(i, dict) for i in (test_global_cache.values()))
 
+
+def test_global_cache_add_item(test_global_cache):
+    # clear cache of keys / values / calculated properties
+    test_global_cache.__setitem__((50, 50, .1), 'apothem', 100)
+    # print(test_global_cache.cache_size)
+    print(test_global_cache.keys())
+    assert test_global_cache.cache_size == 1
+
+
+# @mark.skip(reason='wip')
+def test_global_cache_clear(test_global_cache):
+    # add cache of keys / values / calculated properties
+    test_global_cache.__setitem__((50, 50, .1), 'apothem', 100)
+    assert test_global_cache.cache_size == 1
+    # clear cache of keys / values / calculated properties
+    test_global_cache.clear()
+    assert test_global_cache.cache_size == 0
+
+
+def test_global_cache_set_size(test_global_cache):
+    # set cache size to key size
+    test_global_cache.cache_limit = 200
+    assert test_global_cache.cache_limit == 200
+
+
+# TODO get the last item in stash
+# TODO get the first item in stash

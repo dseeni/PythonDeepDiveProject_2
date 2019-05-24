@@ -6,42 +6,73 @@ from random import randint, uniform
 from copy import deepcopy
 
 
-# TODO NrsGlobalCache maybe in a separate file as a seperate global cache
-# TODO NrsGlobalCache is a singleton?
-# This is a global nested dictionary for {(n,r,sig):calculated_properties:value}
-# NrsGlobalCache= { (n,r,sig):
-#                   {interior_angle: value,
-#                   edge_length: value,
-#                   apothem: value,
-#                   area: value,
-#                   perimeter: value}
-#                  }
-class NrsGlobalCache:
+class NrsGlobalCache(OrderedDict):
+    """This is a global nested dictionary for {(n,r,sig):calculated_properties:value}
+        NrsGlobalCache= {(n,r,sig):
+                          {interior_angle: value,
+                           edge_length: value,
+                           apothem: value,
+                           area: value,
+                           perimeter: value}
+                        }
+    """
 
     _instance = None
 
     @staticmethod
     def get_instance():
-        """ Static access method. """
+        """Static access method."""
         if NrsGlobalCache._instance is None:
             NrsGlobalCache()
         return NrsGlobalCache._instance
 
     def __init__(self):
-        """ Virtually private constructor. """
+        """Virtually private constructor."""
         if NrsGlobalCache._instance is not None:
             raise Exception("This class is a singleton!")
         else:
+            super(NrsGlobalCache, self).__init__()
             NrsGlobalCache._instance = self
-            self._cache = OrderedDict({})
+            # self._cache = OrderedDict(dict())
+            self._cache_limit = 100
 
     @property
     def cache_size(self):
-        return len(self._cache.keys())
+        # current size of the cache
+        return len(self.keys())
 
     @property
-    def cache_view(self):
-        return list(self._cache.keys())
+    def cache_limit(self):
+        # maximum cache size
+        return self._cache_limit
+
+    @property
+    def key_view(self):
+        # view cached (n,r,Sig) keys
+        return list(self.keys())
+
+    @cache_limit.setter
+    def cache_limit(self, limit):
+        # set maximum cache size
+        self._cache_limit = limit
+
+    def __setitem__(self, key, calc_prop, value):
+        # let calc_prop be a dictionary {}
+        # self[key] = {calc_prop: value}
+        super(NrsGlobalCache, self).__setitem__(key, value)
+        self[key]:{calc_prop: value}
+        # if self.cache_size > self.cache_limit:
+        while self.cache_size > self.cache_limit:
+            # last=True -> FIFO remove the oldest items in the cache
+            self.popitem(last=False)
+
+    def __getitem__(self, key, calc_prop=None):
+        # return all calculated properties for a given (n,r,Sig) key
+        if calc_prop is None:
+            return self[key]
+        # return specific calculated property for a given (n,r,Sig) key
+        else:
+            return self[key][calc_prop]
 
 
 class Poly:
