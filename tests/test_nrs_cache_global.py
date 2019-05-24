@@ -40,10 +40,10 @@ def test_global_cache_add_item(test_global_cache):
     assert test_global_cache.cache_size == 1
 
 
-@mark.skip(reason='wip')
+# @mark.skip(reason='wip')
 def test_global_cache_clear(test_global_cache):
     # add cache of keys / values / calculated properties
-    test_global_cache[(50,50,.1)]: {'apothem': 100}
+    test_global_cache.__setitem__((50, 50, .1), 'apothem', 100)
     assert test_global_cache.cache_size == 1
     # clear cache of keys / values / calculated properties
     test_global_cache.clear()
