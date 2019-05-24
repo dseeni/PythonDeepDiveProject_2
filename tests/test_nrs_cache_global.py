@@ -35,10 +35,12 @@ def test_global_cache_contains_dict(test_global_cache):
 def test_global_cache_add_item(test_global_cache):
     # clear cache of keys / values / calculated properties
     test_global_cache.__setitem__((50, 50, .1), 'apothem', 100)
-    print(test_global_cache.cache_size)
+    # print(test_global_cache.cache_size)
+    print(test_global_cache.keys())
     assert test_global_cache.cache_size == 1
 
 
+@mark.skip(reason='wip')
 def test_global_cache_clear(test_global_cache):
     # add cache of keys / values / calculated properties
     test_global_cache[(50,50,.1)]: {'apothem': 100}
