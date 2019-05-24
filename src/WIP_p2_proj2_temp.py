@@ -6,7 +6,7 @@ from random import randint, uniform
 from copy import deepcopy
 
 
-class NrsGlobalCache:
+class NrsGlobalCache(OrderedDict):
     """This is a global nested dictionary for {(n,r,sig):calculated_properties:value}
         NrsGlobalCache= {(n,r,sig):
                           {interior_angle: value,
@@ -31,14 +31,15 @@ class NrsGlobalCache:
         if NrsGlobalCache._instance is not None:
             raise Exception("This class is a singleton!")
         else:
+            super(NrsGlobalCache, self).__init__()
             NrsGlobalCache._instance = self
-            self._cache = OrderedDict(dict())
+            # self._cache = OrderedDict(dict())
             self._cache_limit = 100
 
     @property
     def cache_size(self):
         # current size of the cache
-        return len(self._cache.keys())
+        return len(self.keys())
 
     @property
     def cache_limit(self):
@@ -48,7 +49,7 @@ class NrsGlobalCache:
     @property
     def key_view(self):
         # view cached (n,r,Sig) keys
-        return list(self._cache.keys())
+        return list(self.keys())
 
     @cache_limit.setter
     def cache_limit(self, limit):
@@ -57,15 +58,20 @@ class NrsGlobalCache:
         # if len(self._cache.kes()) < self._cache_size:
 
     def add_item(self, key, calc_prop, value):
-        self._cache[key] ={calc_prop: value}
+        self[key] = {calc_prop: value}
 
         # if self.cache_size > self.cache_limit:
         while self.cache_size > self.cache_limit:
             # last=True -> FIFO remove the oldest items in the cache
-            self._cache.popitem(last=False)
+            self.popitem(last=False)
 
-
-    # test_global_cache._cache['poly100'] = {'apothem': 100}
+    def get_item(self, key, calc_prop=None):
+        # return all calculated properties for a given (n,r,Sig) key
+        if calc_prop is None:
+            return self[key]
+        # return specific calculated property for a given (n,r,Sig) key
+        else:
+            return self[key[calc_prop]]
 
 
 
