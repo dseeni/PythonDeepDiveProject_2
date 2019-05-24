@@ -56,9 +56,9 @@ class NrsGlobalCache(OrderedDict):
         # set maximum cache size
         self._cache_limit = limit
 
-    def __setitem__(self, key, calc_prop, value):
+    def __setitem__(self, key, calc_prop):
         # let calc_prop be a dictionary {}
-        self[key][calc_prop] = value
+        self[key] = {calc_prop}
         # if self.cache_size > self.cache_limit:
         while self.cache_size > self.cache_limit:
             # last=True -> FIFO remove the oldest items in the cache
