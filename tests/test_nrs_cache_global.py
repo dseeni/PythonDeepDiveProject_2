@@ -29,20 +29,23 @@ def test_global_cache_key_view(test_global_cache):
 
 def test_global_cache_contains_dict(test_global_cache):
     # key contains a nested dictionary as a value
-    assert all(isinstance(i, dict) for i in (test_global_cache.values()))
+    print(test_global_cache.values())
+    for i in test_global_cache.values():
+        assert (isinstance(i, dict))
 
 
 def test_global_cache_add_item(test_global_cache):
     # clear cache of keys / values / calculated properties
+    test_global_cache.clear()
     test_global_cache.__setitem__((50, 50, .1), 'apothem', 100)
     # print(test_global_cache.cache_size)
     print(test_global_cache.keys())
     assert test_global_cache.cache_size == 1
 
 
-# @mark.skip(reason='wip')
 def test_global_cache_clear(test_global_cache):
     # add cache of keys / values / calculated properties
+    test_global_cache.clear()
     test_global_cache.__setitem__((50, 50, .1), 'apothem', 100)
     assert test_global_cache.cache_size == 1
     # clear cache of keys / values / calculated properties
@@ -56,5 +59,14 @@ def test_global_cache_set_size(test_global_cache):
     assert test_global_cache.cache_limit == 200
 
 
-# TODO get the last item in stash
-# TODO get the first item in stash
+# def test_global_cache_oldest_item(test_global_cache):
+#     test_global_cache.
+# def test_global_cache_update_item(test_global_cache):
+    # update an existing key and values
+    # test_global_cache.se
+    
+# TODO get the latest item in stash
+# TODO get the oldest item in stash
+# TODO update an existing key more values
+# TODO updating a key makes key recent item
+# TODO cache_size respects cachce limit, old keys are discarded

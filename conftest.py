@@ -44,6 +44,9 @@ def reset_test_global_cache_singletons():
 @fixture(scope='function')
 def test_global_cache():
     global_cache = Ngc()
+    global_cache.__setitem__((50, 50, .1), 'apothem', 100)
+    global_cache.__setitem__((60, 50, .1), 'apothem', 200)
+    global_cache.__setitem__((70, 50, .1), 'apothem', 300)
     return global_cache
 #
 # @pytest.fixture
