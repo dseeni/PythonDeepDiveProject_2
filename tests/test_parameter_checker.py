@@ -2,14 +2,14 @@ from src import parameter_checker as pm
 
 # check_parameters tests
 def test_check_parameters_docstring():
-        if pm.check_parameters.__doc__ is None:
-                assert False
+        assert pm.check_parameters.__doc__ is not None
+
 
 def test_check_parameters_callable():
     assert (pm.check_parameters())
 
-# check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2)
 
+# check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2)
 def test_check_parameters_default_finalcount():
     returnvalues = pm.check_parameters()
     finalcount = (returnvalues[0] - returnvalues[1]) \
@@ -19,8 +19,8 @@ def test_check_parameters_default_finalcount():
 
 # frange helper function tests
 def test_frange_docstring():
-        if pm.frange.__doc__ is None:
-                assert False
+        assert pm.frange.__doc__ is not None
+
 
 # test frange returns len of stop - start x
 def test_frange_default():
