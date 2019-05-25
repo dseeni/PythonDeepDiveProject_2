@@ -58,15 +58,16 @@ class NrsGlobalCache(OrderedDict):
 
     def __setitem__(self, key, calc_prop, value):
         # let calc_prop be a dictionary {}
-        super(NrsGlobalCache, self).__setitem__(key, value)
+        super(NrsGlobalCache, self).__setitem__(key, calc_prop, value)
         self[key]: {calc_prop: value}
         # if self.cache_size > self.cache_limit:
         while self.cache_size > self.cache_limit:
             # last=True -> FIFO remove the oldest items in the cache
             self.popitem(last=False)
 
-    def cache_read(self, key, calc_prop=None):
+    def __getitem__(self, key, calc_prop=None):
         # return all calculated properties for a given (n,r,Sig) key
+        super(NrsGlobalCache, self).__getitem__(key, calc_prop)
         if calc_prop is None:
             return self[key]
         # return specific calculated property for a given (n,r,Sig) key

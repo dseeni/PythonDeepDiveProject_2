@@ -30,10 +30,12 @@ def test_global_cache_key_view(test_global_cache):
 
 def test_global_cache_contains_dict(test_global_cache):
     # key contains a nested dictionary as a value
-    for i in test_global_cache.keys():
-        print(test_global_cache.values())
-        print(type(test_global_cache))
-        all(isinstance(test_global_cache[i], dict))
+    print(test_global_cache.__getitem__((50,50,.1), 'area'))
+    print(test_global_cache.__getitem__((50,50,.1), 'apothem'))
+    # for i in test_global_cache.keys():
+    #     print(test_global_cache.values())
+    #     print(type(test_global_cache))
+    #     all(isinstance(test_global_cache[i], dict))
 
 
 def test_global_cache_add_item(test_global_cache):

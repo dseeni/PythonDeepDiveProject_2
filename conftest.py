@@ -44,8 +44,11 @@ def reset_test_global_cache_singletons():
 @fixture(scope='function')
 def test_global_cache():
     global_cache = Ngc()
-    
+   # a dictionary can only have one key for one value, you're duplicating the same key twice here and causing problmes
+
     global_cache.__setitem__((50, 50, .1), 'apothem', 100)
+# you need ot UPDATE THE ITEM HERE TO UPDATE KEY / VALUE PAIR
+    # practice creating a basic ordered dict and updating it !!!!!
     global_cache.__setitem__((50, 50, .1), 'area', 400)
 
     global_cache.__setitem__((60, 50, .1), 'apothem', 200)
@@ -62,5 +65,4 @@ def test_global_cache():
 #
 # def test_keys_initialize(mocked_key_response):
 #   key_handler = credentials.KeyHandler('some_key')
-#
 
