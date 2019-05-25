@@ -12,6 +12,7 @@ def test_global_cache_is_singleton(test_global_cache):
 
 def test_global_cache_subclassed_ordered_dict(test_global_cache):
     # confirm NrsGlobalCache is a subclass of OrderedDict
+    print(type(NCacheGlobal))
     assert issubclass(NCacheGlobal, OrderedDict)
 
 
@@ -29,9 +30,10 @@ def test_global_cache_key_view(test_global_cache):
 
 def test_global_cache_contains_dict(test_global_cache):
     # key contains a nested dictionary as a value
-    print(test_global_cache.values())
-    for i in test_global_cache.values():
-        assert (isinstance(i, dict))
+    for i in test_global_cache.keys():
+        print(test_global_cache.values())
+        print(type(test_global_cache))
+        all(isinstance(test_global_cache[i], dict))
 
 
 def test_global_cache_add_item(test_global_cache):

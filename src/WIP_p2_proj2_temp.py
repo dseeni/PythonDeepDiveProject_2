@@ -31,7 +31,7 @@ class NrsGlobalCache(OrderedDict):
         if NrsGlobalCache._instance is not None:
             raise Exception("This class is a singleton!")
         else:
-            super(NrsGlobalCache, self).__init__()
+            super().__init__()
             NrsGlobalCache._instance = self
             # self._cache = OrderedDict(dict())
             self._cache_limit = 100
@@ -65,7 +65,7 @@ class NrsGlobalCache(OrderedDict):
             # last=True -> FIFO remove the oldest items in the cache
             self.popitem(last=False)
 
-    def __getitem__(self, key, calc_prop=None):
+    def cache_read(self, key, calc_prop=None):
         # return all calculated properties for a given (n,r,Sig) key
         if calc_prop is None:
             return self[key]
