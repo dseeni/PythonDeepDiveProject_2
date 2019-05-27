@@ -46,23 +46,25 @@ def test_global_cache():
     global_cache = Ngc()
    # a dictionary can only have one key for one value, you're duplicating the same key twice here and causing problmes
 
-    global_cache.__setitem__((50, 50, .1), 'apothem', 100)
-# you need ot UPDATE THE ITEM HERE TO UPDATE KEY / VALUE PAIR
+#     global_cache.__setitem__((50, 50, .1), 'apothem', 100)
+# # you need to UPDATE THE ITEM HERE TO UPDATE KEY / VALUE PAIR
+#     # practice creating a basic ordered dict and updating it !!!!!
+#     global_cache.__setitem__((50, 50, .1), 'area', 400)
+#
+#     global_cache.__setitem__((60, 50, .1), 'apothem', 200)
+#     global_cache.__setitem__((60, 50, .1), 'area', 500)
+#
+#     global_cache.__setitem__((70, 50, .1), 'apothem', 300)
+#     global_cache.__setitem__((70, 50, .1), 'area', 600)
+
+    global_cache[(50, 50, .1)]['apothem']=[100]
+    # you need to UPDATE THE ITEM HERE TO UPDATE KEY / VALUE PAIR
     # practice creating a basic ordered dict and updating it !!!!!
-    global_cache.__setitem__((50, 50, .1), 'area', 400)
+    global_cache[(50, 50, .1)]['area']=[400]
 
-    global_cache.__setitem__((60, 50, .1), 'apothem', 200)
-    global_cache.__setitem__((60, 50, .1), 'area', 500)
+    global_cache[(60, 50, .1)]['apothem']=[200]
+    global_cache[(60, 50, .1)]['area']=[500]
 
-    global_cache.__setitem__((70, 50, .1), 'apothem', 300)
-    global_cache.__setitem__((70, 50, .1), 'area', 600)
-
+    global_cache[(70, 50, .1)]['apothem']=[300]
+    global_cache[(70, 50, .1)]['area']=[600]
     return global_cache
-#
-# @pytest.fixture
-# def mocked_key_response(mocker):
-#   mocker.patch.object(credentials.KeyHandler, '_retrieve_parameter', return_value=key_response)
-#
-# def test_keys_initialize(mocked_key_response):
-#   key_handler = credentials.KeyHandler('some_key')
-

@@ -12,13 +12,13 @@ def test_global_cache_is_singleton(test_global_cache):
 
 def test_global_cache_subclassed_ordered_dict(test_global_cache):
     # confirm NrsGlobalCache is a subclass of OrderedDict
-    print(type(NCacheGlobal))
+    # print(type(NCacheGlobal))
     assert issubclass(NCacheGlobal, OrderedDict)
 
 
 def test_global_cache_size(test_global_cache):
     # working size w/add, change, pop
-    test_global_cache[(20,20,.001)]: {'apothem': 100}
+    test_global_cache[(20,20,.001)]['apothem']=[100]
     assert test_global_cache.cache_size == len(test_global_cache.key_view)
 
 
@@ -30,29 +30,22 @@ def test_global_cache_key_view(test_global_cache):
 
 def test_global_cache_contains_dict(test_global_cache):
     # key contains a nested dictionary as a value
-    print(test_global_cache.__getitem__((50,50,.1), 'area'))
-    print(test_global_cache.__getitem__((50,50,.1), 'apothem'))
-    # for i in test_global_cache.keys():
-    #     print(test_global_cache.values())
-    #     print(type(test_global_cache))
-    #     all(isinstance(test_global_cache[i], dict))
-
+    assert isinstance(test_global_cache[(50,50,.1)].items, dict.items)
 
 def test_global_cache_add_item(test_global_cache):
     # clear cache of keys / values / calculated properties
     test_global_cache.clear()
-    test_global_cache.__setitem__((50, 50, .1), 'apothem', 100)
+    test_global_cache[(50, 50, .1)]['apothem'] = 100
     # print(test_global_cache.cache_size)
-    print(test_global_cache.keys())
+    # print(test_global_cache.keys())
     assert test_global_cache.cache_size == 1
 
 
 def test_global_cache_clear(test_global_cache):
     # add cache of keys / values / calculated properties
     test_global_cache.clear()
-    test_global_cache.__setitem__((50, 50, .1), 'apothem', 100)
+    test_global_cache[(50, 50, .1)]['apothem'] = [100]
     assert test_global_cache.cache_size == 1
-    # clear cache of keys / values / calculated properties
     test_global_cache.clear()
     assert test_global_cache.cache_size == 0
 

@@ -28,13 +28,13 @@ class NrsGlobalCache(OrderedDict):
 
     def __init__(self):
         """Virtually private constructor."""
-        if NrsGlobalCache._instance is not None:
-            raise Exception("This class is a singleton!")
-        else:
-            super().__init__()
-            NrsGlobalCache._instance = self
-            # self._cache = OrderedDict(dict())
-            self._cache_limit = 100
+        # if NrsGlobalCache._instance is not None:
+        #     raise Exception("This class is a singleton!")
+        # else:
+        super().__init__()
+        NrsGlobalCache._instance = self
+        # self._cache = OrderedDict(dict())
+        self._cache_limit = 100
 
     @property
     def cache_size(self):
@@ -56,23 +56,28 @@ class NrsGlobalCache(OrderedDict):
         # set maximum cache size
         self._cache_limit = limit
 
-    def __setitem__(self, key, calc_prop, value):
-        # let calc_prop be a dictionary {}
-        super(NrsGlobalCache, self).__setitem__(key, calc_prop, value)
-        self[key]: {calc_prop: value}
-        # if self.cache_size > self.cache_limit:
-        while self.cache_size > self.cache_limit:
-            # last=True -> FIFO remove the oldest items in the cache
-            self.popitem(last=False)
 
-    def __getitem__(self, key, calc_prop=None):
-        # return all calculated properties for a given (n,r,Sig) key
-        super(NrsGlobalCache, self).__getitem__(key, calc_prop)
-        if calc_prop is None:
-            return self[key]
-        # return specific calculated property for a given (n,r,Sig) key
-        else:
-            return self[key][calc_prop]
+    def __missing__(self, key):
+        val = self[key] = {}
+        return val
+
+    # def __setitem__(self, key, calc_prop, value):
+    #     # let calc_prop be a dictionary {}
+    #     super(NrsGlobalCache, self).__setitem__(key, calc_prop, value)
+    #     self[key][calc_prop] = [value]
+    #     # if self.cache_size > self.cache_limit:
+    #     while self.cache_size > self.cache_limit:
+    #         # last=True -> FIFO remove the oldest items in the cache
+    #         self.popitem(last=False)
+    #
+    # def __getitem__(self, key, value, calc_prop):
+    #     # return all calculated properties for a given (n,r,Sig) key
+    #     super(NrsGlobalCache, self).__getitem__(key, value, calc_prop)
+    #     if calc_prop is None:
+    #         return self[key]
+    #     # return specific calculated property for a given (n,r,Sig) key
+    #     else:
+    #         return self[key][calc_prop]
 
 
 class Poly:
