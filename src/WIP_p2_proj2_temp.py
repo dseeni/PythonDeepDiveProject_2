@@ -2,8 +2,6 @@ import math
 from fractions import Fraction
 from decimal import Decimal
 from collections import OrderedDict
-from random import randint, uniform
-from copy import deepcopy
 
 
 class NrsGlobalCache(OrderedDict):

@@ -4,9 +4,9 @@ from pytest import mark
 from src.WIP_p2_proj2_temp import NrsGlobalCache as NCacheGlobal
 
 
-# xfail = "expected to fail test"
 @mark.xfail(reason="NrsGlobalCache is not a Singleton!")
 def test_global_cache_is_singleton(test_global_cache):
+    # xfail = "expected to fail test"
     Another_Singleton = NCacheGlobal()
 
 
@@ -32,12 +32,11 @@ def test_global_cache_contains_dict(test_global_cache):
     # key contains a nested dictionary as a value
     assert isinstance(type(test_global_cache[(50,50,.1)].values()), type(dict))
 
+
 def test_global_cache_add_item(test_global_cache):
     # clear cache of keys / values / calculated properties
     test_global_cache.clear()
     test_global_cache[(50, 50, .1)]['apothem'] = 100
-    # print(test_global_cache.cache_size)
-    # print(test_global_cache.keys())
     assert test_global_cache.cache_size == 1
 
 
