@@ -30,7 +30,7 @@ def test_global_cache_key_view(test_global_cache):
 
 def test_global_cache_contains_dict(test_global_cache):
     # key contains a nested dictionary as a value
-    assert isinstance(test_global_cache[(50,50,.1)].items, dict.items)
+    assert isinstance(type(test_global_cache[(50,50,.1)].values()), type(dict))
 
 def test_global_cache_add_item(test_global_cache):
     # clear cache of keys / values / calculated properties

@@ -57,14 +57,15 @@ def test_global_cache():
 #     global_cache.__setitem__((70, 50, .1), 'apothem', 300)
 #     global_cache.__setitem__((70, 50, .1), 'area', 600)
 
-    global_cache[(50, 50, .1)]['apothem']=[100]
+    global_cache[(50, 50, .1)]['apothem'] = [100]
     # you need to UPDATE THE ITEM HERE TO UPDATE KEY / VALUE PAIR
     # practice creating a basic ordered dict and updating it !!!!!
-    global_cache[(50, 50, .1)]['area']=[400]
+    global_cache[(50, 50, .1)]['area'] = [400]
 
-    global_cache[(60, 50, .1)]['apothem']=[200]
-    global_cache[(60, 50, .1)]['area']=[500]
+    global_cache[(60, 50, .1)]['apothem'] = [200]
+    global_cache[(60, 50, .1)]['area'] = [500]
 
-    global_cache[(70, 50, .1)]['apothem']=[300]
-    global_cache[(70, 50, .1)]['area']=[600]
+    global_cache[(70, 50, .1)]['apothem'] = [300]
+    global_cache[(70, 50, .1)]['area'] = [600]
+    global_cache[(70, 50, .1)] = ['area']
     return global_cache

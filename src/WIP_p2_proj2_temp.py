@@ -31,8 +31,8 @@ class NrsGlobalCache(OrderedDict):
         # if NrsGlobalCache._instance is not None:
         #     raise Exception("This class is a singleton!")
         # else:
-        super().__init__()
         NrsGlobalCache._instance = self
+        super().__init__()
         # self._cache = OrderedDict(dict())
         self._cache_limit = 100
 
