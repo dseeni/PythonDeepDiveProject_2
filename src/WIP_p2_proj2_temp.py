@@ -319,6 +319,7 @@ class Poly:
             return False
 
 
+# TODO Finish Polygons Iterator __next__(method)
 # class Polygons:
 #     """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
 #     def __init__(self, m, r):
