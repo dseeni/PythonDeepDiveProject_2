@@ -45,7 +45,7 @@ def reset_test_global_cache_singletons():
 @fixture(scope='function')
 def test_global_cache():
     global_cache = Ngc()
-    # this is the first item in the dictionary
+    # this is the oldest item in the dictionary
     global_cache[(50, 50, .1)]['apothem'] = [100]
     global_cache[(50, 50, .1)]['area'] = [400]
 
@@ -55,7 +55,7 @@ def test_global_cache():
     global_cache[(70, 50, .1)]['apothem'] = [300]
     global_cache[(70, 50, .1)]['area'] = [600]
 
-    # this is the last item in the dictionary
+    # this is the newest item in the dictionary
     global_cache[(70, 50, .1)]['interior angle'] = [300]
 
     return global_cache

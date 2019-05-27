@@ -55,12 +55,12 @@ def test_global_cache_set_size(test_global_cache):
     assert test_global_cache.cache_limit == 200
 
 
-def test_global_cache_newest_item(test_global_cache):
+def test_global_cache_oldest_item(test_global_cache):
     assert ((test_global_cache.popitem(last=False)) ==
             ((50, 50, 0.1), {'apothem': [100], 'area': [400]}))
 
 
-def test_global_cache_oldest_item(test_global_cache):
+def test_global_cache_newest_item(test_global_cache):
     assert ((test_global_cache.popitem(last=True)) ==
             ((70, 50, 0.1), {'apothem': [300], 'area': [600], 'interior angle': [300]}))
 
@@ -69,7 +69,11 @@ def test_existing_key_additional_calculated_properties(test_global_cache):
     test_global_cache[(50, 50, .1)]['interior_angle'] = [60]
     assert len(test_global_cache.values()) == 3
 
-# TODO update an existing key more values
+
+def test_updating_key_makes_key_newest_item(test_global_cache):
+    test_global_cache[(50, 50, .1)]['interior_angle'] = [60]
+
+
 # TODO updating a key makes key recent item
 # TODO cache_size respects cache limit, old keys are discarded
 #
