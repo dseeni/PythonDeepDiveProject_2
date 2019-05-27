@@ -56,7 +56,6 @@ class NrsGlobalCache(OrderedDict):
         # set maximum cache size
         self._cache_limit = limit
 
-
     def __missing__(self, key):
         val = self[key] = {}
         return val
