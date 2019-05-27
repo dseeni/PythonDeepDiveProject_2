@@ -56,6 +56,6 @@ def test_global_cache():
     global_cache[(70, 50, .1)]['area'] = [600]
 
     # this is the last item in the dictionary
-    global_cache[(70, 50, .1)]['interior angle'] =[300]
+    global_cache[(70, 50, .1)]['interior angle'] = [300]
 
     return global_cache
