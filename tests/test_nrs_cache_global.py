@@ -55,9 +55,15 @@ def test_global_cache_set_size(test_global_cache):
     assert test_global_cache.cache_limit == 200
 
 
-def test_global_cache_oldest_item(test_global_cache):
+def test_global_cache_newest_item(test_global_cache):
     assert ((test_global_cache.popitem(last=False)) == ((50, 50, 0.1), {'apothem': [100], 'area': [400]}))
 
+
+# def test_global_cache_oldest_item(test_global_cache):
+#     assert ((test_global_cache.popitem(last=True)) == ((50, 50, 0.1), {'apothem': [100], 'area': [400]}))
+    #
+    # global_cache[(50, 50, .1)]['apothem'] = [100]
+    # global_cache[(50, 50, .1)]['area'] = [400]
 # TODO get the latest item in stash
 # TODO get the oldest item in stash
 # TODO update an existing key more values
