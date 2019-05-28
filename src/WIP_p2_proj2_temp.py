@@ -60,22 +60,19 @@ class NrsGlobalCache(OrderedDict):
         val = self[key] = {}
         return val
 
-    def __setitem__(self, key, calc_prop, value):
-        if key in self:
-            oldkey = self.pop(key)
-
-            # del self[key]
-        OrderedDict.__setitem__(self, key, value)
-
-
-
-        # let calc_prop be a dictionary {}
-        super(NrsGlobalCache, self).__setitem__(key, calc_prop, value)
-        self[key][calc_prop] = [value]
-        # if self.cache_size > self.cache_limit:
-        while self.cache_size > self.cache_limit:
-            # last=True -> FIFO remove the oldest items in the cache
-            self.popitem(last=False)
+    # def __setitem__(self, key, calc_prop, value):
+    #     if key in self:
+    #         oldkey = self.pop(key)
+    #
+    #         # del self[key]
+    #     OrderedDict.__setitem__(self, key, value)
+    #     # let calc_prop be a dictionary {}
+    #     super(NrsGlobalCache, self).__setitem__(key, calc_prop, value)
+    #     self[key][calc_prop] = [value]
+    #     # if self.cache_size > self.cache_limit:
+    #     while self.cache_size > self.cache_limit:
+    #         # last=True -> FIFO remove the oldest items in the cache
+    #         self.popitem(last=False)
     #
     # def __getitem__(self, key, value, calc_prop):
     #     # return all calculated properties for a given (n,r,Sig) key
