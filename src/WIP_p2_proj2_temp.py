@@ -26,13 +26,13 @@ class NrsGlobalCache(OrderedDict):
 
     def __init__(self):
         """Virtually private constructor."""
-        # if NrsGlobalCache._instance is not None:
-        #     raise Exception("This class is a singleton!")
-        # else:
-        NrsGlobalCache._instance = self
-        super().__init__()
-        # self._cache = OrderedDict(dict())
-        self._cache_limit = 100
+        if NrsGlobalCache._instance is not None:
+            raise Exception("This class is a singleton!")
+        else:
+            NrsGlobalCache._instance = self
+            super().__init__()
+            # self._cache = OrderedDict(dict())
+            self._cache_limit = 100
 
     @property
     def cache_size(self):
@@ -42,7 +42,8 @@ class NrsGlobalCache(OrderedDict):
     @property
     def cache_limit(self):
         # maximum cache size
-        return self._cache_limit
+        self.cache_limit = self._cache_limit
+        return self.cache_limit
 
     @property
     def key_view(self):
@@ -51,7 +52,13 @@ class NrsGlobalCache(OrderedDict):
 
     @cache_limit.setter
     def cache_limit(self, limit):
-        # set maximum cache size
+        if self.cache_size > self.cache_limit:
+            while self.cache_size > self.cache_limit:
+                # last=True -> FIFO remove the oldest items in the cache
+                print(self.cache_size)
+                self.popitem(last=False)
+                print(self.cache_size)
+                # set maximum cache size
         self._cache_limit = limit
 
     def __missing__(self, key):

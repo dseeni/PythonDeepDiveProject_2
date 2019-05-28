@@ -10,7 +10,7 @@ def test_global_cache_is_singleton(test_global_cache):
     Another_Singleton = NCacheGlobal()
 
 
-def test_global_cache_subclassed_ordered_dict(test_global_cache):
+def test_global_cache_is_subclass_of_ordered_dict(test_global_cache):
     # confirm NrsGlobalCache is a subclass of OrderedDict
     # print(type(NCacheGlobal))
     assert issubclass(NCacheGlobal, OrderedDict)
@@ -49,31 +49,36 @@ def test_global_cache_clear(test_global_cache):
     assert test_global_cache.cache_size == 0
 
 
-def test_global_cache_set_size(test_global_cache):
+def test_global_cache_set_cache_limit(test_global_cache):
     # set cache size to key size
     test_global_cache.cache_limit = 200
     assert test_global_cache.cache_limit == 200
 
 
-def test_global_cache_oldest_item(test_global_cache):
+def test_global_cache_get_oldest_item(test_global_cache):
     assert ((test_global_cache.popitem(last=False)) ==
             ((50, 50, 0.1), {'apothem': [100], 'area': [400]}))
 
 
-def test_global_cache_newest_item(test_global_cache):
-
+def test_global_cache_get_newest_item(test_global_cache):
     assert ((test_global_cache.popitem(last=True)) ==
             ((70, 50, 0.1), {'apothem': [300], 'area': [600], 'interior angle': [300]}))
 
 
-def test_existing_key_additional_calculated_properties(test_global_cache):
+def test_global_cache_add_calc_prop_to_existing_key(test_global_cache):
     test_global_cache[(50, 50, .1)]['interior_angle'] = [60]
     assert len(test_global_cache.values()) == 3
 
 
-def test_updating_key_makes_key_newest_item(test_global_cache):
+def test_global_cache_updating_key_makes_key_newest_item(test_global_cache):
     test_global_cache.cache_access((50, 50, .1), 'interior_angle', 60)
     assert next(reversed(test_global_cache)) == (50,50, .1)
 
+
+def test_global_cache_limit_respects_new_item(test_global_cache):
+    print(test_global_cache.cache_size)
+    test_global_cache.cache_limit = 1
+    print(test_global_cache.cache_size)
+    test_global_cache.cache_access((60, 60, .1), 'area', 100)
+    assert test_global_cache.cache_size == 1
 # TODO cache_size respects cache limit, old keys are discarded
-#
