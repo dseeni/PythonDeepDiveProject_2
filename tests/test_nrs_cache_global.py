@@ -18,7 +18,7 @@ def test_global_cache_subclassed_ordered_dict(test_global_cache):
 
 def test_global_cache_size(test_global_cache):
     # working size w/add, change, pop
-    test_global_cache[(20,20,.001)]['apothem']=[100]
+    test_global_cache[(20,20,.001)]['apothem'] = [100]
     assert test_global_cache.cache_size == len(test_global_cache.key_view)
 
 
@@ -72,10 +72,8 @@ def test_existing_key_additional_calculated_properties(test_global_cache):
 
 
 def test_updating_key_makes_key_newest_item(test_global_cache):
-    test_global_cache[(50, 50, .1)]['interior_angle'] = [60]
-    assert ((test_global_cache.popitem(last=True)) ==
-            ((50, 50, 0.1), {'apothem': [100], 'area': [400], 'interior_angle': [60]}))
+    test_global_cache.cache_access((50, 50, .1), 'interior_angle', 60)
+    assert next(reversed(test_global_cache)) == (50,50, .1)
 
-# TODO updating a key makes key recent item
 # TODO cache_size respects cache limit, old keys are discarded
 #
