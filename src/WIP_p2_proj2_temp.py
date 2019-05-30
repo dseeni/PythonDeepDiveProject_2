@@ -86,7 +86,6 @@ class NrsGlobalCache(OrderedDict):
     def __repr__(self):
         return 'NrsGlobalCache()'
 
-
 class Poly:
     # These are temp default values to pass into polycheck(n,r,sig) / __init__:
     n = None
@@ -186,15 +185,15 @@ class Poly:
     # If radius changes, reset all calculated properties:
     @circumradius.setter
     def circumradius(self, r):
-            if self.polycheck():
-                print('Radius Set')
-                self._r = r
-                self._perimeter = None
-                self._area = None
-                self._apothem = None
-                self._edge_length = None
-                self._interior_angle = None
-                return self._r
+        if self.polycheck():
+            print('Radius Set')
+            self._r = r
+            self._perimeter = None
+            self._area = None
+            self._apothem = None
+            self._edge_length = None
+            self._interior_angle = None
+            return self._r
 
     @property
     def sigvalue(self):
@@ -213,6 +212,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._sig))):
                 print('Calculating interior_angle...')
                 self._interior_angle = round((self._n - 2) * (180 / self._n), self._sig)
+        else:
+            print('Retrieving interior_angle...')
         return self._interior_angle
 
     @property
@@ -221,6 +222,8 @@ class Poly:
             if all(_ is not None for _ in (self._r, self._n, self._sig)):
                 print('Calculating edge_length...')
                 self._edge_length = round(2 * self._r * math.sin(self.Pi / self._n), self._sig)
+        else:
+            print('Retrieving edge_length...')
         return self._edge_length
 
     @property
@@ -229,6 +232,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
                 print('Calculating Apothem...')
                 self._apothem = round(self._r * (math.cos(self.Pi / self._n)), self._sig)
+        else:
+            print('Retrieving apothem...')
         return self._apothem
 
     @property
@@ -237,6 +242,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._edge_length, self._apothem, self._sig))):
                 print('Calculating Area...')
                 self._area = round(.5 * self._n * self.edge_length * self.apothem, self._sig)
+        else:
+            print('Retrieving area...')
         return self._area
 
     @property
@@ -245,6 +252,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
                 print('Calculating Perimeter...')
                 self._perimeter = round(self._n * self.edge_length, self._sig)
+        else:
+            print('Retrieving perimeter...')
         return self._perimeter
 
     # Calculate all properties...
@@ -261,34 +270,35 @@ class Poly:
             'Edge Length:', self.edge_length,'\n',
             'Interior_angle:', self.interior_angle,'\n',
             'Sig Value:', self.sig
-            )
+        )
         return 'All Properties Calculated'
 
 
-    # def __setitem__(self, n=None, r=None, sig=None):
-    #     n = n if n is not None else self._n
-    #     r = r if r is not None else self._r
-    #     sig = sig if sig is not None else self._sig
-    #
-    #     if not (isinstance(n, self._ptype) and float(n).is_integer()):
-    #         raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
-    #
-    #     if n < 3:
-    #         raise ValueError('At least 3 sides required')
-    #
-    #     if not (isinstance(r, self._ptype) and r > 0):
-    #         raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-    #
-    #     if not isinstance(sig, int):
-    #         raise TypeError('Significant Digits (sig) must be of integer type only')
-    #     if n:
-    #         self._n = int(n)
-    #     if r:
-    #         self._r = float(r)
-    #     if sig:
-    #         self._sig = sig
-    #
-    #     return self._n
+    def __setitem__(self, n=None, r=None, sig=None):
+        if Poly.polycheck():
+            n = n if n is not None else self._n
+            r = r if r is not None else self._r
+            sig = sig if sig is not None else self._sig
+
+        # if not (isinstance(n, self._ptype) and float(n).is_integer()):
+        #     raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
+        #
+        # if n < 3:
+        #     raise ValueError('At least 3 sides required')
+        #
+        # if not (isinstance(r, self._ptype) and r > 0):
+        #     raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
+        #
+        # if not isinstance(sig, int):
+        #     raise TypeError('Significant Digits (sig) must be of integer type only')
+        if n:
+            self._n = int(n)
+        if r:
+            self._r = float(r)
+        if sig:
+            self._sig = sig
+
+        return self._n
 
     # adding it as self vs self.__class__ explained later (prob meta-class checking)
     # self.__class__ allows for non-hard-coded of names of objects/instances
@@ -621,3 +631,14 @@ class Poly:
 # print(g2)
 # g2.sigvalue = 0
 # print(g2)
+
+poly9 = Poly(6, 2)
+print(poly9.calcproperties)
+# print(poly9.edge_length)
+# print(poly9.apothem)
+# print(poly9.area)
+# print(poly9)
+# print(poly9.edge_length)
+# print(poly9.apothem)
+# print(poly9.area)
+print(poly9)

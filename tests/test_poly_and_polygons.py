@@ -1,4 +1,4 @@
-from src import poly_and_polygons as pp
+from src import WIP_p2_proj2_temp as pp
 import math
 
 # globals().update(test_poly())
@@ -30,7 +30,8 @@ def test_polygon_specific_value():
     poly11 = pp.Poly(4, 1)
     poly12 = pp.Poly(4, 1)
     poly13 = pp.Poly(1000, 1)
-
+    for i in range(9,14):
+        eval("poly{0}.calcproperties".format(i))
     assert math.isclose(poly9.apothem, 1.732, rel_tol=.0001, abs_tol=.0001)
     assert math.isclose(poly9.area, 10.392, rel_tol=.0001, abs_tol=.0001)
     assert math.isclose(poly9.perimeter, 12, rel_tol=.0001, abs_tol=.0001)
