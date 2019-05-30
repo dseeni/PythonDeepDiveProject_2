@@ -33,33 +33,37 @@ class NrsGlobalCache(OrderedDict):
             super().__init__()
             # self._cache = OrderedDict(dict())
             self._cache_limit = 100
+            self._cache_size = len(self.keys())
 
     @property
     def cache_size(self):
         # current size of the cache
         return len(self.keys())
 
+    # @cache_size.setter
+    # def cache_size(self, length):
+    #     return length
+
     @property
     def cache_limit(self):
-        # maximum cache size
-        self.cache_limit = self._cache_limit
-        return self.cache_limit
+        # maximum cache size default = 100
+        return self._cache_limit
+
+    @cache_limit.setter
+    def cache_limit(self, limit):
+        if self.cache_size > limit:
+            while self.cache_size > (limit):
+                # last=True -> FIFO remove the oldest items in the cache
+                self.popitem(last=False)
+                # self.cache_size(len(self.keys()))
+                # set maximum cache size
+        self._cache_limit = limit
+        # return self._cache_limit
 
     @property
     def key_view(self):
         # view cached (n,r,Sig) keys
         return list(self.keys())
-
-    @cache_limit.setter
-    def cache_limit(self, limit):
-        if self.cache_size > self.cache_limit:
-            while self.cache_size > self.cache_limit:
-                # last=True -> FIFO remove the oldest items in the cache
-                print(self.cache_size)
-                self.popitem(last=False)
-                print(self.cache_size)
-                # set maximum cache size
-        self._cache_limit = limit
 
     def __missing__(self, key):
         # if key in self.keys():
@@ -73,7 +77,12 @@ class NrsGlobalCache(OrderedDict):
             newitem = {(str(calc_prop)): value}
             olditem.update(newitem)
             self.update({key: olditem})
-            
+        elif self.cache_size == self.cache_limit:
+            self.popitem(last=False)
+            self[key][calc_prop] = value
+        else:
+            self[key][calc_prop] = value
+
 
     #         # del self[key]
     #     OrderedDict.__setitem__(self, key, value)
