@@ -18,6 +18,16 @@ def test_global_cache_is_singleton(test_global_cache):
     NCacheGlobal()
 
 
+def test_global_cache_get_instance_method(test_global_cache):
+    assert test_global_cache._instance is not None
+    assert NCacheGlobal.get_instance() == test_global_cache
+
+
+def test_global_cache_get_instance_as_none():
+    assert NCacheGlobal._instance is None
+    assert NCacheGlobal.get_instance() == NCacheGlobal._instance
+
+
 def test_global_cache_is_subclass_of_ordered_dict(test_global_cache):
     # confirm NrsGlobalCache is a subclass of OrderedDict
     # print(type(NCacheGlobal))
