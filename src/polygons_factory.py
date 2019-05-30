@@ -1,8 +1,10 @@
 from collections import OrderedDict
 from random import randint, uniform
 from copy import deepcopy
-from src import poly_and_polygons as pp
+from src import WIP_p2_proj2_temp as pp
 from src import parameter_checker as pm
+
+
 class Poly_Factory:
 
     """
@@ -32,7 +34,7 @@ class Poly_Factory:
             self.instancerepr = dispaly instancerepr for each instance of Poly(n,r,sig)
     """
 
-    def __init__(self, icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2):
+    def __init__(self, icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=0):
 
         params = pm.check_parameters(icount,clones,cloneamount,siderange,radrange,sig)
 
@@ -275,3 +277,8 @@ class Poly_Factory:
         if self._finalcount < clones * cloneamount and all(x > 0 for x in (icount, clones, cloneamount)):
             raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.nrfinal
+
+pf = Poly_Factory()
+print(pf.nrfinal)
+print(pf.finallist)
+print(pf.finalcount)

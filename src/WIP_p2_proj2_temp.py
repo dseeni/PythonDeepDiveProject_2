@@ -113,14 +113,14 @@ class Poly:
             self._interior_angle = None
 
         # query global dictionary if (n,r,sig) have been assigned:
-        if self.nrskey:
-            NrsGlobalCache[self.nrskey]['perimeter']
-            NrsGlobalCache[self.nrskey]['area']
-            NrsGlobalCache[self.nrskey]['apothem']
-            NrsGlobalCache[self.nrskey]['edge_length']
-            NrsGlobalCache[self.nrskey]['interior_ange']
+        # if self.nrskey:
+        #     NrsGlobalCache[self.nrskey]['perimeter']
+        #     NrsGlobalCache[self.nrskey]['area']
+        #     NrsGlobalCache[self.nrskey]['apothem']
+        #     NrsGlobalCache[self.nrskey]['edge_length']
+        #     NrsGlobalCache[self.nrskey]['interior_ange']
 
-    @classmethod
+    @staticmethod
     def polycheck(n=n,r=r,sig=sig):
         ptype = (int, float, Decimal, Fraction)
 

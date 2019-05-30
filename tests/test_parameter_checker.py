@@ -75,4 +75,4 @@ def test_check_paramters_icount_clones_cloneamount_integer_exception():
 
 
 def test_check_parameter_self_correction():
-    assert pm.check_parameters(sig=0) == (10, 2, 2, (3,14), (1,5), 1)
+    assert pm.check_parameters(sig=0) == (10, 2, 2, (3,13), (1,5), 1)
