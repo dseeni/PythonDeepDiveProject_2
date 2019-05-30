@@ -3,6 +3,14 @@ from pytest import mark
 
 from src.WIP_p2_proj2_temp import NrsGlobalCache as NCacheGlobal
 
+# NrsGlobalCache docstring test
+def test_global_cache_docstring(test_global_cache):
+    assert test_global_cache.__doc__ is not None
+
+
+def test_global_cache_repr(test_global_cache):
+    assert test_global_cache.__repr__() == 'NrsGlobalCache()'
+
 
 @mark.xfail(reason="NrsGlobalCache is not a Singleton!")
 def test_global_cache_is_singleton(test_global_cache):

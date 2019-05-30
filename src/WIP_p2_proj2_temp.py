@@ -19,7 +19,7 @@ class NrsGlobalCache(OrderedDict):
 
     @staticmethod
     def get_instance():
-        """Static access method."""
+        """Static access method allows multiple handles for the same instance."""
         if NrsGlobalCache._instance is None:
             NrsGlobalCache()
         return NrsGlobalCache._instance
@@ -83,6 +83,8 @@ class NrsGlobalCache(OrderedDict):
         else:
             self[key][calc_prop] = value
 
+    def __repr__(self):
+        return 'NrsGlobalCache()'
 
     #         # del self[key]
     #     OrderedDict.__setitem__(self, key, value)
