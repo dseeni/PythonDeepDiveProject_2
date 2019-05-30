@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from pytest import mark
-
 from src.WIP_p2_proj2_temp import NrsGlobalCache as NCacheGlobal
+
 
 # NrsGlobalCache docstring test
 def test_global_cache_docstring(test_global_cache):
