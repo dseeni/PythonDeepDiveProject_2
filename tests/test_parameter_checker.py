@@ -2,7 +2,7 @@ from src import parameter_checker as pm
 
 # check_parameters tests
 def test_check_parameters_docstring():
-        assert pm.check_parameters.__doc__ is not None
+    assert pm.check_parameters.__doc__ is not None
 
 
 def test_check_parameters_callable():
@@ -19,17 +19,20 @@ def test_check_parameters_default_finalcount():
 
 # frange helper function tests
 def test_frange_docstring():
-        assert pm.frange.__doc__ is not None
+    assert pm.frange.__doc__ is not None
 
 
 # test frange returns len of stop - start x
 def test_frange_default():
-    print(list(pm.frange(0,10,.5)))
+    assert(len(list(pm.frange(0, 10, 1))) == 10)
+    assert(len(list(pm.frange(0, 10, .5))) == 20)
+    assert(len(list(pm.frange(0, 10, .25))) == 40)
 
+# test frange returns len of stop - start x
 def test_frange_step_length():
-    if len(list(pm.frange())) == 0:
-        assert True
+    assert len(list(pm.frange())) == 0
 
+# test frange returns len of stop - start x
 def test_frange_output_length():
     assert len(list(pm.frange(1.5,5.5,1))) == 4
 
