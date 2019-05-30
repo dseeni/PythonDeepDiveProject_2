@@ -1,12 +1,10 @@
 from src import WIP_p2_proj2_temp as pp
 import math
-
-# globals().update(test_poly())
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 
 
 def test_polygon_repr(test_poly):
-    assert(test_poly['poly100']) == pp.Poly(3,13), 'actual:{0}'.format(test_poly['poly100'])
+    assert(test_poly['poly100']) == pp.Poly(3,13,3), 'actual:{0}'.format(test_poly['poly100'])
 
 
 def test_polygon_rich_comparisons(test_poly):
@@ -32,29 +30,29 @@ def test_polygon_specific_value():
     poly13 = pp.Poly(1000, 1)
     for i in range(9,14):
         eval("poly{0}.calcproperties".format(i))
-    assert math.isclose(poly9.apothem, 1.732, rel_tol=.0001, abs_tol=.0001)
-    assert math.isclose(poly9.area, 10.392, rel_tol=.0001, abs_tol=.0001)
-    assert math.isclose(poly9.perimeter, 12, rel_tol=.0001, abs_tol=.0001)
-    assert math.isclose(poly9.interior_angle, 120, rel_tol=.0001, abs_tol=.0001)
-    assert math.isclose(poly9.edge_length, 2, rel_tol=.0001, abs_tol=.0001)
-    assert math.isclose(poly10.area, 2, rel_tol=.0001, abs_tol=.0001)
+    assert math.isclose(poly9.apothem, 1.732, rel_tol=.001, abs_tol=.001)
+    assert math.isclose(poly9.area, 10.392, rel_tol=.001, abs_tol=.001)
+    assert math.isclose(poly9.perimeter, 12, rel_tol=.001, abs_tol=.001)
+    assert math.isclose(poly9.interior_angle, 120, rel_tol=.001, abs_tol=.001)
+    assert math.isclose(poly9.edge_length, 2, rel_tol=.001, abs_tol=.001)
+    assert math.isclose(poly10.area, 2, rel_tol=.001, abs_tol=.001)
     assert poly10.equal_area(poly11)
     assert poly10.equal_perimeter(poly11)
-    assert math.isclose(poly12.edge_length, math.sqrt(2), rel_tol=.0001, abs_tol=.0001)
-    assert math.isclose(poly13.area, math.pi, rel_tol=.0001, abs_tol=.0001)
+    assert math.isclose(poly12.edge_length, math.sqrt(2), rel_tol=.001, abs_tol=.001)
+    assert math.isclose(poly13.area, math.pi, rel_tol=.001, abs_tol=.001)
 
 
 def test_polygon_set_item():
     # set item and recalculate of poly1
     poly1 = pp.Poly(4, 5)
     poly1.__setitem__(10, 13.1)
-    assert str(poly1) == 'Poly(10,13.1)', 'actual:{0}'.format(poly1)
+    assert poly1 == pp.Poly(10,13.1,3), 'actual:{0}'.format(poly1)
 
 
-def test_polygon_list_properties_method():
+def test_polygon_calulate_properties_method():
     # poly1 list properties
     poly1 = pp.Poly(4, 5)
-    assert poly1.listproperties
+    assert poly1.calcproperties
 
 
 # Testing for Polygons Class #

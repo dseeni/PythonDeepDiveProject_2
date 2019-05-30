@@ -1,5 +1,5 @@
 from pytest import fixture
-from src import poly_and_polygons as p
+from src import WIP_p2_proj2_temp as p
 from collections import OrderedDict
 from src.WIP_p2_proj2_temp import NrsGlobalCache as Ngc
 
