@@ -1,4 +1,5 @@
 from src import WIP_p2_proj2_temp as pp
+from pytest import mark
 import math
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 
@@ -79,6 +80,25 @@ def test_polygon_circumradius_setter(test_poly):
 def test_polygon_side_count_setter(test_poly):
     test_poly['poly101'].side_count = 4
     assert test_poly['poly101'].side_count == 4
+
+
+@mark.xfail(reason="Sides (n) = integer type Int/Flot/Decimal/Fraction only")
+def test_polygon_polycheck_n_type():
+    poly100 = pp.Poly('string',4,3)
+
+
+@mark.xfail(reason="At least 3 sides required")
+def test_polygon_polycheck_n_positive():
+    poly100 = pp.Poly(-4,4,3)
+
+
+@mark.xfail(reason="r = Positive Int/Float/Decimal/Fraction only")
+def test_polygon_polycheck_r_positive_type():
+    poly100 = pp.Poly(4,-4,3)
+
+@mark.xfail(reason="Significant Digits (sig) must be of positive integer type only")
+def test_polygon_polycheck_sig_positive_type():
+    poly100 = pp.Poly(4,4,-3)
 
 
 # Testing for Polygons Class #

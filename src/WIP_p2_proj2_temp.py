@@ -87,30 +87,27 @@ class NrsGlobalCache(OrderedDict):
         return 'NrsGlobalCache()'
 
 class Poly:
-    # These are temp default values to pass into polycheck(n,r,sig) / __init__:
-    n = None
-    r = None
-    sig = 3
 
-    def __init__(self, n=n, r=r, sig=sig):
+    def __init__(self, n=None, r=None, sig=3):
 
         # These are temp variables to pass into polycheck()
-        self.n = n
-        self.r = r
-        self.sig = sig
+        self.tn = n
+        self.tr = r
+        self.tsig = sig
         # if (n,r,sig) are valid, this is the starting state:
-        if Poly.polycheck():
+        if Poly.polycheck(self.tn,self.tr,self.tsig):
 
-            self._n = int(n) if self.n else None
-            self._r = float(r) if self.r else None
-            self._sig = self.sig if self.sig else None
+            self._n = int(self.tn) if self.tn else None
+            self._r = float(self.tr) if self.tr else None
+            self._sig = self.tsig if self.tsig else None
             # Calculated Properties Start as None:
             self._perimeter = None
             self._area = None
             self._apothem = None
             self._edge_length = None
             self._interior_angle = None
-
+        # else:
+        #     raise ValueError
         # query global dictionary if (n,r,sig) have been assigned:
         # if self.nrskey:
         #     NrsGlobalCache[self.nrskey]['perimeter']
@@ -120,7 +117,8 @@ class Poly:
         #     NrsGlobalCache[self.nrskey]['interior_ange']
 
     @staticmethod
-    def polycheck(n=n,r=r,sig=sig):
+    def polycheck(n=None,r=None,sig=None):
+        # ptype = acceptable types for (n,r,sig)
         ptype = (int, float, Decimal, Fraction)
 
         if n:
@@ -134,11 +132,11 @@ class Poly:
         if sig:
             if not (isinstance(sig, int) and sig > 0):
                 raise TypeError('Significant Digits (sig) must be of positive integer type only')
-
+        
         return True
 
     def __repr__(self):
-        if all(v for v in (self.n, self.r, self.sig)):
+        if all(v is not None for v in (self._n, self._r, self._sig)):
             if float(self._r).is_integer():
                 return 'Poly({0},{1},{2})'.format(self._n, int(self._r), self._sig)
 
@@ -147,7 +145,6 @@ class Poly:
     # math constants Pi etc
     Pi = math.pi
     abs_tolerance = .00001
-
 
     # global dictionary cache of (n,r,sig) key
     @property
@@ -168,8 +165,7 @@ class Poly:
     # If side count changes, reset all calculated properties:
     @side_count.setter
     def side_count(self, n):
-        self.n = n
-        if self.polycheck():
+        if self.polycheck(n):
             print('Side Count Set')
             self._n = n
             self._perimeter = None
@@ -185,7 +181,7 @@ class Poly:
     # If radius changes, reset all calculated properties:
     @circumradius.setter
     def circumradius(self, r):
-        if self.polycheck():
+        if self.polycheck(r):
             print('Radius Set')
             self._r = r
             self._perimeter = None
@@ -193,18 +189,18 @@ class Poly:
             self._apothem = None
             self._edge_length = None
             self._interior_angle = None
-            return self._r
+            # return self._r
 
     @property
-    def sigvalue(self):
+    def sig(self):
         return self._sig
 
-    @sigvalue.setter
-    def sigvalue(self, sig):
+    @sig.setter
+    def sig(self, sig):
         if self.polycheck(sig):
             print('Sig Value Set')
             self._sig = sig
-            return self._sig
+            # return self._sig
 
     @property
     def interior_angle(self):
@@ -263,7 +259,7 @@ class Poly:
             'Current Properties:', '\n',
             'Side Count:', self.side_count,'\n',
             'Cirumradius:', self.circumradius, '\n',
-            'Vertex Count:', self.n, '\n',
+            'Vertex Count:', self.vertex_count, '\n',
             'Perimeter:', self.perimeter,'\n',
             'Area:', self.area,'\n',
             'Apothem:', self.apothem,'\n',
@@ -275,7 +271,7 @@ class Poly:
 
 
     def __setitem__(self, n=None, r=None, sig=None):
-        if Poly.polycheck():
+        if Poly.polycheck(n,r,sig):
             n = n if n is not None else self._n
             r = r if r is not None else self._r
             sig = sig if sig is not None else self._sig
@@ -630,6 +626,9 @@ class Poly:
 # g2.side_count = 12
 # print(g2)
 # g2.sigvalue = 0
-# print(g2)
 
-#
+# print(float(-.75).is_integer())
+# poly100 = Poly(-4.1,4,1)
+# print(poly100.circumradius)
+# print(poly100)
+# print(poly100.side_count)
