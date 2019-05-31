@@ -60,7 +60,7 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
 
     possibleside = siderange[1] - siderange[0]
     if icount > possibleside:
-        siderange = (siderange[0], siderange[1] + (icount - possibleside + 1))
+        siderange = (siderange[0], siderange[1] + (icount - possibleside))
 
     # ensures input parameter for unique numbers / elements to clone / clone amount are integers
     if not all(isinstance(i, int) for i in [icount, clones, cloneamount]):

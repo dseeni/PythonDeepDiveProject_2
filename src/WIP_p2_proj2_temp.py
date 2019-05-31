@@ -2,8 +2,6 @@ import math
 from fractions import Fraction
 from decimal import Decimal
 from collections import OrderedDict
-from random import randint, uniform
-from copy import deepcopy
 
 
 class NrsGlobalCache(OrderedDict):
@@ -21,7 +19,7 @@ class NrsGlobalCache(OrderedDict):
 
     @staticmethod
     def get_instance():
-        """Static access method."""
+        """Static access method allows multiple handles for the same instance."""
         if NrsGlobalCache._instance is None:
             NrsGlobalCache()
         return NrsGlobalCache._instance
@@ -31,49 +29,62 @@ class NrsGlobalCache(OrderedDict):
         if NrsGlobalCache._instance is not None:
             raise Exception("This class is a singleton!")
         else:
-            super(NrsGlobalCache, self).__init__()
             NrsGlobalCache._instance = self
+            super().__init__()
             # self._cache = OrderedDict(dict())
             self._cache_limit = 100
+            self._cache_size = len(self.keys())
 
     @property
     def cache_size(self):
         # current size of the cache
         return len(self.keys())
 
+    # @cache_size.setter
+    # def cache_size(self, length):
+    #     return length
+
     @property
     def cache_limit(self):
-        # maximum cache size
+        # maximum cache size default = 100
         return self._cache_limit
+
+    @cache_limit.setter
+    def cache_limit(self, limit):
+        if self.cache_size > limit:
+            while self.cache_size > (limit):
+                # last=True -> FIFO remove the oldest items in the cache
+                self.popitem(last=False)
+                # self.cache_size(len(self.keys()))
+                # set maximum cache size
+        self._cache_limit = limit
+        # return self._cache_limit
 
     @property
     def key_view(self):
         # view cached (n,r,Sig) keys
         return list(self.keys())
 
-    @cache_limit.setter
-    def cache_limit(self, limit):
-        # set maximum cache size
-        self._cache_limit = limit
+    def __missing__(self, key):
+        # if key in self.keys():
+        #     self.pop(key)
+        val = self[key] = {}
+        return val
 
-    def __setitem__(self, key, calc_prop, value):
-        # let calc_prop be a dictionary {}
-        # self[key] = {calc_prop: value}
-        super(NrsGlobalCache, self).__setitem__(key, value)
-        self[key]:{calc_prop: value}
-        # if self.cache_size > self.cache_limit:
-        while self.cache_size > self.cache_limit:
-            # last=True -> FIFO remove the oldest items in the cache
+    def cache_access(self, key, calc_prop, value):
+        if key in self.keys():
+            olditem = self.pop(key)
+            newitem = {(str(calc_prop)): value}
+            olditem.update(newitem)
+            self.update({key: olditem})
+        elif self.cache_size == self.cache_limit:
             self.popitem(last=False)
-
-    def __getitem__(self, key, calc_prop=None):
-        # return all calculated properties for a given (n,r,Sig) key
-        if calc_prop is None:
-            return self[key]
-        # return specific calculated property for a given (n,r,Sig) key
+            self[key][calc_prop] = value
         else:
-            return self[key][calc_prop]
+            self[key][calc_prop] = value
 
+    def __repr__(self):
+        return 'NrsGlobalCache()'
 
 class Poly:
     # These are temp default values to pass into polycheck(n,r,sig) / __init__:
@@ -101,14 +112,14 @@ class Poly:
             self._interior_angle = None
 
         # query global dictionary if (n,r,sig) have been assigned:
-        if self.nrskey:
-            NrsGlobalCache[self.nrskey]['perimeter']
-            NrsGlobalCache[self.nrskey]['area']
-            NrsGlobalCache[self.nrskey]['apothem']
-            NrsGlobalCache[self.nrskey]['edge_length']
-            NrsGlobalCache[self.nrskey]['interior_ange']
+        # if self.nrskey:
+        #     NrsGlobalCache[self.nrskey]['perimeter']
+        #     NrsGlobalCache[self.nrskey]['area']
+        #     NrsGlobalCache[self.nrskey]['apothem']
+        #     NrsGlobalCache[self.nrskey]['edge_length']
+        #     NrsGlobalCache[self.nrskey]['interior_ange']
 
-    @classmethod
+    @staticmethod
     def polycheck(n=n,r=r,sig=sig):
         ptype = (int, float, Decimal, Fraction)
 
@@ -174,15 +185,15 @@ class Poly:
     # If radius changes, reset all calculated properties:
     @circumradius.setter
     def circumradius(self, r):
-            if self.polycheck():
-                print('Radius Set')
-                self._r = r
-                self._perimeter = None
-                self._area = None
-                self._apothem = None
-                self._edge_length = None
-                self._interior_angle = None
-                return self._r
+        if self.polycheck():
+            print('Radius Set')
+            self._r = r
+            self._perimeter = None
+            self._area = None
+            self._apothem = None
+            self._edge_length = None
+            self._interior_angle = None
+            return self._r
 
     @property
     def sigvalue(self):
@@ -201,6 +212,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._sig))):
                 print('Calculating interior_angle...')
                 self._interior_angle = round((self._n - 2) * (180 / self._n), self._sig)
+        else:
+            print('Retrieving interior_angle...')
         return self._interior_angle
 
     @property
@@ -209,6 +222,8 @@ class Poly:
             if all(_ is not None for _ in (self._r, self._n, self._sig)):
                 print('Calculating edge_length...')
                 self._edge_length = round(2 * self._r * math.sin(self.Pi / self._n), self._sig)
+        else:
+            print('Retrieving edge_length...')
         return self._edge_length
 
     @property
@@ -217,6 +232,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
                 print('Calculating Apothem...')
                 self._apothem = round(self._r * (math.cos(self.Pi / self._n)), self._sig)
+        else:
+            print('Retrieving apothem...')
         return self._apothem
 
     @property
@@ -225,6 +242,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._edge_length, self._apothem, self._sig))):
                 print('Calculating Area...')
                 self._area = round(.5 * self._n * self.edge_length * self.apothem, self._sig)
+        else:
+            print('Retrieving area...')
         return self._area
 
     @property
@@ -233,6 +252,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
                 print('Calculating Perimeter...')
                 self._perimeter = round(self._n * self.edge_length, self._sig)
+        else:
+            print('Retrieving perimeter...')
         return self._perimeter
 
     # Calculate all properties...
@@ -249,34 +270,35 @@ class Poly:
             'Edge Length:', self.edge_length,'\n',
             'Interior_angle:', self.interior_angle,'\n',
             'Sig Value:', self.sig
-            )
+        )
         return 'All Properties Calculated'
 
 
-    # def __setitem__(self, n=None, r=None, sig=None):
-    #     n = n if n is not None else self._n
-    #     r = r if r is not None else self._r
-    #     sig = sig if sig is not None else self._sig
-    #
-    #     if not (isinstance(n, self._ptype) and float(n).is_integer()):
-    #         raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
-    #
-    #     if n < 3:
-    #         raise ValueError('At least 3 sides required')
-    #
-    #     if not (isinstance(r, self._ptype) and r > 0):
-    #         raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-    #
-    #     if not isinstance(sig, int):
-    #         raise TypeError('Significant Digits (sig) must be of integer type only')
-    #     if n:
-    #         self._n = int(n)
-    #     if r:
-    #         self._r = float(r)
-    #     if sig:
-    #         self._sig = sig
-    #
-    #     return self._n
+    def __setitem__(self, n=None, r=None, sig=None):
+        if Poly.polycheck():
+            n = n if n is not None else self._n
+            r = r if r is not None else self._r
+            sig = sig if sig is not None else self._sig
+
+        # if not (isinstance(n, self._ptype) and float(n).is_integer()):
+        #     raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
+        #
+        # if n < 3:
+        #     raise ValueError('At least 3 sides required')
+        #
+        # if not (isinstance(r, self._ptype) and r > 0):
+        #     raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
+        #
+        # if not isinstance(sig, int):
+        #     raise TypeError('Significant Digits (sig) must be of integer type only')
+        if n:
+            self._n = int(n)
+        if r:
+            self._r = float(r)
+        if sig:
+            self._sig = sig
+
+        return self._n
 
     # adding it as self vs self.__class__ explained later (prob meta-class checking)
     # self.__class__ allows for non-hard-coded of names of objects/instances
@@ -317,6 +339,7 @@ class Poly:
             return False
 
 
+# TODO Finish Polygons Iterator __next__(method)
 # class Polygons:
 #     """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
 #     def __init__(self, m, r):
@@ -608,3 +631,5 @@ class Poly:
 # print(g2)
 # g2.sigvalue = 0
 # print(g2)
+
+#
