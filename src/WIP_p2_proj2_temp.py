@@ -632,14 +632,4 @@ class Poly:
 # g2.sigvalue = 0
 # print(g2)
 
-poly9 = Poly(6, 2)
-poly13 = Poly(100000, 1)
-print(poly13.calcproperties)
-# print(poly9.edge_length)
-# print(poly9.apothem)
-# print(poly9.area)
-# print(poly9)
-# print(poly9.edge_length)
-# print(poly9.apothem)
-# print(poly9.area)
-print('13 area',poly13.area)
+#

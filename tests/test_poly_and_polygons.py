@@ -6,6 +6,14 @@ import math
 def test_polygon_repr(test_poly):
     assert(test_poly['poly100']) == pp.Poly(3,13,3), 'actual:{0}'.format(test_poly['poly100'])
 
+def test_polygon_float_radius_repr():
+    poly100 = pp.Poly(3,3,3)
+    assert poly100.__repr__() == "Poly(3,3,3)"
+    poly100 = pp.Poly(3,3.1,3)
+    assert poly100.__repr__() == "Poly(3,3.1,3)"
+    poly100 = pp.Poly(3,3.0,3)
+    assert poly100.__repr__() == "Poly(3,3,3)"
+
 
 def test_polygon_rich_comparisons(test_poly):
     # unit test: rich comparisons
@@ -53,6 +61,24 @@ def test_polygon_calulate_properties_method():
     # poly1 list properties
     poly1 = pp.Poly(4, 5)
     assert poly1.calcproperties
+
+
+def test_polygon_sig_value_attribute(test_poly):
+    assert test_poly['poly101'].sig == 3
+
+def test_polygon_sig_value_setter(test_poly):
+    test_poly['poly101'].sig = 4
+    assert test_poly['poly101'].sig == 4
+
+
+def test_polygon_circumradius_setter(test_poly):
+    test_poly['poly101'].circumradius = 4
+    assert test_poly['poly101'].circumradius == 4
+
+
+def test_polygon_side_count_setter(test_poly):
+    test_poly['poly101'].side_count = 4
+    assert test_poly['poly101'].side_count == 4
 
 
 # Testing for Polygons Class #
