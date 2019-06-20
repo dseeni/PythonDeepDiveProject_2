@@ -1,18 +1,19 @@
-from src import WIP_p2_proj2_temp as pp
+from src import WIP_p2_proj2_temp as Pp
 from pytest import mark
 import math
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 
 
 def test_polygon_repr(test_poly):
-    assert(test_poly['poly100']) == pp.Poly(3,13,3), 'actual:{0}'.format(test_poly['poly100'])
+    assert (test_poly['poly100']) == Pp.Poly(3, 13, 3), 'actual:{0}'.format(test_poly['poly100'])
+
 
 def test_polygon_float_radius_repr():
-    poly100 = pp.Poly(3,3,3)
+    poly100 = Pp.Poly(3, 3, 3)
     assert poly100.__repr__() == "Poly(3,3,3)"
-    poly100 = pp.Poly(3,3.1,3)
+    poly100 = Pp.Poly(3, 3.1, 3)
     assert poly100.__repr__() == "Poly(3,3.1,3)"
-    poly100 = pp.Poly(3,3.0,3)
+    poly100 = Pp.Poly(3, 3.0, 3)
     assert poly100.__repr__() == "Poly(3,3,3)"
 
 
@@ -21,23 +22,23 @@ def test_polygon_rich_comparisons(test_poly):
     assert test_poly['poly103'] < test_poly['poly104'], 'actual:{0}'\
             .format(test_poly['poly103'] < test_poly['poly104'])
     assert test_poly['poly106'] > test_poly['poly103'], 'actual:{0}'\
-           .format(test_poly['poly106'] > test_poly['poly103'])
+        .format(test_poly['poly106'] > test_poly['poly103'])
     assert test_poly['poly103'] >= test_poly['poly102'], 'actual:{0}'\
-           .format(test_poly['poly103'] >= test_poly['poly102'])
+        .format(test_poly['poly103'] >= test_poly['poly102'])
     assert test_poly['poly104'] >= test_poly['poly101'], 'actual:{0}'\
-           .format(test_poly['poly104'] >= test_poly['poly101'])
+        .format(test_poly['poly104'] >= test_poly['poly101'])
     assert test_poly['poly107'] != test_poly['poly108'], 'actual:{0}'\
-            .format(test_poly['poly107'] != test_poly['poly108'])
+        .format(test_poly['poly107'] != test_poly['poly108'])
 
 
 def test_polygon_specific_value():
     # specific value unit test
-    poly9 = pp.Poly(6, 2)
-    poly10 = pp.Poly(4, 1)
-    poly11 = pp.Poly(4, 1)
-    poly12 = pp.Poly(4, 1)
-    poly13 = pp.Poly(1000, 1, 5)
-    for i in range(9,14):
+    poly9 = Pp.Poly(6, 2)
+    poly10 = Pp.Poly(4, 1)
+    poly11 = Pp.Poly(4, 1)
+    poly12 = Pp.Poly(4, 1)
+    poly13 = Pp.Poly(1000, 1, 5)
+    for i in range(9, 14):
         eval("poly{0}.calcproperties".format(i))
     assert math.isclose(poly9.apothem, 1.732, rel_tol=.001, abs_tol=.001)
     assert math.isclose(poly9.area, 10.392, rel_tol=.001, abs_tol=.001)
@@ -53,19 +54,20 @@ def test_polygon_specific_value():
 
 def test_polygon_set_item():
     # set item and recalculate of poly1
-    poly1 = pp.Poly(4, 5)
+    poly1 = Pp.Poly(4, 5)
     poly1.__setitem__(10, 13.1)
-    assert poly1 == pp.Poly(10,13.1,3), 'actual:{0}'.format(poly1)
+    assert poly1 == Pp.Poly(10, 13.1, 3), 'actual:{0}'.format(poly1)
 
 
 def test_polygon_calulate_properties_method():
     # poly1 list properties
-    poly1 = pp.Poly(4, 5)
+    poly1 = Pp.Poly(4, 5)
     assert poly1.calcproperties
 
 
 def test_polygon_sig_value_attribute(test_poly):
     assert test_poly['poly101'].sig == 3
+
 
 def test_polygon_sig_value_setter(test_poly):
     test_poly['poly101'].sig = 4
@@ -84,22 +86,33 @@ def test_polygon_side_count_setter(test_poly):
 
 @mark.xfail(reason="Sides (n) = integer type Int/Flot/Decimal/Fraction only")
 def test_polygon_polycheck_n_type():
-    poly100 = pp.Poly('string',4,3)
+    Pp.Poly('string', 4, 3)
 
 
 @mark.xfail(reason="At least 3 sides required")
 def test_polygon_polycheck_n_positive():
-    poly100 = pp.Poly(-4,4,3)
+    Pp.Poly(-4, 4, 3)
 
 
 @mark.xfail(reason="r = Positive Int/Float/Decimal/Fraction only")
 def test_polygon_polycheck_r_positive_type():
-    poly100 = pp.Poly(4,-4,3)
+    Pp.Poly(4, -4, 3)
+
 
 @mark.xfail(reason="Significant Digits (sig) must be of positive integer type only")
 def test_polygon_polycheck_sig_positive_type():
-    poly100 = pp.Poly(4,4,-3)
+    Pp.Poly(4, 4, -3)
 
+
+def test_polygon_nrskey_valid():
+    poly100 = Pp.Poly(4, 4, 2)
+    assert poly100.nrskey == (4, 4, 2)
+
+
+@mark.xfail(reason="n,r,s values = None")
+def test_polygon_nrskey_invalid():
+    poly100 = Pp.Poly()
+    return poly100.nrskey
 
 # Testing for Polygons Class #
 # def test_polygons_repr(test_polygons):
@@ -131,4 +144,3 @@ def test_polygon_polycheck_sig_positive_type():
     #     print('polys2', polys2)
     #     print('pp.Polygons Class setitem method working')
     # print('Unit Testing Complete')
-

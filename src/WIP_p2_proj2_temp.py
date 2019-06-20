@@ -86,6 +86,7 @@ class NrsGlobalCache(OrderedDict):
     def __repr__(self):
         return 'NrsGlobalCache()'
 
+
 class Poly:
 
     def __init__(self, n=None, r=None, sig=3):
@@ -146,11 +147,11 @@ class Poly:
     Pi = math.pi
     abs_tolerance = .00001
 
-    # global dictionary cache of (n,r,sig) key
+    # local dictionary cache of (n,r,sig) key
     @property
     def nrskey(self):
         if any((_ is None for _ in (self._n, self._r, self._sig))):
-            return False
+            raise KeyError ("n,r,s values = None")
         return self._n, self._r, self._sig
 
     # vertex_count = side_count....
@@ -268,7 +269,6 @@ class Poly:
             'Sig Value:', self.sig
         )
         return 'All Properties Calculated'
-
 
     def __setitem__(self, n=None, r=None, sig=None):
         if Poly.polycheck(n,r,sig):
