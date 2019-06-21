@@ -63,10 +63,16 @@ def test_polygon_specific_value():
     assert math.isclose(poly9.interior_angle, 120, rel_tol=.001, abs_tol=.001)
     assert math.isclose(poly9.edge_length, 2, rel_tol=.001, abs_tol=.001)
     assert math.isclose(poly10.area, 2, rel_tol=.001, abs_tol=.001)
-    assert poly10.equal_area(poly11)
-    assert poly10.equal_perimeter(poly11)
     assert math.isclose(poly12.edge_length, math.sqrt(2), rel_tol=.001, abs_tol=.001)
     assert math.isclose(poly13.area, math.pi, rel_tol=.001, abs_tol=.001)
+    # test equality
+    assert poly10.equal_area(poly11)
+    assert poly10.equal_perimeter(poly11)
+    # test equality exceptions
+    with raises(Exception):
+        assert poly13.equal_area(poly9)
+    with raises(Exception):
+        assert poly13.equal_perimeter(poly9)
 
 
 def test_polygon_set_item():
