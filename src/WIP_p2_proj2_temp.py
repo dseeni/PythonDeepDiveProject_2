@@ -96,7 +96,7 @@ class Poly:
         self.tr = r
         self.tsig = sig
         # if (n,r,sig) are valid, this is the starting state:
-        if Poly.polycheck(self.tn,self.tr,self.tsig):
+        if Poly.polycheck(self.tn, self.tr, self.tsig):
 
             self._n = int(self.tn) if self.tn else None
             self._r = float(self.tr) if self.tr else None
@@ -338,56 +338,92 @@ class Poly:
 
 
 # TODO Finish Polygons Iterator __next__(method)
-# class Polygons:
-#     """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
-#     def __init__(self, m, r):
-#
-#         ptype = (int, float, Decimal, Fraction)
-#
-#         if not (isinstance(m, ptype) and float(m).is_integer()):
-#             raise TypeError('Sides (m) = positive integer type Int/Float/Decimal/Fraction only')
-#         if m < 3:
-#             raise ValueError('At least 3 sides required')
-#         if not (isinstance(r, ptype) and r > 0):
-#             raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-#
-#         self._m = int(m)
-#         self._r = float(r)
-#         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
-#         self._ptype = ptype
-#
-#     def __len__(self):
-#         return self._m - 2
-#
-#     def __repr__(self):
-#         if self._r.is_integer():
-#             return 'Polygons({0},{1})'.format(self._m, int(self._r))
-#         return 'Polygons({0},{1})'.format(self._m, self._r)
-#
-#     def __getitem__(self, s):
-#         return self._polygons[s]
-#
-#     def __setitem__(self, m, r):
-#
-#         if not (isinstance(m, self._ptype) and float(m).is_integer()):
-#             raise TypeError('Sides (m) = positive integer type Int/Float/Decimal/Fraction only')
-#         if m < 3:
-#             raise ValueError('At least 3 sides required')
-#         if not (isinstance(r, self._ptype) and r > 0):
-#             raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-#
-#         self._m = int(m)
-#         self._r = float(r)
-#         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
-#
-#     @property
-#     def max_efficiency(self):
-#         sorted_polygons = sorted(self._polygons,
-#                                  key=lambda i: i.area/i.perimeter,
-#                                  reverse=True)
-#         print('Max Efficeny polygon:', sorted_polygons[0])
-#         return sorted_polygons[0].area / sorted_polygons[0].perimeter
+class Polygons:
+    """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
+    @staticmethod
+    def polyscheck(m=None, r=None):
+        # ptype = acceptable types for (n,r,sig)
+        ptype = (int, float, Decimal, Fraction)
 
+        if m:
+            if not (isinstance(m, ptype) and float(m).is_integer()):
+                raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
+            if m < 3:
+                raise ValueError('At least 3 sides required')
+        if r:
+            if not (isinstance(r, ptype) and r > 0):
+                raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
+        return True
+
+    def __init__(self, m, r):
+        # These are temp variables to pass into polyscheck()
+        self.tm = m
+        self.tr = r
+        if Polygons.polyscheck(self.tm, self.tr):
+            self._ptype = (int, float, Decimal, Fraction)
+            self._m = int(m)
+            self._r = float(r)
+            self._polygons = [Poly(m, self._r) for m in range(3, self._m+1)]
+
+    def __len__(self):
+        return self._m - 2
+
+    def __iter__(self):
+        print('Calling Polygons instance __iter__')
+        return self.PolyIterator(self)
+    
+    class PolyIterator:
+        def __init__(self, poly_obj):
+            print('Calling PolyIterator __init__')
+            self._poly_obj = poly_obj
+            self._index = 0
+
+        def __iter__(self):
+            print('Calling PolyIterator instance __iter__')
+            return self
+
+        def __next__(self):
+            print('Calling __next__')
+            if self._index >= len(self._poly_obj):
+                raise StopIteration
+            else:
+                item = self._poly_obj._polygons[self._index]
+                self._index += 1
+                return item
+        # def __getitem__(self, s):
+        #     return self._polygons[s]
+        #
+        # def __setitem__(self, m, r):
+        #     if Polygons.polyscheck(m,r):
+        #         self._m = int(m)
+        #         self._r = float(r)
+        #         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
+
+        @property
+        def max_efficiency(self):
+            sorted_polygons = sorted(self._polygons,
+                                     key=lambda i: i.area/i.perimeter,
+                                     reverse=True)
+            print('Max Efficeny polygon:', sorted_polygons[0])
+            return sorted_polygons[0].area / sorted_polygons[0].perimeter
+
+    def __repr__(self):
+        if self._r.is_integer():
+            return 'Polygons({0},{1})'.format(self._m, int(self._r))
+        return 'Polygons({0},{1})'.format(self._m, self._r)
+
+polys = iter(Polygons(10,3))
+for i in range(len(polys._poly_obj)):
+    print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
 # TODO nrsdictglobal maybe in a seperate file as a seperate global cache
 # # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 # # UNIT TESTING #######################################################
