@@ -1,6 +1,5 @@
 from src import WIP_p2_proj2_temp as Pp
 from pytest import raises
-from pytest import mark
 import math
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 
@@ -107,24 +106,24 @@ def test_polygon_side_count_setter(test_poly):
     assert test_poly['poly101'].side_count == 4
 
 
-@mark.xfail(reason="Sides (n) = integer type Int/Flot/Decimal/Fraction only")
 def test_polygon_polycheck_n_type():
-    Pp.Poly('string', 4, 3)
+    with raises(Exception):
+        Pp.Poly('string', 4, 3)
 
 
-@mark.xfail(reason="At least 3 sides required")
 def test_polygon_polycheck_n_positive():
-    Pp.Poly(-4, 4, 3)
+    with raises(Exception):
+        Pp.Poly(-4, 4, 3)
 
 
-@mark.xfail(reason="r = Positive Int/Float/Decimal/Fraction only")
 def test_polygon_polycheck_r_positive_type():
-    Pp.Poly(4, -4, 3)
+    with raises(Exception):
+        Pp.Poly(4, -4, 3)
 
 
-@mark.xfail(reason="Significant Digits (sig) must be of positive integer type only")
 def test_polygon_polycheck_sig_positive_type():
-    Pp.Poly(4, 4, -3)
+    with raises(Exception):
+        Pp.Poly(4, 4, -3)
 
 
 def test_polygon_nrskey_valid():
@@ -132,10 +131,10 @@ def test_polygon_nrskey_valid():
     assert poly100.nrskey == (4, 4, 2)
 
 
-@mark.xfail(reason="n,r,s values = None")
 def test_polygon_nrskey_invalid():
-    poly100 = Pp.Poly()
-    return poly100.nrskey
+    with raises(Exception):
+        poly100 = Pp.Poly()
+        return poly100.nrskey
 
 # Testing for Polygons Class #
 # def test_polygons_repr(test_polygons):
