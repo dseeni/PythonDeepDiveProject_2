@@ -319,20 +319,22 @@ class Poly:
             return NotImplemented
 
     def equal_area(self, other):
-        if math.isclose(self.area, other.area,
-                        rel_tol=self.abs_tolerance,
-                        abs_tol=self.abs_tolerance):
-            return True
-        else:
-            return False
+        if isinstance(other, self.__class__):
+            if math.isclose(self.area, other.area,
+                            rel_tol=self.abs_tolerance,
+                            abs_tol=self.abs_tolerance):
+                return True
+            else:
+                return False
 
     def equal_perimeter(self, other):
-        if math.isclose(self.perimeter, other.perimeter,
-                        rel_tol=self.abs_tolerance,
-                        abs_tol=self.abs_tolerance):
-            return True
-        else:
-            return False
+        if isinstance(other, self.__class__):
+            if math.isclose(self.perimeter, other.perimeter,
+                            rel_tol=self.abs_tolerance,
+                            abs_tol=self.abs_tolerance):
+                return True
+            else:
+                return False
 
 
 # TODO Finish Polygons Iterator __next__(method)

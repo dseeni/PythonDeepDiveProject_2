@@ -15,6 +15,8 @@ def test_poly():
 
     polylist = [p.Poly(n, r) for n, r in nr]
     polydict = OrderedDict(zip(name, polylist))
+    polydict['poly111'] = 'dummy_obj'
+    polydict['poly112'] = p.Poly(3,13)
 
     # for k, v in polydict.items():
     #     print(k, v,

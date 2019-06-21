@@ -1,4 +1,5 @@
 from src import WIP_p2_proj2_temp as Pp
+from pytest import raises
 from pytest import mark
 import math
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
@@ -19,16 +20,32 @@ def test_polygon_float_radius_repr():
 
 def test_polygon_rich_comparisons(test_poly):
     # unit test: rich comparisons
-    assert test_poly['poly103'] < test_poly['poly104'], 'actual:{0}'\
-            .format(test_poly['poly103'] < test_poly['poly104'])
-    assert test_poly['poly106'] > test_poly['poly103'], 'actual:{0}'\
-        .format(test_poly['poly106'] > test_poly['poly103'])
-    assert test_poly['poly103'] >= test_poly['poly102'], 'actual:{0}'\
-        .format(test_poly['poly103'] >= test_poly['poly102'])
-    assert test_poly['poly104'] >= test_poly['poly101'], 'actual:{0}'\
-        .format(test_poly['poly104'] >= test_poly['poly101'])
-    assert test_poly['poly107'] != test_poly['poly108'], 'actual:{0}'\
-        .format(test_poly['poly107'] != test_poly['poly108'])
+    assert test_poly['poly103'] < test_poly['poly104']
+
+    assert test_poly['poly106'] > test_poly['poly103']
+
+    assert test_poly['poly103'] >= test_poly['poly102']
+
+    assert test_poly['poly101'] <= test_poly['poly104']
+
+    assert test_poly['poly107'] != test_poly['poly108']
+
+    assert test_poly['poly100'] == test_poly['poly112']
+
+
+def test_polygon_rich_comparisons_not_implemented(test_poly):
+    # unit test: rich comparison not implemented error
+    with raises(TypeError):
+        assert test_poly['poly106'] > test_poly['poly111']
+
+    with raises(TypeError):
+        assert test_poly['poly103'] >= test_poly['poly111']
+
+    with raises(TypeError):
+        assert test_poly['poly104'] >= test_poly['poly111']
+
+    with raises(Exception):
+        assert test_poly['poly107'] == test_poly['poly111']
 
 
 def test_polygon_specific_value():
