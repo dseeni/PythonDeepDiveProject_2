@@ -91,16 +91,11 @@ class Poly:
 
     def __init__(self, n=None, r=None, sig=3):
 
-        # These are temp variables to pass into polycheck()
-        self.tn = n
-        self.tr = r
-        self.tsig = sig
-        # if (n,r,sig) are valid, this is the starting state:
-        if Poly.polycheck(self.tn, self.tr, self.tsig):
+        if Poly.polycheck(n, r, sig):
 
-            self._n = int(self.tn) if self.tn else None
-            self._r = float(self.tr) if self.tr else None
-            self._sig = self.tsig if self.tsig else None
+            self._n = int(n) if n else None
+            self._r = float(r) if r else None
+            self._sig = sig if sig else None
             # Calculated Properties Start as None:
             self._perimeter = None
             self._area = None
@@ -256,19 +251,16 @@ class Poly:
     # Calculate all properties...
     @property
     def calcproperties(self):
-        print(
-            'Current Properties:', '\n',
-            'Side Count:', self.side_count,'\n',
-            'Cirumradius:', self.circumradius, '\n',
-            'Vertex Count:', self.vertex_count, '\n',
-            'Perimeter:', self.perimeter,'\n',
-            'Area:', self.area,'\n',
-            'Apothem:', self.apothem,'\n',
-            'Edge Length:', self.edge_length,'\n',
-            'Interior_angle:', self.interior_angle,'\n',
-            'Sig Value:', self.sig
-        )
-        return 'All Properties Calculated'
+        self.side_count
+        self.circumradius
+        self.vertex_count
+        self.perimeter
+        self.area
+        self.apothem
+        self.edge_length
+        self.interior_angle
+        self.sig
+        return ('All Properties Calculated')
 
     def __setitem__(self, n=None, r=None, sig=None):
         if Poly.polycheck(n,r,sig):
@@ -357,13 +349,13 @@ class Polygons:
 
     def __init__(self, m, r):
         # These are temp variables to pass into polyscheck()
-        self.tm = m
-        self.tr = r
-        if Polygons.polyscheck(self.tm, self.tr):
-            self._ptype = (int, float, Decimal, Fraction)
+        # self.tm = m
+        # self.tr = r
+        if Polygons.polyscheck(m, r):
             self._m = int(m)
             self._r = float(r)
-            self._polygons = [Poly(m, self._r) for m in range(3, self._m+1)]
+            self._polygons = [(m, self._r) for m in range(3, self._m+1)]
+            print(self._polygons)
 
     def __len__(self):
         return self._m - 2
@@ -371,9 +363,26 @@ class Polygons:
     def __iter__(self):
         print('Calling Polygons instance __iter__')
         return self.PolyIterator(self)
-    
+
+    @property
+    def max_efficiency(self):
+        polylist = [Poly(self._polygons[i][0], self._polygons[i][1]) for i in range(len(self._polygons))]
+        for i in polylist:
+            i.calcproperties
+        sorted_polygons = sorted(polylist,
+                                 key=lambda i: i.area/i.perimeter,
+                                 reverse=True)
+        print('Max Efficeny polygon:', sorted_polygons[0])
+        return sorted_polygons[0].area / sorted_polygons[0].perimeter
+
+    def __repr__(self):
+        if self._r.is_integer():
+            return 'Polygons({0},{1})'.format(self._m, int(self._r))
+        return 'Polygons({0},{1})'.format(self._m, self._r)
+
     class PolyIterator:
         def __init__(self, poly_obj):
+            # poly_obj is the instance of Polygons iterable passed into the iterator
             print('Calling PolyIterator __init__')
             self._poly_obj = poly_obj
             self._index = 0
@@ -384,10 +393,10 @@ class Polygons:
 
         def __next__(self):
             print('Calling __next__')
-            if self._index >= len(self._poly_obj):
+            if self._index >= self._poly_obj.__len__():
                 raise StopIteration
             else:
-                item = self._poly_obj._polygons[self._index]
+                item = Poly(self._poly_obj._polygons[self._index][0], self._poly_obj._polygons[self._index][1])
                 self._index += 1
                 return item
         # def __getitem__(self, s):
@@ -399,22 +408,34 @@ class Polygons:
         #         self._r = float(r)
         #         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
 
-        @property
-        def max_efficiency(self):
-            sorted_polygons = sorted(self._polygons,
-                                     key=lambda i: i.area/i.perimeter,
-                                     reverse=True)
-            print('Max Efficeny polygon:', sorted_polygons[0])
-            return sorted_polygons[0].area / sorted_polygons[0].perimeter
+# polys = iter(Polygons(10,3))
+# while True:
+#     try:
+#         print(next(polys))
+#     except StopIteration:
+#        break
 
-    def __repr__(self):
-        if self._r.is_integer():
-            return 'Polygons({0},{1})'.format(self._m, int(self._r))
-        return 'Polygons({0},{1})'.format(self._m, self._r)
 
-polys = iter(Polygons(10,3))
-for i in range(len(polys._poly_obj)):
-    print(next(polys))
+# polys = (Polygons(10,3))
+# for i in polys:
+#     print(i)
+
+polys = Polygons(10, 3)
+print(list(iter(polys)))
+print(polys.max_efficiency)
+
+# UNIT test via dir(method)
+# test if next exists in iterator subclass
+print('__next__' in dir(iter(polys)))
+# test if iter exists in iterable class
+print('__iter__' in dir(polys))
+
+# print(len(polys))
+# polyiter = iter(polys)
+
+
+
+# print(polys.max_efficiency)
 # print(next(polys))
 # print(next(polys))
 # print(next(polys))
