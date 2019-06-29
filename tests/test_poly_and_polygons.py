@@ -136,17 +136,44 @@ def test_polygon_nrskey_invalid():
         poly100 = Pp.Poly()
         return poly100.nrskey
 
-# Testing for Polygons Class #
-# def test_polygons_repr(test_polygons):
-#     # Polygons Class __repr__ test
-#     assert str(test_polygons[0]) == 'Polygons(10,6.35)', '{0}'.format(polys)
-#
-#
+
+# Testing for Polygons Class
+def test_polygons_repr(test_polygons):
+    # Polygons Class __repr__ test
+    assert str(test_polygons[0]) == 'Polygons(10,6.35)', '{0}'.format(polys)
+
+
+def test_polygons_type_error_sides():
+    with raises(TypeError):
+        polys = Pp.Polygons("string", 1)
+        return polys
+
+
+def test_polygons_value_error_sides():
+    with raises(ValueError):
+        polys = Pp.Polygons(0,1)
+        return polys
+
+
+def test_polygons_type_error_radius():
+    with raises(TypeError):
+        polys = Pp.Polygons(10, "string")
+        return polys
+
+
+def test_polygons_len(test_polygons):
+    assert len(test_polygons[0]) == 8
+
+
+def test_polygons_returns_iterator(test_polygons):
+    assert '__iter__' in dir(test_polygons[0]) and iter(test_polygons[0])
+
+
 # def test_polygons_max_efficencey_method(test_polygons):
 #     # test the max efficencey formula
 #     assert max([p.area/p.perimeter for p in test_polygons[1]]) == test_polygons[1].max_efficiency
-#
-#
+
+
 # def test_polygons_sequence(test_polygons):
 #     # Access the sequence type
 #     assert test_polygons[0][1]

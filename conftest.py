@@ -29,12 +29,12 @@ def test_poly():
     return polydict
 
 
-# @fixture(scope='function')
-# def test_polygons():
-#     polys = p.Polygons(10, 6.35)
-#     polys2 = p.Polygons(500, 1)
-#     two_iterables = (polys,polys2)
-#     return two_iterables
+@fixture(scope='function')
+def test_polygons():
+    polys = p.Polygons(10, 6.35)
+    polys2 = p.Polygons(500, 1)
+    two_iterables = (polys,polys2)
+    return two_iterables
 
 
 # test_global_cache fixtures
