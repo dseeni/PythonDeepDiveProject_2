@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from src.WIP_p2_proj2_temp import NrsGlobalCache as NCacheGlobal
+from src.poly_and_polygons import NrsGlobalCache as NCacheGlobal
 from pytest import raises
 
 

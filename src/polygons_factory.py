@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from random import randint, uniform
 from copy import deepcopy
-from src import WIP_p2_proj2_temp as pp
+from src import poly_and_polygons as pp
 from src import parameter_checker as pm
 
 

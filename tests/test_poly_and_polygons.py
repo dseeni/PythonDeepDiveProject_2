@@ -1,4 +1,4 @@
-from src import WIP_p2_proj2_temp as Pp
+from src import poly_and_polygons as Pp
 from pytest import raises
 import math
 # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
