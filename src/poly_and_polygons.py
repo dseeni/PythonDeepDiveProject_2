@@ -103,7 +103,7 @@ class Poly:
             self._interior_angle = None
 
     @staticmethod
-    def polycheck(n=None,r=None,sig=None):
+    def polycheck(n=None, r=None, sig=None):
         # ptype = acceptable types for (n,r,sig)
         ptype = (int, float, Decimal, Fraction)
 
@@ -264,7 +264,7 @@ class Poly:
                 self.sig]
 
     def __setitem__(self, n=None, r=None, sig=None):
-        if Poly.polycheck(n,r,sig):
+        if Poly.polycheck(n, r, sig):
             n = n if n is not None else self._n
             r = r if r is not None else self._r
             sig = sig if sig is not None else self._sig
@@ -319,7 +319,6 @@ class Poly:
                 return False
 
 
-# TODO Finish Polygons Iterator __next__(method)
 class Polygons:
     """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
     @staticmethod
@@ -338,9 +337,6 @@ class Polygons:
         return True
 
     def __init__(self, m, r):
-        # These are temp variables to pass into polyscheck()
-        # self.tm = m
-        # self.tr = r
         if Polygons.polyscheck(m, r):
             self._m = int(m)
             self._r = float(r)
