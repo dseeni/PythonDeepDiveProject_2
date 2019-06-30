@@ -5,10 +5,12 @@ import math
 
 
 def test_polygon_repr(test_poly):
-    assert (test_poly['poly100']) == Pp.Poly(3, 13, 3), 'actual:{0}'.format(test_poly['poly100'])
+    # unit test: Polygon repr
+    assert str(test_poly['poly100']) == 'Poly(3,13,3)'
 
 
 def test_polygon_float_radius_repr():
+    # unit test: Polygon radius float/int repr
     poly100 = Pp.Poly(3, 3, 3)
     assert poly100.__repr__() == "Poly(3,3,3)"
     poly100 = Pp.Poly(3, 3.1, 3)
@@ -39,9 +41,6 @@ def test_polygon_rich_comparisons_not_implemented(test_poly):
 
     with raises(TypeError):
         assert test_poly['poly103'] >= test_poly['poly111']
-
-    with raises(TypeError):
-        assert test_poly['poly104'] >= test_poly['poly111']
 
     with raises(Exception):
         assert test_poly['poly107'] == test_poly['poly111']
@@ -78,10 +77,40 @@ def test_polygon_set_item():
     # set item and recalculate of poly1
     poly1 = Pp.Poly(4, 5)
     poly1.__setitem__(10, 13.1)
-    assert poly1 == Pp.Poly(10, 13.1, 3), 'actual:{0}'.format(poly1)
+    assert str(poly1) == 'Poly(10,13.1,3)'
 
 
-def test_polygon_calulate_properties_method():
+def test_polygon_interior_angle_value_error():
+    poly = Pp.Poly(None, None, None)
+    with raises(ValueError):
+        return poly.interior_angle
+
+
+def test_polygon_interior_angle_cache():
+    poly = Pp.Poly(5, 5, 3)
+    if poly.interior_angle:
+        assert poly.interior_angle
+
+
+def test_polygon_edge_length_value_error():
+    poly = Pp.Poly(None, None, None)
+    with raises(ValueError):
+        return poly.edge_length
+
+
+def test_polygon_apothem_value_error():
+    poly = Pp.Poly(None, None, None)
+    with raises(ValueError):
+        return poly.apothem
+
+
+def test_polygon_area_value_error():
+    poly = Pp.Poly(None, None, None)
+    with raises(ValueError):
+        return poly.area
+
+
+def test_polygon_calculate_properties_method():
     # poly1 list properties
     poly1 = Pp.Poly(4, 5)
     assert poly1.calcproperties
@@ -140,7 +169,12 @@ def test_polygon_nrskey_invalid():
 # Testing for Polygons Class
 def test_polygons_repr(test_polygons):
     # Polygons Class __repr__ test
-    assert str(test_polygons[0]) == 'Polygons(10,6.35)', '{0}'.format(polys)
+    assert str(test_polygons[0]) == 'Polygons(10,6.35)'
+
+
+def test_polygons_radius_as_integer_repr():
+    polygons = Pp.Polygons(4, 3.0)
+    assert str(polygons) == 'Polygons(4,3)'
 
 
 def test_polygons_type_error_sides():
@@ -151,7 +185,7 @@ def test_polygons_type_error_sides():
 
 def test_polygons_value_error_sides():
     with raises(ValueError):
-        polys = Pp.Polygons(0,1)
+        polys = Pp.Polygons(0, 1)
         return polys
 
 
@@ -169,14 +203,17 @@ def test_polygons_returns_iterator(test_polygons):
     assert '__iter__' in dir(test_polygons[0]) and iter(test_polygons[0])
 
 
-# def test_polygons_max_efficencey_method(test_polygons):
-#     # test the max efficencey formula
-#     assert max([p.area/p.perimeter for p in test_polygons[1]]) == test_polygons[1].max_efficiency
+def test_polygons_max_efficencey_method(test_polygons):
+    # test the max efficencey formula
+    assert max([p.area/p.perimeter for p in test_polygons[1]]) == test_polygons[1].max_efficiency
 
 
-# def test_polygons_sequence(test_polygons):
-#     # Access the sequence type
-#     assert test_polygons[0][1]
+def test_polygons_iterator_returns_self():
+    polys = Pp.Polygons(10, 3)
+    polysiterator = iter(polys)
+    assert id(polysiterator) == id(iter(polysiterator))
+
+
 #
 #
 # def test_polygon_sequence_pi_area(test_polygons):

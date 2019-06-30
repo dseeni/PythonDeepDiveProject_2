@@ -101,15 +101,6 @@ class Poly:
             self._apothem = None
             self._edge_length = None
             self._interior_angle = None
-        # else:
-        #     raise ValueError
-        # query global dictionary if (n,r,sig) have been assigned:
-        # if self.nrskey:
-        #     NrsGlobalCache[self.nrskey]['perimeter']
-        #     NrsGlobalCache[self.nrskey]['area']
-        #     NrsGlobalCache[self.nrskey]['apothem']
-        #     NrsGlobalCache[self.nrskey]['edge_length']
-        #     NrsGlobalCache[self.nrskey]['interior_ange']
 
     @staticmethod
     def polycheck(n=None,r=None,sig=None):
@@ -196,7 +187,12 @@ class Poly:
         if self.polycheck(sig):
             print('Sig Value Set')
             self._sig = sig
-            # return self._sig
+            # reset calculated properties
+            self._perimeter = None
+            self._area = None
+            self._apothem = None
+            self._edge_length = None
+            self._interior_angle = None
 
     @property
     def interior_angle(self):
@@ -204,9 +200,11 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._sig))):
                 print('Calculating interior_angle...')
                 self._interior_angle = round((self._n - 2) * (180 / self._n), self._sig)
+            else:
+                raise ValueError('Assign missing n, sig values')
         else:
             print('Retrieving interior_angle...')
-            return self._interior_angle
+        return self._interior_angle
 
     @property
     def edge_length(self):
@@ -215,10 +213,10 @@ class Poly:
                 print('Calculating edge_length...')
                 self._edge_length = round(2 * self._r * math.sin(self.Pi / self._n), self._sig)
             else:
-                ValueError('Assign missing n,r,sig values')
+                raise ValueError('Assign missing n,r,sig values')
         else:
             print('Retrieving edge_length...')
-            return self._edge_length
+        return self._edge_length
 
     @property
     def apothem(self):
@@ -226,21 +224,21 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
                 print('Calculating Apothem...')
                 self._apothem = round(self._r * (math.cos(self.Pi / self._n)), self._sig)
+            else:
+                raise ValueError('Assign missing n,r,sig values')
         else:
             print('Retrieving apothem...')
-            return self._apothem
+        return self._apothem
 
     @property
     def area(self):
         if self._area is None:
-            if all((_ is not None for _ in (self._n, self._edge_length, self._apothem, self._sig))):
+            if self.edge_length and self.apothem:
                 print('Calculating Area...')
                 self._area = round(.5 * self._n * self.edge_length * self.apothem, self._sig)
-            else:
-                raise ValueError('Assign missing n, edge_length, apothem, sig values')
         else:
             print('Retrieving area...')
-            return self._area
+        return self._area
 
     @property
     def perimeter(self):
@@ -248,11 +246,9 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
                 print('Calculating Perimeter...')
                 self._perimeter = round(self._n * self.edge_length, self._sig)
-            else:
-                raise ValueError('Assign missing n,r,sig values')
         else:
             print('Retrieving perimeter...')
-            return self._perimeter
+        return self._perimeter
 
     # Calculate all properties...
     # @property
@@ -266,7 +262,6 @@ class Poly:
                 self.edge_length,
                 self.interior_angle,
                 self.sig]
-        # return ('All Properties Calculated')
 
     def __setitem__(self, n=None, r=None, sig=None):
         if Poly.polycheck(n,r,sig):
@@ -415,9 +410,6 @@ class Polygons:
 # for i in polys:
 #     print(i)
 
-polys = Polygons(10, 3)
-for p in polys:
-    print(p.area / p.perimeter)
 # print(list(iter(polys)))
 # print(polys.max_efficiency)
 
