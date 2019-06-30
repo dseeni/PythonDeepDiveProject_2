@@ -5,7 +5,7 @@ from src import poly_and_polygons as pp
 from src import parameter_checker as pm
 
 
-class Poly_Factory:
+class PolyFactory:
 
     """
     This class generates randomized instances of Poly(n,r,sig):
@@ -278,7 +278,8 @@ class Poly_Factory:
             raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.nrfinal
 
-pf = Poly_Factory()
+pf = PolyFactory()
+print(pf)
 print(pf.nrfinal)
-print(pf.finallist)
-print(pf.finalcount)
+# print(pf.finallist)
+# print(pf.finalcount)

@@ -2,6 +2,7 @@ from pytest import fixture
 from src import poly_and_polygons as p
 from collections import OrderedDict
 from src.poly_and_polygons import NrsGlobalCache as Ngc
+from src.polygons_factory import PolyFactory as Pf
 
 
 @fixture(scope='function')
@@ -65,3 +66,9 @@ def test_global_cache():
     # this is the key 3 newest item in the dictionary
     global_cache[(70, 50, .1)]['interior angle'] = [300]
     return global_cache
+
+
+@fixture(scope='function')
+def test_poly_factory():
+    polyfactory = Pf()
+    return polyfactory
