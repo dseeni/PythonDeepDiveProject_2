@@ -2,6 +2,7 @@ import math
 from fractions import Fraction
 from decimal import Decimal
 
+
 class Poly:
     def __init__(self, n, r):
 
@@ -76,17 +77,17 @@ class Poly:
 
     def __setitem__(self, n, r):
 
-            if not (isinstance(n, self._ptype) and float(n).is_integer()):
-                raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
+        if not (isinstance(n, self._ptype) and float(n).is_integer()):
+            raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
 
-            if n < 3:
-                raise ValueError('At least 3 sides required')
+        if n < 3:
+            raise ValueError('At least 3 sides required')
 
-            if not (isinstance(r, self._ptype) and r > 0):
-                raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
+        if not (isinstance(r, self._ptype) and r > 0):
+            raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
 
-            self._n = int(n)
-            self._r = float(r)
+        self._n = int(n)
+        self._r = float(r)
 
     # adding it as self vs self.__class__ explained later (prob meta-class checking)
     # self.__class__ allows for non-hard-coded of names of objects/instances
