@@ -90,6 +90,60 @@ def test_polygon_interior_angle_cache():
     poly = Pp.Poly(5, 5, 3)
     if poly.interior_angle:
         assert poly.interior_angle
+    poly.sig = 1
+    assert poly._interior_angle is None
+    poly.circumradius = 1
+    assert poly._interior_angle is None
+    poly.side_count = 3
+    assert poly._interior_angle is None
+
+
+def test_polygon_edge_length_cache():
+    poly = Pp.Poly(5, 5, 3)
+    if poly.edge_length:
+        assert poly.edge_length
+    poly.sig = 1
+    assert poly._edge_length is None
+    poly.circumradius = 1
+    assert poly._edge_length is None
+    poly.side_count = 3
+    assert poly._edge_length is None
+
+
+def test_polygon_apothem_cache():
+    poly = Pp.Poly(5, 5, 3)
+    if poly.apothem:
+        assert poly.apothem
+    poly.sig = 1
+    assert poly._apothem is None
+    poly.circumradius = 1
+    assert poly._apothem is None
+    poly.side_count = 3
+    assert poly._apothem is None
+
+
+def test_polygon_area_cache():
+    poly = Pp.Poly(5, 5, 3)
+    if poly.area:
+        assert poly.area
+    poly.sig = 1
+    assert poly._area is None
+    poly.circumradius = 1
+    assert poly._area is None
+    poly.side_count = 3
+    assert poly._area is None
+
+
+def test_polygon_perimeter_cache():
+    poly = Pp.Poly(5, 5, 3)
+    if poly.perimeter:
+        assert poly.perimeter
+    poly.sig = 1
+    assert poly._perimeter is None
+    poly.circumradius = 1
+    assert poly._perimeter is None
+    poly.side_count = 3
+    assert poly._perimeter is None
 
 
 def test_polygon_edge_length_value_error():

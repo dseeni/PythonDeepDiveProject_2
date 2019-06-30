@@ -52,7 +52,7 @@ class NrsGlobalCache(OrderedDict):
     @cache_limit.setter
     def cache_limit(self, limit):
         if self.cache_size > limit:
-            while self.cache_size > (limit):
+            while self.cache_size > limit:
                 # last=True -> FIFO remove the oldest items in the cache
                 self.popitem(last=False)
                 # self.cache_size(len(self.keys()))
@@ -151,7 +151,7 @@ class Poly:
     # If side count changes, reset all calculated properties:
     @side_count.setter
     def side_count(self, n):
-        if self.polycheck(n):
+        if self.polycheck(n, None, None):
             print('Side Count Set')
             self._n = n
             # reset calculated properties
@@ -168,7 +168,7 @@ class Poly:
     # If radius changes, reset all calculated properties:
     @circumradius.setter
     def circumradius(self, r):
-        if self.polycheck(r):
+        if self.polycheck(None, r, None):
             print('Radius Set')
             self._r = r
             # reset calculated properties
@@ -184,7 +184,7 @@ class Poly:
 
     @sig.setter
     def sig(self, sig):
-        if self.polycheck(sig):
+        if self.polycheck(None, None, sig):
             print('Sig Value Set')
             self._sig = sig
             # reset calculated properties
