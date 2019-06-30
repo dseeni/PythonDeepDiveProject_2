@@ -52,7 +52,7 @@ class NrsGlobalCache(OrderedDict):
     @cache_limit.setter
     def cache_limit(self, limit):
         if self.cache_size > limit:
-            while self.cache_size > (limit):
+            while self.cache_size > limit:
                 # last=True -> FIFO remove the oldest items in the cache
                 self.popitem(last=False)
                 # self.cache_size(len(self.keys()))
@@ -86,24 +86,15 @@ class NrsGlobalCache(OrderedDict):
     def __repr__(self):
         return 'NrsGlobalCache()'
 
+
 class Poly:
-    # These are temp default values to pass into polycheck(n,r,sig) / __init__:
-    n = None
-    r = None
-    sig = 3
 
-    def __init__(self, n=n, r=r, sig=sig):
+    def __init__(self, n=None, r=None, sig=3):
 
-        # These are temp variables to pass into polycheck()
-        self.n = n
-        self.r = r
-        self.sig = sig
-        # if (n,r,sig) are valid, this is the starting state:
-        if Poly.polycheck():
-
-            self._n = int(n) if self.n else None
-            self._r = float(r) if self.r else None
-            self._sig = self.sig if self.sig else None
+        if Poly.polycheck(n, r, sig):
+            self._n = int(n) if n is not None else None
+            self._r = float(r) if r is not None else None
+            self._sig = sig if sig is not None else None
             # Calculated Properties Start as None:
             self._perimeter = None
             self._area = None
@@ -111,34 +102,27 @@ class Poly:
             self._edge_length = None
             self._interior_angle = None
 
-        # query global dictionary if (n,r,sig) have been assigned:
-        # if self.nrskey:
-        #     NrsGlobalCache[self.nrskey]['perimeter']
-        #     NrsGlobalCache[self.nrskey]['area']
-        #     NrsGlobalCache[self.nrskey]['apothem']
-        #     NrsGlobalCache[self.nrskey]['edge_length']
-        #     NrsGlobalCache[self.nrskey]['interior_ange']
-
     @staticmethod
-    def polycheck(n=n,r=r,sig=sig):
+    def polycheck(n=None,r=None,sig=None):
+        # ptype = acceptable types for (n,r,sig)
         ptype = (int, float, Decimal, Fraction)
 
-        if n:
+        if n is not None:
             if not (isinstance(n, ptype) and float(n).is_integer()):
                 raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
             if n < 3:
                 raise ValueError('At least 3 sides required')
-        if r:
+        if r is not None:
             if not (isinstance(r, ptype) and r > 0):
                 raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-        if sig:
+        if sig is not None:
             if not (isinstance(sig, int) and sig > 0):
                 raise TypeError('Significant Digits (sig) must be of positive integer type only')
-
+        
         return True
 
     def __repr__(self):
-        if all(v for v in (self.n, self.r, self.sig)):
+        if all(v is not None for v in (self._n, self._r, self._sig)):
             if float(self._r).is_integer():
                 return 'Poly({0},{1},{2})'.format(self._n, int(self._r), self._sig)
 
@@ -148,12 +132,11 @@ class Poly:
     Pi = math.pi
     abs_tolerance = .00001
 
-
-    # global dictionary cache of (n,r,sig) key
+    # local dictionary cache of (n,r,sig) key
     @property
     def nrskey(self):
         if any((_ is None for _ in (self._n, self._r, self._sig))):
-            return False
+            raise KeyError("n,r,s values = None")
         return self._n, self._r, self._sig
 
     # vertex_count = side_count....
@@ -168,10 +151,10 @@ class Poly:
     # If side count changes, reset all calculated properties:
     @side_count.setter
     def side_count(self, n):
-        self.n = n
-        if self.polycheck():
+        if self.polycheck(n, None, None):
             print('Side Count Set')
             self._n = n
+            # reset calculated properties
             self._perimeter = None
             self._area = None
             self._apothem = None
@@ -185,26 +168,31 @@ class Poly:
     # If radius changes, reset all calculated properties:
     @circumradius.setter
     def circumradius(self, r):
-        if self.polycheck():
+        if self.polycheck(None, r, None):
             print('Radius Set')
             self._r = r
+            # reset calculated properties
             self._perimeter = None
             self._area = None
             self._apothem = None
             self._edge_length = None
             self._interior_angle = None
-            return self._r
 
     @property
-    def sigvalue(self):
+    def sig(self):
         return self._sig
 
-    @sigvalue.setter
-    def sigvalue(self, sig):
-        if self.polycheck(sig):
+    @sig.setter
+    def sig(self, sig):
+        if self.polycheck(None, None, sig):
             print('Sig Value Set')
             self._sig = sig
-            return self._sig
+            # reset calculated properties
+            self._perimeter = None
+            self._area = None
+            self._apothem = None
+            self._edge_length = None
+            self._interior_angle = None
 
     @property
     def interior_angle(self):
@@ -212,6 +200,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._sig))):
                 print('Calculating interior_angle...')
                 self._interior_angle = round((self._n - 2) * (180 / self._n), self._sig)
+            else:
+                raise ValueError('Assign missing n, sig values')
         else:
             print('Retrieving interior_angle...')
         return self._interior_angle
@@ -222,6 +212,8 @@ class Poly:
             if all(_ is not None for _ in (self._r, self._n, self._sig)):
                 print('Calculating edge_length...')
                 self._edge_length = round(2 * self._r * math.sin(self.Pi / self._n), self._sig)
+            else:
+                raise ValueError('Assign missing n,r,sig values')
         else:
             print('Retrieving edge_length...')
         return self._edge_length
@@ -232,6 +224,8 @@ class Poly:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
                 print('Calculating Apothem...')
                 self._apothem = round(self._r * (math.cos(self.Pi / self._n)), self._sig)
+            else:
+                raise ValueError('Assign missing n,r,sig values')
         else:
             print('Retrieving apothem...')
         return self._apothem
@@ -239,7 +233,7 @@ class Poly:
     @property
     def area(self):
         if self._area is None:
-            if all((_ is not None for _ in (self._n, self._edge_length, self._apothem, self._sig))):
+            if self.edge_length and self.apothem:
                 print('Calculating Area...')
                 self._area = round(.5 * self._n * self.edge_length * self.apothem, self._sig)
         else:
@@ -257,40 +251,24 @@ class Poly:
         return self._perimeter
 
     # Calculate all properties...
-    @property
+    # @property
     def calcproperties(self):
-        print(
-            'Current Properties:', '\n',
-            'Side Count:', self.side_count,'\n',
-            'Cirumradius:', self.circumradius, '\n',
-            'Vertex Count:', self.n, '\n',
-            'Perimeter:', self.perimeter,'\n',
-            'Area:', self.area,'\n',
-            'Apothem:', self.apothem,'\n',
-            'Edge Length:', self.edge_length,'\n',
-            'Interior_angle:', self.interior_angle,'\n',
-            'Sig Value:', self.sig
-        )
-        return 'All Properties Calculated'
-
+        return [self.side_count,
+                self.circumradius,
+                self.vertex_count,
+                self.perimeter,
+                self.area,
+                self.apothem,
+                self.edge_length,
+                self.interior_angle,
+                self.sig]
 
     def __setitem__(self, n=None, r=None, sig=None):
-        if Poly.polycheck():
+        if Poly.polycheck(n,r,sig):
             n = n if n is not None else self._n
             r = r if r is not None else self._r
             sig = sig if sig is not None else self._sig
 
-        # if not (isinstance(n, self._ptype) and float(n).is_integer()):
-        #     raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
-        #
-        # if n < 3:
-        #     raise ValueError('At least 3 sides required')
-        #
-        # if not (isinstance(r, self._ptype) and r > 0):
-        #     raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-        #
-        # if not isinstance(sig, int):
-        #     raise TypeError('Significant Digits (sig) must be of integer type only')
         if n:
             self._n = int(n)
         if r:
@@ -323,73 +301,139 @@ class Poly:
             return NotImplemented
 
     def equal_area(self, other):
-        if math.isclose(self.area, other.area,
-                        rel_tol=self.abs_tolerance,
-                        abs_tol=self.abs_tolerance):
-            return True
-        else:
-            return False
+        if isinstance(other, self.__class__):
+            if math.isclose(self.area, other.area,
+                            rel_tol=self.abs_tolerance,
+                            abs_tol=self.abs_tolerance):
+                return True
+            else:
+                return False
 
     def equal_perimeter(self, other):
-        if math.isclose(self.perimeter, other.perimeter,
-                        rel_tol=self.abs_tolerance,
-                        abs_tol=self.abs_tolerance):
-            return True
-        else:
-            return False
+        if isinstance(other, self.__class__):
+            if math.isclose(self.perimeter, other.perimeter,
+                            rel_tol=self.abs_tolerance,
+                            abs_tol=self.abs_tolerance):
+                return True
+            else:
+                return False
 
 
 # TODO Finish Polygons Iterator __next__(method)
-# class Polygons:
-#     """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
-#     def __init__(self, m, r):
-#
-#         ptype = (int, float, Decimal, Fraction)
-#
-#         if not (isinstance(m, ptype) and float(m).is_integer()):
-#             raise TypeError('Sides (m) = positive integer type Int/Float/Decimal/Fraction only')
-#         if m < 3:
-#             raise ValueError('At least 3 sides required')
-#         if not (isinstance(r, ptype) and r > 0):
-#             raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-#
-#         self._m = int(m)
-#         self._r = float(r)
-#         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
-#         self._ptype = ptype
-#
-#     def __len__(self):
-#         return self._m - 2
-#
-#     def __repr__(self):
-#         if self._r.is_integer():
-#             return 'Polygons({0},{1})'.format(self._m, int(self._r))
-#         return 'Polygons({0},{1})'.format(self._m, self._r)
-#
-#     def __getitem__(self, s):
-#         return self._polygons[s]
-#
-#     def __setitem__(self, m, r):
-#
-#         if not (isinstance(m, self._ptype) and float(m).is_integer()):
-#             raise TypeError('Sides (m) = positive integer type Int/Float/Decimal/Fraction only')
-#         if m < 3:
-#             raise ValueError('At least 3 sides required')
-#         if not (isinstance(r, self._ptype) and r > 0):
-#             raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
-#
-#         self._m = int(m)
-#         self._r = float(r)
-#         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
-#
-#     @property
-#     def max_efficiency(self):
-#         sorted_polygons = sorted(self._polygons,
-#                                  key=lambda i: i.area/i.perimeter,
-#                                  reverse=True)
-#         print('Max Efficeny polygon:', sorted_polygons[0])
-#         return sorted_polygons[0].area / sorted_polygons[0].perimeter
+class Polygons:
+    """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
+    @staticmethod
+    def polyscheck(m=None, r=None):
+        # ptype = acceptable types for (n,r,sig)
+        ptype = (int, float, Decimal, Fraction)
 
+        if m is not None:
+            if not (isinstance(m, ptype) and float(m).is_integer()):
+                raise TypeError('Sides (n) = positive integer type Int/Float/Decimal/Fraction only')
+            if m < 3:
+                raise ValueError('At least 3 sides required')
+        if r is not None:
+            if not (isinstance(r, ptype) and r > 0):
+                raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
+        return True
+
+    def __init__(self, m, r):
+        # These are temp variables to pass into polyscheck()
+        # self.tm = m
+        # self.tr = r
+        if Polygons.polyscheck(m, r):
+            self._m = int(m)
+            self._r = float(r)
+            self._polygons = [(m, self._r) for m in range(3, self._m+1)]
+            print(self._polygons)
+
+    def __len__(self):
+        return self._m - 2
+
+    def __iter__(self):
+        print('Calling Polygons instance __iter__')
+        return self.PolyIterator(self)
+
+    @property
+    def max_efficiency(self):
+        polylist = [Poly(self._polygons[i][0], self._polygons[i][1]) for i in range(len(self._polygons))]
+        for i in polylist:
+            i.calcproperties()
+        sorted_polygons = sorted(polylist,
+                                 key=lambda i: i.area/i.perimeter,
+                                 reverse=True)
+        print('Max Efficeny polygon:', sorted_polygons[0])
+        return sorted_polygons[0].area / sorted_polygons[0].perimeter
+
+    def __repr__(self):
+        if self._r.is_integer():
+            return 'Polygons({0},{1})'.format(self._m, int(self._r))
+        return 'Polygons({0},{1})'.format(self._m, self._r)
+
+    class PolyIterator:
+        def __init__(self, poly_obj):
+            # poly_obj is the instance of Polygons iterable passed into the iterator
+            print('Calling PolyIterator __init__')
+            self._poly_obj = poly_obj
+            self._index = 0
+
+        def __iter__(self):
+            print('Calling PolyIterator instance __iter__')
+            return self
+
+        def __next__(self):
+            print('Calling __next__')
+            if self._index >= self._poly_obj.__len__():
+                raise StopIteration
+            else:
+                item = Poly(self._poly_obj._polygons[self._index][0], self._poly_obj._polygons[self._index][1])
+                self._index += 1
+                return item
+        # def __getitem__(self, s):
+        #     return self._polygons[s]
+        #
+        # def __setitem__(self, m, r):
+        #     if Polygons.polyscheck(m,r):
+        #         self._m = int(m)
+        #         self._r = float(r)
+        #         self._polygons = [Poly(m, self._r) for m in range(3, m+1)]
+
+# polys = iter(Polygons(10,3))
+# while True:
+#     try:
+#         print(next(polys))
+#     except StopIteration:
+#        break
+
+
+# polys = (Polygons(10,3))
+# for i in polys:
+#     print(i)
+
+# print(list(iter(polys)))
+# print(polys.max_efficiency)
+
+# UNIT test via dir(method)
+# test if next exists in iterator subclass
+# print('__next__' in dir(iter(polys)))
+# test if iter exists in iterable class
+# print('__iter__' in dir(polys))
+
+# print(len(polys))
+# polyiter = iter(polys)
+
+
+
+# print(polys.max_efficiency)
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
+# print(next(polys))
 # TODO nrsdictglobal maybe in a seperate file as a seperate global cache
 # # https://www.calculatorsoup.com/calculators/geometry-plane/polygon.php
 # # UNIT TESTING #######################################################
@@ -630,6 +674,9 @@ class Poly:
 # g2.side_count = 12
 # print(g2)
 # g2.sigvalue = 0
-# print(g2)
 
-#
+# print(float(-.75).is_integer())
+# poly100 = Poly(-4.1,4,1)
+# print(poly100.circumradius)
+# print(poly100)
+# print(poly100.side_count)

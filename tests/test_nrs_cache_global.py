@@ -1,6 +1,6 @@
 from collections import OrderedDict
-from pytest import mark
 from src.WIP_p2_proj2_temp import NrsGlobalCache as NCacheGlobal
+from pytest import raises
 
 
 # NrsGlobalCache docstring test
@@ -12,10 +12,9 @@ def test_global_cache_repr(test_global_cache):
     assert test_global_cache.__repr__() == 'NrsGlobalCache()'
 
 
-@mark.xfail(reason="NrsGlobalCache is not a Singleton!")
 def test_global_cache_is_singleton(test_global_cache):
-    # xfail = "expected to fail test"
-    NCacheGlobal()
+    with raises(Exception):
+        NCacheGlobal()
 
 
 def test_global_cache_get_instance_method(test_global_cache):
