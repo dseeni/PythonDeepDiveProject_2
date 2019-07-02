@@ -1,7 +1,5 @@
-from src import poly_and_polygons as Pp
 from src import polygons_factory as Pf
 from pytest import raises
-import math
 
 
 def test_polygons_factory_repr(test_poly_factory):

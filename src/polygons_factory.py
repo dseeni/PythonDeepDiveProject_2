@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from random import randint, uniform, seed
+from random import randint, uniform
 from copy import deepcopy
 from src import poly_and_polygons as pp
 from src import parameter_checker as pm
@@ -175,7 +175,7 @@ class PolyFactory:
         """Returns side counts for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
-            print(v, 'Side Count =', eval('{0}.side_count'. format(v)))
+           return (v, 'Side Count =', eval('{0}.side_count'. format(v)))
 
 
 
@@ -184,7 +184,7 @@ class PolyFactory:
         """Returns circumradius for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
-            print(v, 'Circumradius =', eval('{0}.side_count'. format(v)))
+            return (v, 'Circumradius =', eval('{0}.side_count'. format(v)))
 
 
     @property
@@ -192,7 +192,7 @@ class PolyFactory:
         """Returns vertex count for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
-            print(v, 'Vertex Count =',eval('{0}.side_count'. format(v)))
+            return (v, 'Vertex Count =',eval('{0}.side_count'. format(v)))
 
 
     @property
@@ -200,14 +200,14 @@ class PolyFactory:
         """Returns caculated perimeter for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
-            print(v, 'Perimeter =', eval('{0}.side_count'. format(v)))
+            return (v, 'Perimeter =', eval('{0}.side_count'. format(v)))
 
     @property
     def apothemcalc(self):
         """Returns caculated apothem for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
-            print(v,'Apothem =', eval('{0}.side_count'. format(v)))
+            return (v,'Apothem =', eval('{0}.side_count'. format(v)))
 
 
     @property
@@ -215,7 +215,7 @@ class PolyFactory:
         """Returns caculated interior angle for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
-            print(v, 'Interior Angle =', eval('{0}.edge_length'. format(v)))
+            return (v, 'Interior Angle =', eval('{0}.edge_length'. format(v)))
 
 
     @property
@@ -223,7 +223,7 @@ class PolyFactory:
         """Returns caculated side length for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
-            print(v, 'Edge Length =', eval('{0}.side_count'. format(v)))
+            return (v, 'Edge Length =', eval('{0}.side_count'. format(v)))
 
 
     @property
@@ -231,14 +231,14 @@ class PolyFactory:
         """Returns calculated area for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
-            print(v, 'Area =',eval('{0}.side_count'. format(v)))
+            return (v, 'Area =',eval('{0}.side_count'. format(v)))
 
     @property
     def instancerepr(self):
         """Returns each instance representation of Poly(n,r,sig)lf):"""
         self.nrfinal()
         for v in self.polynames:
-            print(v, 'Poly() Instance Names =',eval('{0}'. format(v)))
+            return (v, 'Poly() Instance Names =',eval('{0}'. format(v)))
 
 
     def __len__(self):
@@ -277,7 +277,6 @@ class PolyFactory:
 
 
 pf = PolyFactory()
-# seed(a=0)
 # print(pf.sample_ints)
 print(pf.allcalc)
 # print(pf)
