@@ -1,4 +1,4 @@
-from src import polygons_factory as Pf
+from src import polygons_factory as pf
 from pytest import raises
 
 
@@ -10,7 +10,7 @@ def test_polygons_factory_repr(test_poly_factory):
 
 def test_polygons_factory_icount_clone_value_error():
     with raises(ValueError):
-        polyfactory = Pf.PolyFactory(icount=10, clones=10, cloneamount=0, siderange=(3, 10), radrange=(1, 5), sig=0)
+        polyfactory = pf.PolyFactory(icount=10, clones=10, cloneamount=0, siderange=(3, 10), radrange=(1, 5), sig=0)
         return polyfactory
 
 
@@ -56,9 +56,9 @@ def test_polygons_factory_nrfinal(test_poly_factory):
         assert len(test_poly_factory.polydict) == 12
         assert len(test_poly_factory.polynames) == 12
         assert test_poly_factory.finallist == 12
-        assert str(Pf.poly101) == 'Poly(12,4.9,1)'
-        assert str(Pf.poly102) == 'Poly(11,4.6,1)'
-        assert Pf.poly101 > Pf.poly102
+        assert str(pf.poly101) == 'Poly(12,4.9,1)'
+        assert str(pf.poly102) == 'Poly(11,4.6,1)'
+        assert pf.poly101 > pf.poly102
 
 
 def test_polygons_factory_allcalc_funciton(test_poly_factory):
