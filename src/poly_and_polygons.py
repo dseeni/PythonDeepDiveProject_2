@@ -152,7 +152,7 @@ class Poly:
     @side_count.setter
     def side_count(self, n):
         if self.polycheck(n, None, None):
-            print('Side Count Set')
+            # print('Side Count Set')
             self._n = n
             # reset calculated properties
             self._perimeter = None
@@ -169,7 +169,7 @@ class Poly:
     @circumradius.setter
     def circumradius(self, r):
         if self.polycheck(None, r, None):
-            print('Radius Set')
+            # print('Radius Set')
             self._r = r
             # reset calculated properties
             self._perimeter = None
@@ -185,7 +185,7 @@ class Poly:
     @sig.setter
     def sig(self, sig):
         if self.polycheck(None, None, sig):
-            print('Sig Value Set')
+            # print('Sig Value Set')
             self._sig = sig
             # reset calculated properties
             self._perimeter = None
@@ -198,56 +198,56 @@ class Poly:
     def interior_angle(self):
         if self._interior_angle is None:
             if all((_ is not None for _ in (self._n, self._sig))):
-                print('Calculating interior_angle...')
+                # print('Calculating interior_angle...')
                 self._interior_angle = round((self._n - 2) * (180 / self._n), self._sig)
             else:
                 raise ValueError('Assign missing n, sig values')
-        else:
-            print('Retrieving interior_angle...')
+        # else:
+        #     # print('Retrieving interior_angle...')
         return self._interior_angle
 
     @property
     def edge_length(self):
         if self._edge_length is None:
             if all(_ is not None for _ in (self._r, self._n, self._sig)):
-                print('Calculating edge_length...')
+                # print('Calculating edge_length...')
                 self._edge_length = round(2 * self._r * math.sin(self.Pi / self._n), self._sig)
             else:
                 raise ValueError('Assign missing n,r,sig values')
-        else:
-            print('Retrieving edge_length...')
+        # else:
+        #     # print('Retrieving edge_length...')
         return self._edge_length
 
     @property
     def apothem(self):
         if self._apothem is None:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
-                print('Calculating Apothem...')
+                # print('Calculating Apothem...')
                 self._apothem = round(self._r * (math.cos(self.Pi / self._n)), self._sig)
             else:
                 raise ValueError('Assign missing n,r,sig values')
-        else:
-            print('Retrieving apothem...')
+        # else:
+        #     print('Retrieving apothem...')
         return self._apothem
 
     @property
     def area(self):
         if self._area is None:
             if self.edge_length and self.apothem:
-                print('Calculating Area...')
+                # print('Calculating Area...')
                 self._area = round(.5 * self._n * self.edge_length * self.apothem, self._sig)
-        else:
-            print('Retrieving area...')
+        # else:
+        #     print('Retrieving area...')
         return self._area
 
     @property
     def perimeter(self):
         if self._perimeter is None:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
-                print('Calculating Perimeter...')
+                # print('Calculating Perimeter...')
                 self._perimeter = round(self._n * self.edge_length, self._sig)
-        else:
-            print('Retrieving perimeter...')
+        # else:
+        #     print('Retrieving perimeter...')
         return self._perimeter
 
     # Calculate all properties...
@@ -347,7 +347,7 @@ class Polygons:
         return self._m - 2
 
     def __iter__(self):
-        print('Calling Polygons instance __iter__')
+        # print('Calling Polygons instance __iter__')
         return self.PolyIterator(self)
 
     @property
@@ -358,7 +358,7 @@ class Polygons:
         sorted_polygons = sorted(polylist,
                                  key=lambda i: i.area/i.perimeter,
                                  reverse=True)
-        print('Max Efficeny polygon:', sorted_polygons[0])
+        # print('Max Efficeny polygon:', sorted_polygons[0])
         return sorted_polygons[0].area / sorted_polygons[0].perimeter
 
     def __repr__(self):
@@ -369,16 +369,16 @@ class Polygons:
     class PolyIterator:
         def __init__(self, poly_obj):
             # poly_obj is the instance of Polygons iterable passed into the iterator
-            print('Calling PolyIterator __init__')
+            # print('Calling PolyIterator __init__')
             self._poly_obj = poly_obj
             self._index = 0
 
         def __iter__(self):
-            print('Calling PolyIterator instance __iter__')
+            # print('Calling PolyIterator instance __iter__')
             return self
 
         def __next__(self):
-            print('Calling __next__')
+            # print('Calling __next__')
             if self._index >= self._poly_obj.__len__():
                 raise StopIteration
             else:

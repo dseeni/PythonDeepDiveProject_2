@@ -2,8 +2,6 @@ from src import poly_and_polygons as Pp
 from src import polygons_factory as Pf
 from pytest import raises
 import math
-from random import Random
-seed = Random(0)
 
 
 def test_polygons_factory_repr(test_poly_factory):
@@ -44,7 +42,7 @@ def test_polygons_factory_radrange(test_poly_factory):
 
 def test_polygons_factory_sample_ints(test_poly_factory):
     assert len(test_poly_factory.sample_ints) == 10
-    assert test_poly_factory.sample_ints[0] == 11
+    assert test_poly_factory.sample_ints[0] == 12
     for i in test_poly_factory.sample_ints:
         assert isinstance(i, int)
 
@@ -60,19 +58,70 @@ def test_polygons_factory_nrfinal(test_poly_factory):
         assert len(test_poly_factory.polydict) == 12
         assert len(test_poly_factory.polynames) == 12
         assert test_poly_factory.finallist == 12
-        assert str(Pf.poly101) == 'Poly(13,4.6,1)'
-        assert str(Pf.poly102) == 'Poly(12,4.3,1)'
+        assert str(Pf.poly101) == 'Poly(12,4.9,1)'
+        assert str(Pf.poly102) == 'Poly(11,4.6,1)'
         assert Pf.poly101 > Pf.poly102
 
 
-def test_polygons_factor_setitem_value_error(test_poly_factory):
-    # asking for clones >= icount triggers a ValueError
-    with raises(ValueError):
-        test_poly_factory.__setitem__(icount=10, clones=10, cloneamount=0, siderange=(3, 10), radrange=(1, 5), sig=0)
-        assert len(test_poly_factory.polydict) == 1
+# def test_polygons_factory_setitem_value_error(test_poly_factory):
+#     # asking for clones >= icount triggers a ValueError
+#     with raises(ValueError):
+#         test_poly_factory.__setitem__(icount=10, clones=10, cloneamount=0, siderange=(3, 10), radrange=(1, 5), sig=0)
+#         assert len(test_poly_factory.polydict) == 1
 
 
+def test_polygons_factory_allcalc_funciton(test_poly_factory):
+    assert hasattr(test_poly_factory, 'allcalc')
+    return test_poly_factory.allcalc
 
+
+def test_polygons_factory_sidevalues(test_poly_factory):
+    assert hasattr(test_poly_factory, 'sidevalues')
+    return test_poly_factory.sidevalues
+
+
+def test_polygons_factory_circumradiusvalues(test_poly_factory):
+    assert hasattr(test_poly_factory, 'circumradiusvalues')
+    return test_poly_factory.circumradiusvalues
+
+
+def test_polygons_factory_vertexcalc(test_poly_factory):
+    assert hasattr(test_poly_factory, 'vertexcalc')
+    return test_poly_factory.vertexcalc
+
+
+def test_polygons_factory_perimetercalc(test_poly_factory):
+    assert hasattr(test_poly_factory, 'perimetercalc')
+    return test_poly_factory.perimetercalc
+
+
+def test_polygons_factory_apothemcalc(test_poly_factory):
+    assert hasattr(test_poly_factory, 'apothemcalc')
+    return test_poly_factory.apothemcalc
+
+
+def test_polygons_factory_interioranglecalc(test_poly_factory):
+    assert hasattr(test_poly_factory, 'interioranglecalc')
+    return test_poly_factory.interioranglecalc
+
+
+def test_polygons_factory_edgelengthcalc(test_poly_factory):
+    assert hasattr(test_poly_factory, 'edgelengthcalc')
+    return test_poly_factory.edgelengthcalc
+
+
+def test_polygons_factory_areacalc(test_poly_factory):
+    assert hasattr(test_poly_factory, 'areacalc')
+    return test_poly_factory.areacalc
+
+
+def test_polygons_factory_instancerepr(test_poly_factory):
+    assert hasattr(test_poly_factory, 'instancerepr')
+    return test_poly_factory.instancerepr
+
+
+def test_polygons_factor_len_method(test_poly_factory):
+    assert len(test_poly_factory) == 12
 # gen_polys = PolyFactory()
 # print(gen_polys.nrfinal)
 # # print(gen_polys.finallist)

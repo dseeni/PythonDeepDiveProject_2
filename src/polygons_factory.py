@@ -116,13 +116,13 @@ class PolyFactory:
 
         nrvalslist = list(zip(sorted(self.sample_ints, reverse=True),
                               sorted(self.sample_floats, reverse=True)))
-        print('Initial Unique Values:', len(nrvalslist), nrvalslist)
+        # print('Initial Unique Values:', len(nrvalslist), nrvalslist)
 
         nrdups = deepcopy(nrvalslist[0:self._clones] * self._cloneamount)
-        print('Clones To Append:', len(nrdups), nrdups)
+        # print('Clones To Append:', len(nrdups), nrdups)
 
         nrremainder = deepcopy(nrvalslist[self._clones:])
-        print('Remaining Unique Values:', len(nrremainder) , nrremainder)
+        # print('Remaining Unique Values:', len(nrremainder) , nrremainder)
 
         finallist = deepcopy(nrdups + nrremainder)
         finallistsig = []
@@ -131,14 +131,14 @@ class PolyFactory:
         for i in finallistsig:
             i.append(self._sig)
 
-        print(finallistsig)
+        # print(finallistsig)
 
-        print('Final Values of (n,r,sig) for Poly Generation:', len(finallistsig), finallistsig)
+        # print('Final Values of (n,r,sig) for Poly Generation:', len(finallistsig), finallistsig)
 
-        print('POLYGON CLASS TESTING:')
+        # print('POLYGON CLASS TESTING:')
 
         name = tuple(('poly{0}'.format(n)) for n in range(101, 101+self._finalcount))
-        print('Newly Created Object Names:', len(name), name)
+        # print('Newly Created Object Names:', len(name), name)
 
         # polylist instantiates Poly objects
         polylist = [pp.Poly(n, r, s) for n, r, s in finallistsig]
@@ -188,7 +188,7 @@ class PolyFactory:
 
 
     @property
-    def vectexcalc(self):
+    def vertexcalc(self):
         """Returns vertex count for each instance of Poly(n,r,sig)"""
         self.nrfinal()
         for v in self.polynames:
@@ -253,32 +253,33 @@ class PolyFactory:
                     self._radrange,
                     self._sig)
 
-    def __setitem__(self, icount=None, clones=None, cloneamount=None, siderange=None, radrange=None, sig=None):
+    # def __setitem__(self, icount=None, clones=None, cloneamount=None, siderange=None, radrange=None, sig=None):
+    #
+    #     icount = icount if icount is not None else icount
+    #     clones = clones if clones is not None else clones
+    #     cloneamount = cloneamount if cloneamount is not None else cloneamount
+    #     siderange = siderange if siderange is not None else siderange
+    #     radrange = radrange if radrange is not None else radrange
+    #     sig = sig if sig is not None else sig
+    #
+    #     params = pm.check_parameters(icount, clones, cloneamount, siderange, radrange, sig)
+    #
+    #     self._icount = params[0]
+    #     self._clones = params[1]
+    #     self._cloneamount = params[2]
+    #     self._siderange = params[3]
+    #     self._radrange = params[4]
+    #     self._sig = params[5]
+    #     self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+    #     if self._finalcount <= clones * cloneamount and all(x >= 0 for x in (icount, clones, cloneamount)):
+    #         raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+    #     self.nrfinal()
 
-        icount = icount if icount is not None else self._icount
-        clones = clones if clones is not None else self._clones
-        cloneamount = cloneamount if cloneamount is not None else self._cloneamount
-        siderange = siderange if siderange is not None else self._siderange
-        radrange = radrange if radrange is not None else self._radrange
-        sig = sig if sig is not None else self._sig
-
-        params = pm.check_parameters(icount, clones, cloneamount, siderange, radrange, sig)
-        print('params', params)
-
-        self._icount = params[0]
-        self._clones = params[1]
-        self._cloneamount = params[2]
-        self._siderange = params[3]
-        self._radrange = params[4]
-        self._sig = params[5]
-        self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
-        if self._finalcount <= clones * cloneamount and all(x >= 0 for x in (icount, clones, cloneamount)):
-            raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
-        self.nrfinal()
 
 pf = PolyFactory()
-seed(a=0)
-print(pf.sample_ints)
+# seed(a=0)
+# print(pf.sample_ints)
+print(pf.allcalc)
 # print(pf)
 # print(pf.nrfinal)
 # print(pf.finallist)

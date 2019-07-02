@@ -3,6 +3,7 @@ from src import poly_and_polygons as p
 from collections import OrderedDict
 from src.poly_and_polygons import NrsGlobalCache as Ngc
 from src.polygons_factory import PolyFactory as Pf
+from random import seed
 
 
 @fixture(scope='function')
@@ -70,5 +71,6 @@ def test_global_cache():
 
 @fixture(scope='function')
 def test_poly_factory():
+    seed(0)
     polyfactory = Pf()
     return polyfactory
