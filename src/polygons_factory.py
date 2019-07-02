@@ -48,18 +48,22 @@ class PolyFactory:
         if self._finalcount <= clones * cloneamount and all(x >= 0 for x in (icount, clones, cloneamount)):
             raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
+
     @property
     def icount(self):
         """ intital count of unique values of (n,r,sig) to generate"""
         return self._icount
+
     @property
     def clones(self):
         """ clones = how many of those values will have frequency > 1"""
         return self._clones
+
     @property
     def cloneamount(self):
         """frequency of reoccuring (n,r,sig)"""
         return self._cloneamount
+
     @property
     def finalcount(self):
         """Total count of last generated Poly(n,r,sig)"""
@@ -157,88 +161,103 @@ class PolyFactory:
     def allcalc(self):
         """Calculates all properties for each instance of Poly(n,r,sig)"""
         self.nrfinal()
+        final_allcalc = []
         for v in self.polynames:
-            print(v,
-                  'Side Count =', eval('{0}.side_count'. format(v)),
-                  'Circumradius =', eval('{0}.circumradius'. format(v)),
-                  'Vertex Count =',eval('{0}.vertex_count'. format(v)),
-                  'Perimeter =', eval('{0}.perimeter'. format(v)),
-                  'Apothem =', eval('{0}.apothem'. format(v)),
-                  'Interior Angle =', eval('{0}.interior_angle'. format(v)),
-                  'Edge Length =', eval('{0}.edge_length'. format(v)),
-                  'Area =',eval('{0}.area'. format(v)),
-                  'Significant Digits =',eval('{0}.sig'. format(v)),
-                  )
+            final_allcalc.append((v,
+                                  'Side Count =', eval('{0}.side_count'. format(v)),
+                                  'Circumradius =', eval('{0}.circumradius'. format(v)),
+                                  'Vertex Count =',eval('{0}.vertex_count'. format(v)),
+                                  'Perimeter =', eval('{0}.perimeter'. format(v)),
+                                  'Apothem =', eval('{0}.apothem'. format(v)),
+                                  'Interior Angle =', eval('{0}.interior_angle'. format(v)),
+                                  'Edge Length =', eval('{0}.edge_length'. format(v)),
+                                  'Area =',eval('{0}.area'. format(v)),
+                                  'Significant Digits =',eval('{0}.sig'. format(v)),
+                                  ))
+
+        return final_allcalc
 
     @property
     def sidevalues(self):
         """Returns side counts for each instance of Poly(n,r,sig)"""
         self.nrfinal()
+        final_sidevalues = []
         for v in self.polynames:
-           return (v, 'Side Count =', eval('{0}.side_count'. format(v)))
-
-
+            final_sidevalues.append((v,
+                                     'Side Count =', eval('{0}.side_count'. format(v))))
+        return final_sidevalues
 
     @property
     def circumradiusvalues(self):
         """Returns circumradius for each instance of Poly(n,r,sig)"""
         self.nrfinal()
+        final_circumradiusvalues = []
         for v in self.polynames:
-            return (v, 'Circumradius =', eval('{0}.side_count'. format(v)))
-
+            final_circumradiusvalues.append((v, 'Circumradius =', eval('{0}.side_count'. format(v))))
+        return final_circumradiusvalues
 
     @property
     def vertexcalc(self):
         """Returns vertex count for each instance of Poly(n,r,sig)"""
         self.nrfinal()
+        final_vertexcalc = []
         for v in self.polynames:
-            return (v, 'Vertex Count =',eval('{0}.side_count'. format(v)))
-
+            final_vertexcalc.append((v, 'Vertex Count =',eval('{0}.side_count'. format(v))))
+        return final_vertexcalc
 
     @property
     def perimetercalc(self):
         """Returns caculated perimeter for each instance of Poly(n,r,sig)"""
         self.nrfinal()
+        final_perimetercalc = []
         for v in self.polynames:
-            return (v, 'Perimeter =', eval('{0}.side_count'. format(v)))
+            final_perimetercalc.append((v, 'Perimeter =', eval('{0}.side_count'. format(v))))
+        return final_perimetercalc
 
     @property
     def apothemcalc(self):
         """Returns caculated apothem for each instance of Poly(n,r,sig)"""
         self.nrfinal()
+        final_apothemcalc = []
         for v in self.polynames:
-            return (v,'Apothem =', eval('{0}.side_count'. format(v)))
-
+            final_apothemcalc.append((v,'Apothem =', eval('{0}.side_count'. format(v))))
+        return final_apothemcalc
 
     @property
     def interioranglecalc(self):
         """Returns caculated interior angle for each instance of Poly(n,r,sig)"""
         self.nrfinal()
+        final_angle = []
         for v in self.polynames:
-            return (v, 'Interior Angle =', eval('{0}.edge_length'. format(v)))
-
+            final_angle.append((v, 'Interior Angle =', eval('{0}.edge_length'. format(v))))
+        return final_angle
 
     @property
     def edgelengthcalc(self):
         """Returns caculated side length for each instance of Poly(n,r,sig)"""
         self.nrfinal()
+        final_edgelengths = []
         for v in self.polynames:
-            return (v, 'Edge Length =', eval('{0}.side_count'. format(v)))
-
+            final_edgelengths.append((v, 'Edge Length =', eval('{0}.side_count'. format(v))))
+        return final_edgelengths
 
     @property
     def areacalc(self):
         """Returns calculated area for each instance of Poly(n,r,sig)"""
+        final_areas = []
         self.nrfinal()
         for v in self.polynames:
-            return (v, 'Area =',eval('{0}.side_count'. format(v)))
+            final_areas.append((v, 'Area =',eval('{0}.side_count'. format(v))))
+        return final_areas
 
     @property
     def instancerepr(self):
         """Returns each instance representation of Poly(n,r,sig)lf):"""
         self.nrfinal()
+        finalrepr = []
         for v in self.polynames:
-            return (v, 'Poly() Instance Names =',eval('{0}'. format(v)))
+            finalrepr.append((v, '=',eval('{0}'. format(v))))
+        return finalrepr
 
     def __len__(self):
         return self.finalcount
@@ -252,3 +271,10 @@ class PolyFactory:
                     self._radrange,
                     self._sig)
 
+
+# pf = PolyFactory()
+# print(*pf.instancerepr, sep="\n")
+# print(*pf.sidevalues, sep="\n")
+# print(*pf.edgelengthcalc, sep="\n")
+# print(*pf.areacalc, sep="\n")
+# print(*pf.apothemcalc, sep="\n")

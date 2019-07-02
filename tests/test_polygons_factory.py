@@ -63,93 +63,63 @@ def test_polygons_factory_nrfinal(test_poly_factory):
 
 def test_polygons_factory_allcalc_funciton(test_poly_factory):
     assert hasattr(test_poly_factory, 'allcalc')
+    assert len(test_poly_factory.allcalc) == 12
     return test_poly_factory.allcalc
 
 
 def test_polygons_factory_sidevalues(test_poly_factory):
     assert hasattr(test_poly_factory, 'sidevalues')
+    assert len(test_poly_factory.sidevalues) == 12
     return test_poly_factory.sidevalues
 
 
 def test_polygons_factory_circumradiusvalues(test_poly_factory):
     assert hasattr(test_poly_factory, 'circumradiusvalues')
+    assert len(test_poly_factory.circumradiusvalues) == 12
     return test_poly_factory.circumradiusvalues
 
 
 def test_polygons_factory_vertexcalc(test_poly_factory):
     assert hasattr(test_poly_factory, 'vertexcalc')
+    assert len(test_poly_factory.vertexcalc) == 12
     return test_poly_factory.vertexcalc
 
 
 def test_polygons_factory_perimetercalc(test_poly_factory):
     assert hasattr(test_poly_factory, 'perimetercalc')
+    assert len(test_poly_factory.perimetercalc) == 12
     return test_poly_factory.perimetercalc
 
 
 def test_polygons_factory_apothemcalc(test_poly_factory):
     assert hasattr(test_poly_factory, 'apothemcalc')
+    assert len(test_poly_factory.apothemcalc) == 12
     return test_poly_factory.apothemcalc
 
 
 def test_polygons_factory_interioranglecalc(test_poly_factory):
     assert hasattr(test_poly_factory, 'interioranglecalc')
+    assert len(test_poly_factory.interioranglecalc) == 12
     return test_poly_factory.interioranglecalc
 
 
 def test_polygons_factory_edgelengthcalc(test_poly_factory):
     assert hasattr(test_poly_factory, 'edgelengthcalc')
+    assert len(test_poly_factory.edgelengthcalc) == 12
     return test_poly_factory.edgelengthcalc
 
 
 def test_polygons_factory_areacalc(test_poly_factory):
     assert hasattr(test_poly_factory, 'areacalc')
+    assert len(test_poly_factory.areacalc) == 12
     return test_poly_factory.areacalc
 
 
 def test_polygons_factory_instancerepr(test_poly_factory):
     assert hasattr(test_poly_factory, 'instancerepr')
+    assert len(test_poly_factory.instancerepr) == 12
     return test_poly_factory.instancerepr
 
 
 def test_polygons_factor_len_method(test_poly_factory):
     assert len(test_poly_factory) == 12
-# gen_polys = PolyFactory()
-# print(gen_polys.nrfinal)
-# # print(gen_polys.finallist)
-# # print(gen_polys.polynames)
-# # help(gen_polys)
-# # gen_polys.__setitem__(cloneamount=50, sig=3)
-# # print(gen_polys)
-# # gen_polys.nrfinal
-# # print(gen_polys.polynames)
-# # print(gen_polys.allcalc)
-# # gen_polys.nrfinal
-# # gen_polys.polynames
-# #
-# # print(gen_polys)
-# # print(gen_polys.polynames)
-# # gen_polys.nrfinal
-# # print(gen_polys.polynames)
-# # gen_polys.apothemcalc
-# #
-# # help(checkparameters)
-# # help(PolyFactory)
-# #
-# # print(len(gen_polys))
-# # gen_polys.__setitem__(siderange=(100,300))
-# # gen_polys.allcalc
-# # gen_polys.__setitem__(sig=5)
-# # print(gen_polys.polynames)
-# # # gen_polys.__setitem__(radrange=(100,200),siderange=(200,400),sig=3)
-# # # gen_polys.allcalc
-# # print(gen_polys)
-# # gen_polys.__setitem__(sig=5)
-# # print(gen_polys)
-# # # gen_polys.__setitem__(sig=1000)
-# print(gen_polys.instancerepr)
-
-
-# pf = PolyFactory()
-# print(pf.nrfinal)
-# print(pf.finallist)
-# print(pf.finalcount)

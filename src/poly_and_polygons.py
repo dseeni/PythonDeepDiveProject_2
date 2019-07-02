@@ -244,7 +244,7 @@ class Poly:
     def perimeter(self):
         if self._perimeter is None:
             if all((_ is not None for _ in (self._n, self._r, self._sig))):
-                print('Calculating Perimeter...')
+                # print('Calculating Perimeter...')
                 self._perimeter = round(self._n * self.edge_length, self._sig)
         # else:
         #     print('Retrieving perimeter...')
