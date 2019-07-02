@@ -61,13 +61,6 @@ def test_polygons_factory_nrfinal(test_poly_factory):
         assert Pf.poly101 > Pf.poly102
 
 
-# def test_polygons_factory_setitem_value_error(test_poly_factory):
-#     # asking for clones >= icount triggers a ValueError
-#     with raises(ValueError):
-#         test_poly_factory.__setitem__(icount=10, clones=10, cloneamount=0, siderange=(3, 10), radrange=(1, 5), sig=0)
-#         assert len(test_poly_factory.polydict) == 1
-
-
 def test_polygons_factory_allcalc_funciton(test_poly_factory):
     assert hasattr(test_poly_factory, 'allcalc')
     return test_poly_factory.allcalc

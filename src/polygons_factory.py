@@ -240,10 +240,9 @@ class PolyFactory:
         for v in self.polynames:
             return (v, 'Poly() Instance Names =',eval('{0}'. format(v)))
 
-
     def __len__(self):
         return self.finalcount
-    #
+
     def __repr__(self):
         return 'PolyFactory(icount={0},clones={1},cloneamount={2},siderange={3},radrange={4},sig={5})'\
             .format(self._icount,
@@ -253,33 +252,3 @@ class PolyFactory:
                     self._radrange,
                     self._sig)
 
-    # def __setitem__(self, icount=None, clones=None, cloneamount=None, siderange=None, radrange=None, sig=None):
-    #
-    #     icount = icount if icount is not None else icount
-    #     clones = clones if clones is not None else clones
-    #     cloneamount = cloneamount if cloneamount is not None else cloneamount
-    #     siderange = siderange if siderange is not None else siderange
-    #     radrange = radrange if radrange is not None else radrange
-    #     sig = sig if sig is not None else sig
-    #
-    #     params = pm.check_parameters(icount, clones, cloneamount, siderange, radrange, sig)
-    #
-    #     self._icount = params[0]
-    #     self._clones = params[1]
-    #     self._cloneamount = params[2]
-    #     self._siderange = params[3]
-    #     self._radrange = params[4]
-    #     self._sig = params[5]
-    #     self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
-    #     if self._finalcount <= clones * cloneamount and all(x >= 0 for x in (icount, clones, cloneamount)):
-    #         raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
-    #     self.nrfinal()
-
-
-pf = PolyFactory()
-# print(pf.sample_ints)
-print(pf.allcalc)
-# print(pf)
-# print(pf.nrfinal)
-# print(pf.finallist)
-# print(pf.finalcount)
