@@ -10,8 +10,8 @@ def frange(start=0.0, stop=0.0, step=1.0):
 
 
 def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2):
-    """ check parameters takes in the input from
-    Polyfactory(icount,clones,clneamount,siderange,radrage,sig)
+    """ check_parameters() takes in the input from
+    Polyfactory(icount, clones, clneamount, siderange, radrage, sig)
     returns verified parameters or the least modified viable parameters
     """
     if not isinstance(sig, int) or sig < 0:

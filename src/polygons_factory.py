@@ -54,15 +54,84 @@ class PolyFactory:
         """ intital count of unique values of (n,r,sig) to generate"""
         return self._icount
 
+    @icount.setter
+    def icount(self, icount):
+        params = pm.check_parameters(icount=icount, clones=self._clones, cloneamount=self._cloneamount,
+                                     siderange=self._siderange, radrange=self._radrange, sig=self._sig)
+        self._icount = params[0]
+        self._clones = params[1]
+        self._cloneamount = params[2]
+        self._siderange = params[3]
+        self._radrange = params[4]
+        self._sig = params[5]
+        self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+        if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+                                                                                         self._cloneamount)):
+            raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
+
+    @property
+    def sig(self):
+        """ sig value for each instance of (n,r,sig) to generate"""
+        return self._sig
+
+    @sig.setter
+    def sig(self, sig):
+        params = pm.check_parameters(icount=self._icount, clones=self._clones, cloneamount=self._cloneamount,
+                                     siderange=self._siderange, radrange=self._radrange, sig=sig)
+        self._icount = params[0]
+        self._clones = params[1]
+        self._cloneamount = params[2]
+        self._siderange = params[3]
+        self._radrange = params[4]
+        self._sig = params[5]
+        self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+        if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+                                                                                         self._cloneamount)):
+            raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
+
     @property
     def clones(self):
         """ clones = how many of those values will have frequency > 1"""
         return self._clones
 
+    @clones.setter
+    def clones(self, clones):
+        params = pm.check_parameters(icount=self._icount, clones=clones, cloneamount=self._cloneamount,
+                                     siderange=self._siderange, radrange=self._radrange, sig=self._sig)
+        self._icount = params[0]
+        self._clones = params[1]
+        self._cloneamount = params[2]
+        self._siderange = params[3]
+        self._radrange = params[4]
+        self._sig = params[5]
+        self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+        if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+                                                                                         self._cloneamount)):
+            raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
+
     @property
     def cloneamount(self):
         """frequency of reoccuring (n,r,sig)"""
         return self._cloneamount
+
+    @cloneamount.setter
+    def cloneamount(self, cloneamount):
+        params = pm.check_parameters(icount=self._icount, clones=self._clones, cloneamount=cloneamount,
+                                     siderange=self._siderange, radrange=self._radrange, sig=self._sig)
+        self._icount = params[0]
+        self._clones = params[1]
+        self._cloneamount = params[2]
+        self._siderange = params[3]
+        self._radrange = params[4]
+        self._sig = params[5]
+        self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+        if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+                                                                                         self._cloneamount)):
+            raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
 
     @property
     def finalcount(self):
@@ -193,7 +262,7 @@ class PolyFactory:
         self.nrfinal()
         final_circumradiusvalues = []
         for v in self.polynames:
-            final_circumradiusvalues.append((v, 'Circumradius =', eval('{0}.side_count'. format(v))))
+            final_circumradiusvalues.append((v, 'Circumradius =', eval('{0}.circumradius'. format(v))))
         return final_circumradiusvalues
 
     @property
@@ -202,7 +271,7 @@ class PolyFactory:
         self.nrfinal()
         final_vertexcalc = []
         for v in self.polynames:
-            final_vertexcalc.append((v, 'Vertex Count =',eval('{0}.side_count'. format(v))))
+            final_vertexcalc.append((v, 'Vertex Count =',eval('{0}.vertex_count'. format(v))))
         return final_vertexcalc
 
     @property
@@ -211,7 +280,7 @@ class PolyFactory:
         self.nrfinal()
         final_perimetercalc = []
         for v in self.polynames:
-            final_perimetercalc.append((v, 'Perimeter =', eval('{0}.side_count'. format(v))))
+            final_perimetercalc.append((v, 'Perimeter =', eval('{0}.perimeter'. format(v))))
         return final_perimetercalc
 
     @property
@@ -220,7 +289,7 @@ class PolyFactory:
         self.nrfinal()
         final_apothemcalc = []
         for v in self.polynames:
-            final_apothemcalc.append((v,'Apothem =', eval('{0}.side_count'. format(v))))
+            final_apothemcalc.append((v,'Apothem =', eval('{0}.apothem'. format(v))))
         return final_apothemcalc
 
     @property
@@ -229,7 +298,7 @@ class PolyFactory:
         self.nrfinal()
         final_angle = []
         for v in self.polynames:
-            final_angle.append((v, 'Interior Angle =', eval('{0}.edge_length'. format(v))))
+            final_angle.append((v, 'Interior Angle =', eval('{0}.interior_angle'. format(v))))
         return final_angle
 
     @property
@@ -238,7 +307,7 @@ class PolyFactory:
         self.nrfinal()
         final_edgelengths = []
         for v in self.polynames:
-            final_edgelengths.append((v, 'Edge Length =', eval('{0}.side_count'. format(v))))
+            final_edgelengths.append((v, 'Edge Length =', eval('{0}.edge_length'. format(v))))
         return final_edgelengths
 
     @property
@@ -247,7 +316,7 @@ class PolyFactory:
         final_areas = []
         self.nrfinal()
         for v in self.polynames:
-            final_areas.append((v, 'Area =',eval('{0}.side_count'. format(v))))
+            final_areas.append((v, 'Area =',eval('{0}.area'. format(v))))
         return final_areas
 
     @property
@@ -256,7 +325,7 @@ class PolyFactory:
         self.nrfinal()
         finalrepr = []
         for v in self.polynames:
-            finalrepr.append((v, '=',eval('{0}'. format(v))))
+            finalrepr.append((v, '=', eval('{0}'. format(v))))
         return finalrepr
 
     def __len__(self):
@@ -272,9 +341,6 @@ class PolyFactory:
                     self._sig)
 
 
-# pf = PolyFactory()
-# print(*pf.instancerepr, sep="\n")
-# print(*pf.sidevalues, sep="\n")
-# print(*pf.edgelengthcalc, sep="\n")
-# print(*pf.areacalc, sep="\n")
-# print(*pf.apothemcalc, sep="\n")
+pf = PolyFactory()
+# print(pf.sample_ints)
+# print(pf.sample_floats)
