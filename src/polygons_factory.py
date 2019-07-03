@@ -372,7 +372,8 @@ class PolyFactory:
                     self._sig)
 
 
-# pf = PolyFactory()
+pf = PolyFactory()
+print(pf)
 # pf.clones = -1
 # pf.cloneamount = -1
 # print(pf)
