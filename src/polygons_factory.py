@@ -371,13 +371,4 @@ class PolyFactory:
                     self._radrange,
                     self._sig)
 
-
 pf = PolyFactory()
-print(pf)
-# pf.clones = -1
-# pf.cloneamount = -1
-# print(pf)
-# print(pf.finalcount)
-# print(*pf.allcalc, sep='\n')
-# print(pf.sample_ints)
-# print(pf.sample_floats)
