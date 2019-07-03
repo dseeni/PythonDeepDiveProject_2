@@ -85,10 +85,10 @@ class PolyFactory:
         self._siderange = params[3]
         self._radrange = params[4]
         self._sig = params[5]
-        self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
-        if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
-                                                                                         self._cloneamount)):
-            raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        # self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+        # if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+        #                                                                                  self._cloneamount)):
+        #     raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
 
     @property
@@ -107,8 +107,8 @@ class PolyFactory:
         self._radrange = params[4]
         self._sig = params[5]
         self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
-        if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
-                                                                                         self._cloneamount)):
+        if self._finalcount <= self._clones * self._cloneamount \
+                and all(x >= 0 for x in (self._icount, self._clones, self._cloneamount)):
             raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
 
@@ -128,9 +128,9 @@ class PolyFactory:
         self._radrange = params[4]
         self._sig = params[5]
         self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
-        if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
-                                                                                         self._cloneamount)):
-            raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        # if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+        #                                                                                  self._cloneamount)):
+        #     raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
 
     @property
@@ -143,10 +143,42 @@ class PolyFactory:
         """(x,y] interval range for side sampling"""
         return self._siderange
 
+    @siderange.setter
+    def siderange(self, siderange):
+        params = pm.check_parameters(icount=self._icount, clones=self._clones, cloneamount=self._cloneamount,
+                                     siderange=siderange, radrange=self._radrange, sig=self._sig)
+        self._icount = params[0]
+        self._clones = params[1]
+        self._cloneamount = params[2]
+        self._siderange = params[3]
+        self._radrange = params[4]
+        self._sig = params[5]
+        # self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+        # if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+        #                                                                                  self._cloneamount)):
+        #     raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
+
     @property
     def radrange(self):
         """(x,y] interval range of radius sampling"""
         return self._radrange
+
+    @radrange.setter
+    def radrange(self, radrange):
+        params = pm.check_parameters(icount=self._icount, clones=self._clones, cloneamount=self._cloneamount,
+                                     siderange=self._siderange, radrange=radrange, sig=self._sig)
+        self._icount = params[0]
+        self._clones = params[1]
+        self._cloneamount = params[2]
+        self._siderange = params[3]
+        self._radrange = params[4]
+        self._sig = params[5]
+        # self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+        # if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+        #                                                                                  self._cloneamount)):
+        #     raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
 
     @property
     def sample_ints(self):
@@ -179,7 +211,6 @@ class PolyFactory:
             result.append(x)
         return result
 
-    # @property
     def nrfinal(self):
         """ nrfinal generates instances of Poly(n,r,sig) objects from specified parameters"""
         # Unique n list + Unique r list of length icount
@@ -341,6 +372,11 @@ class PolyFactory:
                     self._sig)
 
 
-pf = PolyFactory()
+# pf = PolyFactory()
+# pf.clones = -1
+# pf.cloneamount = -1
+# print(pf)
+# print(pf.finalcount)
+# print(*pf.allcalc, sep='\n')
 # print(pf.sample_ints)
 # print(pf.sample_floats)

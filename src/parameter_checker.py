@@ -14,6 +14,9 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
     Polyfactory(icount, clones, clneamount, siderange, radrage, sig)
     returns verified parameters or the least modified viable parameters
     """
+    if clones < 0 or cloneamount < 0:
+        raise ValueError('clones and cloneamount must be >= 0')
+    
     if not isinstance(sig, int) or sig < 0:
         raise TypeError('significant digits (sig) must be of type integer only')
 

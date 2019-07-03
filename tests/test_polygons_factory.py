@@ -18,12 +18,37 @@ def test_polygons_factory_icount(test_poly_factory):
     assert test_poly_factory.icount == 10
 
 
+def test_polygons_factor_icount_setter(test_poly_factory):
+    test_poly_factory.icount = 3
+    assert test_poly_factory.finalcount == 5
+    with raises(ValueError):
+        test_poly_factory.icount = 2
+
+
 def test_polygons_factory_clones(test_poly_factory):
     assert test_poly_factory.clones == 2
+    with raises(ValueError):
+        test_poly_factory.icount = 1
+        test_poly_factory.clones = 1
+
+
+def test_polygons_factor_clones_setter(test_poly_factory):
+    test_poly_factory.clones = 0
+    assert test_poly_factory.finalcount == 10
+
+
+def test_polygons_factor_clones_setter_value_error(test_poly_factory):
+    with raises(ValueError):
+        test_poly_factory.clones = 10
 
 
 def test_polygons_factory_cloneamount(test_poly_factory):
     assert test_poly_factory.cloneamount == 2
+
+
+def test_polygons_factor_cloneamount_setter(test_poly_factory):
+    test_poly_factory.cloneamount = 3
+    assert test_poly_factory.finalcount == 14
 
 
 def test_polygons_factory_finalcount(test_poly_factory):
@@ -34,8 +59,27 @@ def test_polygons_factory_siderange(test_poly_factory):
     assert test_poly_factory.siderange == (3, 13)
 
 
+def test_polygons_factory_siderange_setter(test_poly_factory):
+    test_poly_factory.siderange = (10,23)
+    assert test_poly_factory.siderange == (10, 23)
+
+
 def test_polygons_factory_radrange(test_poly_factory):
     assert test_poly_factory.radrange == (1, 5)
+
+
+def test_polygons_factory_radrange_setter(test_poly_factory):
+    test_poly_factory.radrange = (5,20)
+    assert test_poly_factory.radrange == (5,20)
+
+
+def test_polygons_factory_sig(test_poly_factory):
+    assert test_poly_factory.sig == 1
+
+
+def test_polygons_factory_sig_setter(test_poly_factory):
+    test_poly_factory.sig = 2
+    assert test_poly_factory.sig == 2
 
 
 def test_polygons_factory_sample_ints(test_poly_factory):

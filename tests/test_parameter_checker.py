@@ -33,6 +33,16 @@ def test_check_parameters_docstring():
     assert pm.check_parameters.__doc__ is not None
 
 
+def test_check_parameters_clones_value_error(test_poly_factory):
+    with raises(ValueError):
+        test_poly_factory.clones = -1
+
+
+def test_check_parameters_cloneamount_value_error(test_poly_factory):
+    with raises(ValueError):
+        test_poly_factory.cloneamount = -1
+
+
 def test_check_parameters_callable():
     assert (pm.check_parameters())
 
