@@ -371,8 +371,3 @@ class PolyFactory:
                     self._radrange,
                     self._sig)
 
-pf = PolyFactory()
-pf.nrfinal()
-# print(pf)
-# print(*pf.allcalc, sep='\n')
-print(*pf.polynames, sep='\n')
