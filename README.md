@@ -10,23 +10,28 @@
 
 - NrsGlobalCache() 
 
-####Poly(n, r, sig):
+##Poly(n, r, sig):
+
 - n = sides
 - r = radius 
 - sig = significant digit precision for calculated properties
 
 **Poly Calculated Properties:**
 
-*Calculated Properties are lazily evaluated and accessable by other instances via NrsGlobalCache*
+*Calculated Properties are lazily evaluated, stored locally, and cached globally via NrsGlobalCache:*
 
 - interior angle
+
 - side length
+
 - apothem 
+
 - area
+
 - perimeter
 
 
-####Polygons(m, r, sig):
+##Polygons(m, r, sig):
 
 - Iterable class that returns an iterator
 
@@ -35,11 +40,11 @@
 - Calculates max_efficency Polygon 
 
 
-####NrsGlobalCache():
+##NrsGlobalCache():
 - Calculated Properties are stored in a Singleton FIFO Cache: *NrsGlobalCache()*
 
 - NrsGlobalCache --> [(n,r,s)] [calculated_property] [value]
 
 - NrsGlobalCache.cache_limit controls the cache size
 
-- Reading or Writing to Cache causes (n,r,s) item to become most recently used
+- Reading or Writing to Cache causes the cached item to become the last item in the cache
