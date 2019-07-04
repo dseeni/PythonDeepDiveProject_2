@@ -280,19 +280,3 @@ def test_polygons_iterator_returns_self():
     assert id(polysiterator) == id(iter(polysiterator))
 
 
-#
-#
-# def test_polygon_sequence_pi_area(test_polygons):
-#     # calculate area of Pi
-#     assert math.isclose(test_polygons[1][497].area, math.pi, abs_tol=.0001, rel_tol=.0001)
-
-    # print('pp.Polygons Class setitem method testing...')
-    #
-    # polys2 = pp.Polygons(4, 20)
-    # print('polys2', polys2)
-    #
-    # print('polys2 changing sides and radius...')
-    # if not polys2.__setitem__(400, 1):
-    #     print('polys2', polys2)
-    #     print('pp.Polygons Class setitem method working')
-    # print('Unit Testing Complete')

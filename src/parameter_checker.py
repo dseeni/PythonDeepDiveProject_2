@@ -1,4 +1,4 @@
-def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=2):
+def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3, 10), radrange=(1, 5), sig=2):
     """ check_parameters() takes in the input from
     Polyfactory(icount, clones, clneamount, siderange, radrage, sig) and
     returns verified parameters or the least modified viable parameters
@@ -33,7 +33,6 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
     s = int('1' + zeros)
 
     # incrementer is the start and step values for frange(start=incrementer , stop=radrange[1], step=incrementer )
-    incrementer = len(str(sig)) / s
     floatrandomtotal = int((radrange[1] - radrange[0]) * s)
     # floatrandomtotal = len(list(frange(incrementer, radrange[1] - radrange[0], incrementer)))
 
@@ -44,7 +43,7 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
     # float range is limited by significant digits (sig)
     floatrange = str(round(radrange[1] - radrange[0], sig))
     # we want to strip out any potential decimal values
-    floatrange = floatrange.replace('.','')
+    floatrange = floatrange.replace('.', '')
     # randoms possible
     randomspossible = int(floatrange + s)
 
@@ -52,11 +51,10 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3,10), radra
     if icount > possibleside:
         siderange = (siderange[0], siderange[1] + (icount - possibleside))
 
-
     while icount >= floatrandomtotal:
-        sig+=1
-        return check_parameters(icount,clones,cloneamount,siderange,radrange, sig)
+        sig += 1
+        return check_parameters(icount, clones, cloneamount, siderange, radrange, sig)
 
     if icount <= randomspossible:
-        return (icount, clones, cloneamount, siderange, radrange, sig)
+        return icount, clones, cloneamount, siderange, radrange, sig
 

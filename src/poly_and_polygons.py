@@ -373,7 +373,7 @@ class Poly:
 class Polygons:
     """Returns an iterable of generated Poly() objects from m(sides) down to len(m-2) sides"""
     @staticmethod
-    def polyscheck(m=None, r=None):
+    def polyscheck(m=None, r=None, sig=None):
         # ptype = acceptable types for (n,r,sig)
         ptype = (int, float, Decimal, Fraction)
 
@@ -385,14 +385,19 @@ class Polygons:
         if r is not None:
             if not (isinstance(r, ptype) and r > 0):
                 raise TypeError('r = Positive Int/Float/Decimal/Fraction only')
+
+        if sig is not None:
+            if not (isinstance(sig, int) and sig > 0):
+                raise TypeError('Significant Digits (sig) must be of positive integer type only')
         return True
 
-    def __init__(self, m, r):
-        if Polygons.polyscheck(m, r):
+    def __init__(self, m, r, sig=3):
+        if Polygons.polyscheck(m, r, sig):
             self._m = int(m)
             self._r = float(r)
-            self._polygons = [(m, self._r) for m in range(3, self._m+1)]
-            print(self._polygons)
+            self._sig = sig
+            self.polygons = [(m, self._r, self._sig) for m in range(3, self._m + 1)]
+            print(self.polygons)
 
     def __len__(self):
         return self._m - 2
@@ -403,13 +408,9 @@ class Polygons:
 
     @property
     def max_efficiency(self):
-        polylist = [Poly(self._polygons[i][0], self._polygons[i][1]) for i in range(len(self._polygons))]
-        for i in polylist:
-            i.calcproperties()
+        polylist = [Poly(self.polygons[i][0], self.polygons[i][1]) for i in range(len(self.polygons))]
         sorted_polygons = sorted(polylist,
-                                 key=lambda i: i.area/i.perimeter,
-                                 reverse=True)
-        # print('Max Efficeny polygon:', sorted_polygons[0])
+                                 key=lambda i: i.area/i.perimeter, reverse=True)
         return sorted_polygons[0].area / sorted_polygons[0].perimeter
 
     def __repr__(self):
@@ -421,7 +422,7 @@ class Polygons:
         def __init__(self, poly_obj):
             # poly_obj is the instance of Polygons iterable passed into the iterator
             # print('Calling PolyIterator __init__')
-            self._poly_obj = poly_obj
+            self.poly_obj = poly_obj
             self._index = 0
 
         def __iter__(self):
@@ -430,10 +431,10 @@ class Polygons:
 
         def __next__(self):
             # print('Calling __next__')
-            if self._index >= self._poly_obj.__len__():
+            if self._index >= self.poly_obj.__len__():
                 raise StopIteration
             else:
-                item = Poly(self._poly_obj._polygons[self._index][0], self._poly_obj._polygons[self._index][1])
+                item = Poly(self.poly_obj.polygons[self._index][0], self.poly_obj.polygons[self._index][1])
                 self._index += 1
                 return item
 
