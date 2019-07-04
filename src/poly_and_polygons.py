@@ -99,6 +99,9 @@ CacheGlobal = NrsGlobalCache()
 
 class Poly:
 
+    """
+    Poly(n, r, sig) is a Polygon object
+    """
     def __init__(self, n=None, r=None, sig=3):
 
         if Poly.polycheck(n, r, sig):
