@@ -33,7 +33,6 @@ class NrsGlobalCache(OrderedDict):
             super().__init__()
             # self._cache = OrderedDict(dict())
             self._cache_limit = 100
-            self._cache_size = len(self.keys())
 
     @property
     def cache_size(self):
@@ -71,7 +70,7 @@ class NrsGlobalCache(OrderedDict):
         val = self[key] = {}
         return val
 
-    def cache_access(self, key, calc_prop, value):
+    def setter(self, key, calc_prop, value):
         if key in self.keys():
             olditem = self.pop(key)
             newitem = {(str(calc_prop)): value}
@@ -83,8 +82,19 @@ class NrsGlobalCache(OrderedDict):
         else:
             self[key][calc_prop] = value
 
+    def getter(self, key, calc_prop):
+        if key in self.keys():
+            pop = self.pop(key)
+            for k, v in pop.items():
+                self.setter(key, k, v)
+
+        return self[key][calc_prop]
+    
     def __repr__(self):
         return 'NrsGlobalCache()'
+
+
+CacheGlobal = NrsGlobalCache()
 
 
 class Poly:
@@ -136,7 +146,7 @@ class Poly:
     @property
     def nrskey(self):
         if any((_ is None for _ in (self._n, self._r, self._sig))):
-            raise KeyError("n,r,s values = None")
+            return None
         return self._n, self._r, self._sig
 
     # vertex_count = side_count....
@@ -196,58 +206,99 @@ class Poly:
 
     @property
     def interior_angle(self):
+        if any((_ is None for _ in (self._n, self._sig))):
+            # Radius is not required for interior_angle
+            raise ValueError('Assign missing n, sig values')
+
+        def calc_interior_angle():
+            print('Calculating interior_angle...')
+            self._interior_angle = round((self._n - 2) * (180 / self._n), self._sig)
+
         if self._interior_angle is None:
-            if all((_ is not None for _ in (self._n, self._sig))):
-                # print('Calculating interior_angle...')
-                self._interior_angle = round((self._n - 2) * (180 / self._n), self._sig)
+            # check CacheGlobal for exiting calculation
+            if self._interior_angle is None and self.nrskey is not None:
+                try:
+                    self._interior_angle = CacheGlobal.getter(self.nrskey, 'interior_angle')
+                    print('Pinged CacheGlobal for interior_angle')
+                except KeyError:
+                    calc_interior_angle()
+                    CacheGlobal.setter(self.nrskey, 'interior_angle', self._interior_angle)
+                    print('Stored caculated property in CacheGlobal')
             else:
-                raise ValueError('Assign missing n, sig values')
-        # else:
-        #     # print('Retrieving interior_angle...')
+                # just in case interior_angle is None but radius is also None so its not in cache...
+                calc_interior_angle()
+
+        else:
+            print('Retrieving interior_angle')
         return self._interior_angle
 
     @property
     def edge_length(self):
+        if any(_ is None for _ in (self._r, self._n, self._sig)):
+            raise ValueError('Assign missing n,r,sig values')
         if self._edge_length is None:
-            if all(_ is not None for _ in (self._r, self._n, self._sig)):
-                # print('Calculating edge_length...')
+            try:
+                self._edge_length = CacheGlobal.getter(self.nrskey, 'edge_length')
+                print('Pinged CacheGlobal for edge_length')
+            except KeyError:
+                print('Calculating edge_length...')
                 self._edge_length = round(2 * self._r * math.sin(self.Pi / self._n), self._sig)
-            else:
-                raise ValueError('Assign missing n,r,sig values')
-        # else:
-        #     # print('Retrieving edge_length...')
+                CacheGlobal.setter(self.nrskey, 'edge_length', self._edge_length)
+                print('Stored caculated property in CacheGlobal')
+        else:
+            print('Retrieving edge_length...')
         return self._edge_length
 
     @property
     def apothem(self):
+        if any((_ is None for _ in (self._n, self._r, self._sig))):
+            raise ValueError('Assign missing n,r,sig values')
         if self._apothem is None:
-            if all((_ is not None for _ in (self._n, self._r, self._sig))):
-                # print('Calculating Apothem...')
-                self._apothem = round(self._r * (math.cos(self.Pi / self._n)), self._sig)
-            else:
-                raise ValueError('Assign missing n,r,sig values')
-        # else:
-        #     print('Retrieving apothem...')
+            try:
+                self._apothem = CacheGlobal[self.nrskey]['apothem']
+                print('Pinged CacheGlobal for apothem')
+            except KeyError:
+                    print('Calculating Apothem...')
+                    self._apothem = round(self._r * (math.cos(self.Pi / self._n)), self._sig)
+                    CacheGlobal.setter(self.nrskey, 'apothem', self._apothem)
+                    print('Stored caculated property in CacheGlobal')
+        else:
+            print('Retrieving apothem...')
         return self._apothem
 
     @property
     def area(self):
+        if any((_ is None for _ in (self._n, self._r, self._sig))):
+            raise ValueError('Assign missing n,r,sig values')
         if self._area is None:
-            if self.edge_length and self.apothem:
-                # print('Calculating Area...')
-                self._area = round(.5 * self._n * self.edge_length * self.apothem, self._sig)
-        # else:
-        #     print('Retrieving area...')
+                try:
+                    self._area = CacheGlobal[self.nrskey]['area']
+                    print('Pinged CacheGlobal for area')
+                except KeyError:
+                    print('Calculating Area...')
+                    self._area = round(.5 * self._n * self.edge_length * self.apothem, self._sig)
+                    CacheGlobal.setter(self.nrskey, 'area', self._area)
+                    print('Stored caculated property in CacheGlobal')
+        else:
+            print('Retrieving area...')
         return self._area
 
     @property
     def perimeter(self):
+        if any((_ is None for _ in (self._n, self._r, self._sig))):
+            raise ValueError('Assign missing n,r,sig values')
+
         if self._perimeter is None:
-            if all((_ is not None for _ in (self._n, self._r, self._sig))):
-                # print('Calculating Perimeter...')
+            try:
+                self._perimeter = CacheGlobal[self.nrskey]['perimeter']
+                print('Pinged CacheGlobal for perimeter')
+            except KeyError:
+                print('Calculating Perimeter...')
                 self._perimeter = round(self._n * self.edge_length, self._sig)
-        # else:
-        #     print('Retrieving perimeter...')
+                CacheGlobal.setter(self.nrskey, 'perimeter', self._perimeter)
+                print('Stored caculated property in CacheGlobal')
+        else:
+            print('Retrieving perimeter...')
         return self._perimeter
 
     # Calculate all properties...
@@ -385,3 +436,19 @@ class Polygons:
                 item = Poly(self._poly_obj._polygons[self._index][0], self._poly_obj._polygons[self._index][1])
                 self._index += 1
                 return item
+
+
+# p = Poly(5,2,3)
+# p1 = Poly(5,2,3)
+#
+# # print(p.interior_angle)
+# # print(p1.interior_angle)
+# # print(p1.interior_angle)
+#
+# # print(p.area)
+# # print(p.area)
+# # print(p1.area)
+# # print(p1.area)
+# print(p.perimeter)
+# print(p.perimeter)
+# print(p1.perimeter)

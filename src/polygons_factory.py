@@ -371,4 +371,3 @@ class PolyFactory:
                     self._radrange,
                     self._sig)
 
-pf = PolyFactory()
