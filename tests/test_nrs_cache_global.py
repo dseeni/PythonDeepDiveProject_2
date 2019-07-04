@@ -102,6 +102,7 @@ def test_global_cache_limit_respects_new_item(test_global_cache):
 
 
 def test_global_cache_getter_method_fifo(test_global_cache):
+    CacheGlobal.clear()
     apothem = test_global_cache.getter((50, 50, .1), 'apothem')
     print('apothem = ', apothem)
     assert next(reversed(test_global_cache)) == (50, 50, .1)
@@ -116,4 +117,10 @@ def test_global_cache_getter_method_fifo(test_global_cache):
     assert next(keys) == (5, 3, 3)
     assert next(keys) == (5, 2, 3)
     assert len(CacheGlobal) == 2
+    CacheGlobal.cache_limit = 1
+    keys = reversed(CacheGlobal)
+    assert next(keys) == (5, 3, 3)
+    assert len(CacheGlobal.key_view) ==1
+
+
 
