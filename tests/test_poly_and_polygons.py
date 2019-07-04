@@ -86,6 +86,11 @@ def test_polygon_interior_angle_value_error():
         return poly.interior_angle
 
 
+def test_polygon_interior_angle_value_calculates_without_radius():
+    poly = Pp.Poly(3, None, 3)
+    return poly.interior_angle
+
+
 def test_polygon_interior_angle_cache():
     poly = Pp.Poly(5, 5, 3)
     if poly.interior_angle:
@@ -144,6 +149,13 @@ def test_polygon_perimeter_cache():
     assert poly._perimeter is None
     poly.side_count = 3
     assert poly._perimeter is None
+
+
+def test_polygon_perimeter_value_error():
+    with raises(ValueError):
+        poly1 = Pp.Poly()
+        return poly1.perimeter
+
 
 
 def test_polygon_edge_length_value_error():

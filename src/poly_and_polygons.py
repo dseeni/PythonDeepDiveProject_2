@@ -438,17 +438,3 @@ class Polygons:
                 return item
 
 
-# p = Poly(5,2,3)
-# p1 = Poly(5,2,3)
-#
-# # print(p.interior_angle)
-# # print(p1.interior_angle)
-# # print(p1.interior_angle)
-#
-# # print(p.area)
-# # print(p.area)
-# # print(p1.area)
-# # print(p1.area)
-# print(p.perimeter)
-# print(p.perimeter)
-# print(p1.perimeter)

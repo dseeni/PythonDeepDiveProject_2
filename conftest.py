@@ -40,7 +40,6 @@ def test_polygons():
 
 
 # test_global_cache fixtures
-
 @fixture(autouse=True)
 # auto-run function fixture to clear singleton
 def reset_test_global_cache_singletons():
