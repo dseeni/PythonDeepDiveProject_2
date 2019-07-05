@@ -271,7 +271,8 @@ def test_polygons_returns_iterator(test_polygons):
 
 def test_polygons_max_efficencey_method(test_polygons):
     # test the max efficencey formula
-    assert max([p.area/p.perimeter for p in test_polygons[1]]) == test_polygons[1].max_efficiency
+    # assert max([p.area/p.perimeter for p in test_polygons[1]]) == test_polygons[1].max_efficiency
+    assert test_polygons[1].max_efficiency == Pp.Poly(500, 1, 3)
 
 
 def test_polygons_iterator_returns_self():
