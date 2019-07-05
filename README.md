@@ -67,6 +67,6 @@
 
 - Verifies instance parameters are viable for desired randomized instances of Poly(n, r)
 
-- If desired unique random instances is not possible, check_parameters returns minimum viable parameters 
+- If desired random instances are not possible, check_parameters returns the minimum viable parameters to satisfy icount 
 
 ![UML](https://raw.githubusercontent.com/dseeni/PDD2_Project2/f/polygons-factory/DDP_Proj2_UML.jpg?token=ABSJHRJ4T7CEBEQ4ONH3UOS5D3GBQ)
