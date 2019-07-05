@@ -409,6 +409,7 @@ class Polygons:
                 self._index += 1
                 return item
 
+
 p = Polygons(10,3)
 print(p.max_efficiency)
 print(p)
