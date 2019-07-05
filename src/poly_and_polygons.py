@@ -39,10 +39,6 @@ class NrsGlobalCache(OrderedDict):
         # current size of the cache
         return len(self.keys())
 
-    # @cache_size.setter
-    # def cache_size(self, length):
-    #     return length
-
     @property
     def cache_limit(self):
         # maximum cache size default = 100
@@ -189,7 +185,7 @@ class Poly:
 
     @property
     def interior_angle(self):
-        if self._n is not None:
+        if self._n is None:
             # Radius is not required for interior_angle
             raise ValueError('Assign missing n')
 

@@ -8,35 +8,35 @@ from src import parameter_checker as pm
 class PolyFactory:
 
     """
-    This class generates randomized instances of Poly(n,r,sig):
+    This class generates randomized instances of Poly(n,r):
 
-            icount = intital unique values of (n,r,sig) to generate
+            icount = intital unique values of (n,r) to generate
             clones = how many of those values will have frequency > 1
-            cloneamount = frequency of reoccuring (n,r,sig)
+            cloneamount = frequency of reoccuring (n,r)
             siderange = (x,y] interval range for side sampling
             radrange = (x,y] interval range of radius sampling
-            sig = significant digits for caclulated properties / radius sample range Poly(n,r,sig)
+            sig = floating point precision for radrange (x,y]
 
-            self.nrfinal = Generates randomized instances of Poly(n,r,sig)
+            self.nrfinal = Generates randomized instances of Poly(n,r)
 
-            self.name = last recent Poly(n,r,sig) object names in a list
-            self.finallist = length of the list of recently created Poly(n,r,sig)
-            self.finalcount = Total count of last generated Poly(n,r,sig)
-            self.allcalc = caculate allcalc for each instance of Poly(n,r,sig)
-            self.sidevalues = caculate sidevalues for each instance of Poly(n,r,sig)
-            self.circumradiusvalues = caculate circumradiusvalues for each instance of Poly(n,r,sig)
-            self.vectexcalc = caculate vectexcalc for each instance of Poly(n,r,sig)
-            self.perimetercalc = caculate perimetercalc for each instance of Poly(n,r,sig)
-            self.apothemcalc = caculate apothemcalc for each instance of Poly(n,r,sig)
-            self.interioranglecalc = caculate interioranglecalc for each instance of Poly(n,r,sig)
-            self.edgelengthcalc = caculate edgelengthcalc for each instance of Poly(n,r,sig)
+            self.name = last recent Poly(n,r) object names in a list
+            self.finallist = length of the list of recently created Poly(n,r)
+            self.finalcount = Total count of last generated Poly(n,r)
+            self.allcalc = caculate allcalc for each instance of Poly(n,r)
+            self.sidevalues = caculate sidevalues for each instance of Poly(n,r)
+            self.circumradiusvalues = caculate circumradiusvalues for each instance of Poly(n,r)
+            self.vectexcalc = caculate vectexcalc for each instance of Poly(n,r)
+            self.perimetercalc = caculate perimetercalc for each instance of Poly(n,r)
+            self.apothemcalc = caculate apothemcalc for each instance of Poly(n,r)
+            self.interioranglecalc = caculate interioranglecalc for each instance of Poly(n,r)
+            self.edgelengthcalc = caculate edgelengthcalc for each instance of Poly(n,r)
             self.areacalc = caculate areacalc for each instance of polygon
-            self.instancerepr = dispaly instancerepr for each instance of Poly(n,r,sig)
+            self.instancerepr = dispaly instancerepr for each instance of Poly(n,r)
     """
 
-    def __init__(self, icount=10, clones=2, cloneamount=2, siderange=(3,10), radrange=(1,5), sig=0):
+    def __init__(self, icount=10, clones=2, cloneamount=2, siderange=(3, 10), radrange=(1, 5), sig=1):
 
-        params = pm.check_parameters(icount,clones,cloneamount,siderange,radrange,sig)
+        params = pm.check_parameters(icount, clones, cloneamount, siderange, radrange, sig)
 
         self._icount = params[0]
         self._clones = params[1]
@@ -51,7 +51,7 @@ class PolyFactory:
 
     @property
     def icount(self):
-        """ intital count of unique values of (n,r,sig) to generate"""
+        """ intital count of unique values of (n,r) to generate"""
         return self._icount
 
     @icount.setter
@@ -68,27 +68,6 @@ class PolyFactory:
         if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
                                                                                          self._cloneamount)):
             raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
-        self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
-
-    @property
-    def sig(self):
-        """ sig value for each instance of (n,r,sig) to generate"""
-        return self._sig
-
-    @sig.setter
-    def sig(self, sig):
-        params = pm.check_parameters(icount=self._icount, clones=self._clones, cloneamount=self._cloneamount,
-                                     siderange=self._siderange, radrange=self._radrange, sig=sig)
-        self._icount = params[0]
-        self._clones = params[1]
-        self._cloneamount = params[2]
-        self._siderange = params[3]
-        self._radrange = params[4]
-        self._sig = params[5]
-        # self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
-        # if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
-        #                                                                                  self._cloneamount)):
-        #     raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
         self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
 
     @property
@@ -114,7 +93,7 @@ class PolyFactory:
 
     @property
     def cloneamount(self):
-        """frequency of reoccuring (n,r,sig)"""
+        """frequency of reoccuring (n,r)"""
         return self._cloneamount
 
     @cloneamount.setter
@@ -135,7 +114,7 @@ class PolyFactory:
 
     @property
     def finalcount(self):
-        """Total count of last generated Poly(n,r,sig)"""
+        """Total count of last generated Poly(n,r)"""
         return self._finalcount
 
     @property
@@ -181,6 +160,27 @@ class PolyFactory:
         self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
 
     @property
+    def sig(self):
+        """"floating point precision for radrange (x,y]"""
+        return self._sig
+
+    @sig.setter
+    def sig(self, sig):
+        params = pm.check_parameters(icount=self._icount, clones=self._clones, cloneamount=self._cloneamount,
+                                     siderange=self._siderange, radrange=self._radrange, sig=sig)
+        self._icount = params[0]
+        self._clones = params[1]
+        self._cloneamount = params[2]
+        self._siderange = params[3]
+        self._radrange = params[4]
+        self._sig = params[5]
+        # self._finalcount = (self._icount - self._clones) + (self._clones * self._cloneamount)
+        # if self._finalcount <= self._clones * self._cloneamount and all(x >= 0 for x in (self._icount, self._clones,
+        #                                                                                  self._cloneamount)):
+        #     raise ValueError('Error: Total Output Polgyons < Total Desired Clones!')
+        self.polynames = '{0}, Generate Polygons with nrfinal method'.format(None)
+
+    @property
     def sample_ints(self):
         """ Return a k-length list of unique random integers
             in the range of low <= x <= high
@@ -212,7 +212,7 @@ class PolyFactory:
         return result
 
     def nrfinal(self):
-        """ nrfinal generates instances of Poly(n,r,sig) objects from specified parameters"""
+        """ nrfinal generates instances of Poly(n,r) objects from specified parameters"""
         # Unique n list + Unique r list of length icount
         # lists are mutable data structures
         # so use deepcopy (copy is a shallow copy and thus is a pass by reference)
@@ -229,15 +229,10 @@ class PolyFactory:
         # print('Remaining Unique Values:', len(nrremainder) , nrremainder)
 
         finallist = deepcopy(nrdups + nrremainder)
-        finallistsig = []
-        for i in finallist:
-            finallistsig.append([i[0], i[1]])
-        for i in finallistsig:
-            i.append(self._sig)
 
-        # print(finallistsig)
+        # print(finallist)
 
-        # print('Final Values of (n,r,sig) for Poly Generation:', len(finallistsig), finallistsig)
+        # print('Final Values of (n,r) for Poly Generation:', len(finallist), finallist)
 
         # print('POLYGON CLASS TESTING:')
 
@@ -245,7 +240,7 @@ class PolyFactory:
         # print('Newly Created Object Names:', len(name), name)
 
         # polylist instantiates Poly objects
-        polylist = [pp.Poly(n, r, s) for n, r, s in finallistsig]
+        polylist = [pp.Poly(n, r) for n, r in finallist]
         polydict = OrderedDict(zip(name, polylist))
 
         self.polydict = polydict
@@ -253,33 +248,32 @@ class PolyFactory:
         globals().update(polydict)
 
         self.finallist = len(finallist)
-        """ self.polynames = list of names for newly created Poly(n,r,sig) objects """
+        """ self.polynames = list of names for newly created Poly(n,r) objects """
         self.polynames = name
         return """Process Complete"""
 
     @property
     def allcalc(self):
-        """Calculates all properties for each instance of Poly(n,r,sig)"""
+        """Calculates all properties for each instance of Poly(n,r)"""
         self.nrfinal()
         final_allcalc = []
         for v in self.polynames:
             final_allcalc.append((v,
                                   'Side Count =', eval('{0}.side_count'. format(v)),
                                   'Circumradius =', eval('{0}.circumradius'. format(v)),
-                                  'Vertex Count =',eval('{0}.vertex_count'. format(v)),
+                                  'Vertex Count =', eval('{0}.vertex_count'. format(v)),
                                   'Perimeter =', eval('{0}.perimeter'. format(v)),
                                   'Apothem =', eval('{0}.apothem'. format(v)),
                                   'Interior Angle =', eval('{0}.interior_angle'. format(v)),
                                   'Edge Length =', eval('{0}.edge_length'. format(v)),
-                                  'Area =',eval('{0}.area'. format(v)),
-                                  'Significant Digits =',eval('{0}.sig'. format(v)),
+                                  'Area =', eval('{0}.area'. format(v))
                                   ))
 
         return final_allcalc
 
     @property
     def sidevalues(self):
-        """Returns side counts for each instance of Poly(n,r,sig)"""
+        """Returns side counts for each instance of Poly(n,r)"""
         self.nrfinal()
         final_sidevalues = []
         for v in self.polynames:
@@ -289,7 +283,7 @@ class PolyFactory:
 
     @property
     def circumradiusvalues(self):
-        """Returns circumradius for each instance of Poly(n,r,sig)"""
+        """Returns circumradius for each instance of Poly(n,r)"""
         self.nrfinal()
         final_circumradiusvalues = []
         for v in self.polynames:
@@ -298,16 +292,16 @@ class PolyFactory:
 
     @property
     def vertexcalc(self):
-        """Returns vertex count for each instance of Poly(n,r,sig)"""
+        """Returns vertex count for each instance of Poly(n,r)"""
         self.nrfinal()
         final_vertexcalc = []
         for v in self.polynames:
-            final_vertexcalc.append((v, 'Vertex Count =',eval('{0}.vertex_count'. format(v))))
+            final_vertexcalc.append((v, 'Vertex Count =', eval('{0}.vertex_count'. format(v))))
         return final_vertexcalc
 
     @property
     def perimetercalc(self):
-        """Returns caculated perimeter for each instance of Poly(n,r,sig)"""
+        """Returns caculated perimeter for each instance of Poly(n,r)"""
         self.nrfinal()
         final_perimetercalc = []
         for v in self.polynames:
@@ -316,16 +310,16 @@ class PolyFactory:
 
     @property
     def apothemcalc(self):
-        """Returns caculated apothem for each instance of Poly(n,r,sig)"""
+        """Returns caculated apothem for each instance of Poly(n,r)"""
         self.nrfinal()
         final_apothemcalc = []
         for v in self.polynames:
-            final_apothemcalc.append((v,'Apothem =', eval('{0}.apothem'. format(v))))
+            final_apothemcalc.append((v, 'Apothem =', eval('{0}.apothem'. format(v))))
         return final_apothemcalc
 
     @property
     def interioranglecalc(self):
-        """Returns caculated interior angle for each instance of Poly(n,r,sig)"""
+        """Returns caculated interior angle for each instance of Poly(n,r)"""
         self.nrfinal()
         final_angle = []
         for v in self.polynames:
@@ -334,7 +328,7 @@ class PolyFactory:
 
     @property
     def edgelengthcalc(self):
-        """Returns caculated side length for each instance of Poly(n,r,sig)"""
+        """Returns caculated side length for each instance of Poly(n,r)"""
         self.nrfinal()
         final_edgelengths = []
         for v in self.polynames:
@@ -343,16 +337,16 @@ class PolyFactory:
 
     @property
     def areacalc(self):
-        """Returns calculated area for each instance of Poly(n,r,sig)"""
+        """Returns calculated area for each instance of Poly(n,r)"""
         final_areas = []
         self.nrfinal()
         for v in self.polynames:
-            final_areas.append((v, 'Area =',eval('{0}.area'. format(v))))
+            final_areas.append((v, 'Area =', eval('{0}.area'. format(v))))
         return final_areas
 
     @property
     def instancerepr(self):
-        """Returns each instance representation of Poly(n,r,sig)lf):"""
+        """Returns each instance representation of Poly(n,r):"""
         self.nrfinal()
         finalrepr = []
         for v in self.polynames:

@@ -100,8 +100,8 @@ def test_polygons_factory_nrfinal(test_poly_factory):
         assert len(test_poly_factory.polydict) == 12
         assert len(test_poly_factory.polynames) == 12
         assert test_poly_factory.finallist == 12
-        assert str(pf.poly101) == 'Poly(12,4.9,1)'
-        assert str(pf.poly102) == 'Poly(11,4.6,1)'
+        assert str(pf.poly101) == 'Poly(12,4.9)'
+        assert str(pf.poly102) == 'Poly(11,4.6)'
         assert pf.poly101 > pf.poly102
 
 

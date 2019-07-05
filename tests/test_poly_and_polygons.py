@@ -6,17 +6,17 @@ import math
 
 def test_polygon_repr(test_poly):
     # unit test: Polygon repr
-    assert str(test_poly['poly100']) == 'Poly(3,13,3)'
+    assert str(test_poly['poly100']) == 'Poly(3,13)'
 
 
 def test_polygon_float_radius_repr():
     # unit test: Polygon radius float/int repr
-    poly100 = Pp.Poly(3, 3, 3)
-    assert poly100.__repr__() == "Poly(3,3,3)"
-    poly100 = Pp.Poly(3, 3.1, 3)
-    assert poly100.__repr__() == "Poly(3,3.1,3)"
-    poly100 = Pp.Poly(3, 3.0, 3)
-    assert poly100.__repr__() == "Poly(3,3,3)"
+    poly100 = Pp.Poly(3, 3)
+    assert poly100.__repr__() == "Poly(3,3)"
+    poly100 = Pp.Poly(3, 3.1)
+    assert poly100.__repr__() == "Poly(3,3.1)"
+    poly100 = Pp.Poly(3, 3.0)
+    assert poly100.__repr__() == "Poly(3,3)"
 
 
 def test_polygon_rich_comparisons(test_poly):
@@ -52,7 +52,7 @@ def test_polygon_specific_value():
     poly10 = Pp.Poly(4, 1)
     poly11 = Pp.Poly(4, 1)
     poly12 = Pp.Poly(4, 1)
-    poly13 = Pp.Poly(1000, 1, 5)
+    poly13 = Pp.Poly(1000, 1)
     for i in range(9, 14):
         eval("poly{0}.calcproperties".format(i))
     assert math.isclose(poly9.apothem, 1.732, rel_tol=.001, abs_tol=.001)
@@ -77,25 +77,25 @@ def test_polygon_set_item():
     # set item and recalculate of poly1
     poly1 = Pp.Poly(4, 5)
     poly1.__setitem__(10, 13.1)
-    assert str(poly1) == 'Poly(10,13.1,3)'
+    assert str(poly1) == 'Poly(10,13.1)'
 
 
 def test_polygon_interior_angle_value_error():
-    poly = Pp.Poly(None, None, None)
+    poly = Pp.Poly(None, None)
     with raises(ValueError):
         return poly.interior_angle
 
 
 def test_polygon_interior_angle_value_calculates_without_radius():
-    poly = Pp.Poly(3, None, 3)
+    poly = Pp.Poly(3, None)
     return poly.interior_angle
 
 
 def test_polygon_interior_angle_cache():
-    poly = Pp.Poly(5, 5, 3)
+    poly = Pp.Poly(5, 5)
     if poly.interior_angle:
         assert poly.interior_angle
-    poly.sig = 1
+    poly.side_count = 9
     assert poly._interior_angle is None
     poly.circumradius = 1
     assert poly._interior_angle is None
@@ -104,10 +104,10 @@ def test_polygon_interior_angle_cache():
 
 
 def test_polygon_edge_length_cache():
-    poly = Pp.Poly(5, 5, 3)
+    poly = Pp.Poly(5, 5)
     if poly.edge_length:
         assert poly.edge_length
-    poly.sig = 1
+    poly.side_count = 9
     assert poly._edge_length is None
     poly.circumradius = 1
     assert poly._edge_length is None
@@ -116,10 +116,10 @@ def test_polygon_edge_length_cache():
 
 
 def test_polygon_apothem_cache():
-    poly = Pp.Poly(5, 5, 3)
+    poly = Pp.Poly(5, 5)
     if poly.apothem:
         assert poly.apothem
-    poly.sig = 1
+    poly.side_count = 9
     assert poly._apothem is None
     poly.circumradius = 1
     assert poly._apothem is None
@@ -128,10 +128,10 @@ def test_polygon_apothem_cache():
 
 
 def test_polygon_area_cache():
-    poly = Pp.Poly(5, 5, 3)
+    poly = Pp.Poly(5, 5)
     if poly.area:
         assert poly.area
-    poly.sig = 1
+    poly.side_count = 9
     assert poly._area is None
     poly.circumradius = 1
     assert poly._area is None
@@ -140,10 +140,10 @@ def test_polygon_area_cache():
 
 
 def test_polygon_perimeter_cache():
-    poly = Pp.Poly(5, 5, 3)
+    poly = Pp.Poly(5, 5)
     if poly.perimeter:
         assert poly.perimeter
-    poly.sig = 1
+    poly.side_count = 8
     assert poly._perimeter is None
     poly.circumradius = 1
     assert poly._perimeter is None
@@ -159,19 +159,19 @@ def test_polygon_perimeter_value_error():
 
 
 def test_polygon_edge_length_value_error():
-    poly = Pp.Poly(None, None, None)
+    poly = Pp.Poly(None, None)
     with raises(ValueError):
         return poly.edge_length
 
 
 def test_polygon_apothem_value_error():
-    poly = Pp.Poly(None, None, None)
+    poly = Pp.Poly(None, None)
     with raises(ValueError):
         return poly.apothem
 
 
 def test_polygon_area_value_error():
-    poly = Pp.Poly(None, None, None)
+    poly = Pp.Poly(None, None)
     with raises(ValueError):
         return poly.area
 
@@ -180,15 +180,6 @@ def test_polygon_calculate_properties_method():
     # poly1 list properties
     poly1 = Pp.Poly(4, 5)
     assert poly1.calcproperties
-
-
-def test_polygon_sig_value_attribute(test_poly):
-    assert test_poly['poly101'].sig == 3
-
-
-def test_polygon_sig_value_setter(test_poly):
-    test_poly['poly101'].sig = 4
-    assert test_poly['poly101'].sig == 4
 
 
 def test_polygon_circumradius_setter(test_poly):
@@ -203,33 +194,28 @@ def test_polygon_side_count_setter(test_poly):
 
 def test_polygon_polycheck_n_type():
     with raises(Exception):
-        Pp.Poly('string', 4, 3)
+        Pp.Poly('string', 4)
 
 
 def test_polygon_polycheck_n_positive():
     with raises(Exception):
-        Pp.Poly(-4, 4, 3)
+        Pp.Poly(-4, 4)
 
 
 def test_polygon_polycheck_r_positive_type():
     with raises(Exception):
-        Pp.Poly(4, -4, 3)
-
-
-def test_polygon_polycheck_sig_positive_type():
-    with raises(Exception):
-        Pp.Poly(4, 4, -3)
+        Pp.Poly(4, -4)
 
 
 def test_polygon_nrskey_valid():
-    poly100 = Pp.Poly(4, 4, 2)
-    assert poly100.nrskey == (4, 4, 2)
+    poly100 = Pp.Poly(4, 4)
+    assert poly100.nrkey == (4, 4)
 
 
-def test_polygon_nrskey_returns_none():
+def test_polygon_nrkey_returns_none():
     # with raises(Exception):
     poly100 = Pp.Poly()
-    return poly100.nrskey
+    return poly100.nrkey
 
 
 # Testing for Polygons Class
@@ -272,7 +258,7 @@ def test_polygons_returns_iterator(test_polygons):
 def test_polygons_max_efficencey_method(test_polygons):
     # test the max efficencey formula
     # assert max([p.area/p.perimeter for p in test_polygons[1]]) == test_polygons[1].max_efficiency
-    assert test_polygons[1].max_efficiency == Pp.Poly(500, 1, 3)
+    assert test_polygons[1].max_efficiency == Pp.Poly(500, 1)
 
 
 def test_polygons_iterator_returns_self():
