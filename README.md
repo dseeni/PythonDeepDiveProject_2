@@ -1,6 +1,6 @@
 # Python Deep Dive Part 2 Project 2
 
-###This project contains 4 main classes:
+### This project contains 4 main classes:
 
 - Poly(n, r, sig)
 
@@ -10,7 +10,7 @@
 
 - NrsGlobalCache() 
 
-##Poly(n, r, sig):
+## Poly(n, r, sig):
 
 - n = sides
 - r = radius 
@@ -31,7 +31,7 @@
 - perimeter
 
 
-##Polygons(m, r, sig):
+## Polygons(m, r, sig):
 
 - Iterable class that returns an iterator
 
@@ -40,7 +40,7 @@
 - Calculates max_efficency Polygon 
 
 
-##NrsGlobalCache():
+## NrsGlobalCache():
 - Calculated Properties are stored in a Singleton FIFO Cache: *NrsGlobalCache()*
 
 - NrsGlobalCache --> [(n,r,s)] [calculated_property] [value]
