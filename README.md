@@ -43,7 +43,7 @@
 ### NrsGlobalCache():
 - Calculated Properties are stored in a Singleton FIFO Cache: *NrsGlobalCache()*
 
-- NrsGlobalCache --> [(n, r)] [calculated_property] [value]
+- NrsGlobalCache --> [(n,r)] [calculated_property] = [value]
 
 - NrsGlobalCache.cache_limit controls the cache size
 
