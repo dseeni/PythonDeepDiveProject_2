@@ -260,13 +260,13 @@ class PolyFactory:
         for v in self.polynames:
             final_allcalc.append((v,
                                   'Side Count =', eval('{0}.side_count'. format(v)),
-                                  'Circumradius =', eval('{0}.circumradius'. format(v)),
+                                  'Circumradius =', round(eval('{0}.circumradius'. format(v)), self._sig),
                                   'Vertex Count =', eval('{0}.vertex_count'. format(v)),
-                                  'Perimeter =', eval('{0}.perimeter'. format(v)),
-                                  'Apothem =', eval('{0}.apothem'. format(v)),
-                                  'Interior Angle =', eval('{0}.interior_angle'. format(v)),
-                                  'Edge Length =', eval('{0}.edge_length'. format(v)),
-                                  'Area =', eval('{0}.area'. format(v))
+                                  'Perimeter =', round(eval('{0}.perimeter'. format(v)), self._sig),
+                                  'Apothem =', round(eval('{0}.apothem'. format(v)), self._sig),
+                                  'Interior Angle =', round(eval('{0}.interior_angle'. format(v)), self._sig),
+                                  'Edge Length =', round(eval('{0}.edge_length'. format(v)), self._sig),
+                                  'Area =', round(eval('{0}.area'. format(v)), self._sig)
                                   ))
 
         return final_allcalc
@@ -365,3 +365,9 @@ class PolyFactory:
                     self._radrange,
                     self._sig)
 
+pf = PolyFactory(icount=200, clones=4, radrange=(.1, 9.1))
+print(pf)
+pf.allcalc
+print(pp.CacheGlobal.key_view)
+print(pp.CacheGlobal.cache_limit)
+print(pp.CacheGlobal.cache_size)

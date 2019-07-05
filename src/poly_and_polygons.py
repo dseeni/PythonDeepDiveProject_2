@@ -72,11 +72,11 @@ class NrsGlobalCache(OrderedDict):
             newitem = {(str(calc_prop)): value}
             olditem.update(newitem)
             self.update({key: olditem})
-        elif self.cache_size == self.cache_limit:
-            self.popitem(last=False)
-            self[key][calc_prop] = value
         else:
             self[key][calc_prop] = value
+            if self.cache_size > self.cache_limit:
+                self.popitem(last=False)
+                self[key][calc_prop] = value
 
     def getter(self, key, calc_prop):
         if key in self.keys():
@@ -406,6 +406,3 @@ class Polygons:
                 return item
 
 
-p = Polygons(10,3)
-print(p.max_efficiency)
-print(p)

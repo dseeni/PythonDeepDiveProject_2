@@ -98,6 +98,7 @@ def test_global_cache_limit_respects_new_item(test_global_cache):
     test_global_cache.cache_limit = 1
     print('test_global_cache.cache_size = ', test_global_cache.cache_size)
     test_global_cache.setter((60, 60), 'area', 100)
+    print(test_global_cache.key_view)
     assert test_global_cache.cache_size == 1
 
 

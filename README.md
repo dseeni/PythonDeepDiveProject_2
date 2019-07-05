@@ -16,7 +16,7 @@
 
 - r = radius 
 
-**Poly Calculated Properties:**
+**_Polygon Calculated Properties_:**
 
 *Calculated Properties are lazily evaluated, stored locally, and cached globally via NrsGlobalCache:*
 
