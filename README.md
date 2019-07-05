@@ -69,4 +69,4 @@
 
 - If desired random instances are not possible, check_parameters returns the minimum viable parameters to satisfy icount 
 
-![UML](https://raw.githubusercontent.com/dseeni/PDD2_Project2/f/polygons-factory/DDP_Proj2_UML.jpg?token=ABSJHRJVBF5CXW7LTSVSQD25D3HUG)
+<img src="https://github.com/dseeni/PDD2_Project2/blob/f/polygons-factory/DDP_Proj2_UML.jpg" width="3882" height="2112"/>
