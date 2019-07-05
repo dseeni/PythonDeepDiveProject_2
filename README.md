@@ -43,7 +43,7 @@
 ### NrsGlobalCache():
 - Calculated Properties are stored in a Singleton FIFO Cache: *NrsGlobalCache()*
 
-- NrsGlobalCache --> [(n,r,s)] [calculated_property] [value]
+- NrsGlobalCache --> [(n,r)] [calculated_property] = [value]
 
 - NrsGlobalCache.cache_limit controls the cache size
 
@@ -53,7 +53,7 @@
     
 - Creational factory class generates randomized instances of Poly(n,r) within specified parameters
 
-- Randomized instances Poly() objects are named starting from 'poly101' and registered in the global namespace
+- Randomized instances of Poly() objects are named starting from 'poly101' and registered in the global namespace
 
 - Newly generated object names can be retrieved via PolyFactory.polynames
 
