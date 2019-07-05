@@ -1,7 +1,16 @@
 def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3, 10), radrange=(1, 5), sig=2):
-    """ check_parameters() takes in the input from
-    Polyfactory(icount, clones, clneamount, siderange, radrage, sig) and
-    returns verified parameters or the least modified viable parameters
+    """
+    *** PolyFactory helper function ***
+    
+    check_parameters() takes in the input from Polyfactory
+
+    (icount, clones, clneamount, siderange, radrage, sig)
+    and returns verified parameters.
+
+    If initial randomized instances to be generated (icount) exceed the possible  unique
+    values within siderange and radrange's significant digit precision, check_parameters
+    returns the minimum viable parameters to satisfy the initial randomized
+    instance count (icount)
     """
     if clones < 0 or cloneamount < 0:
         raise ValueError('clones and cloneamount must be >= 0')
@@ -58,3 +67,4 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3, 10), radr
     if icount <= randomspossible:
         return icount, clones, cloneamount, siderange, radrange, sig
 
+help(check_parameters)

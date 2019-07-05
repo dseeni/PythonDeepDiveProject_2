@@ -15,10 +15,9 @@ class PolyFactory:
             cloneamount = frequency of reoccuring (n,r)
             siderange = (x,y] interval range for side sampling
             radrange = (x,y] interval range of radius sampling
-            sig = floating point precision for radrange (x,y]
+            sig = floating point precision for radrange (x,y] and float display rounding
 
             self.nrfinal = Generates randomized instances of Poly(n,r)
-
             self.name = last recent Poly(n,r) object names in a list
             self.finallist = length of the list of recently created Poly(n,r)
             self.finalcount = Total count of last generated Poly(n,r)
@@ -365,9 +364,3 @@ class PolyFactory:
                     self._radrange,
                     self._sig)
 
-pf = PolyFactory(icount=200, clones=4, radrange=(.1, 9.1))
-print(pf)
-pf.allcalc
-print(pp.CacheGlobal.key_view)
-print(pp.CacheGlobal.cache_limit)
-print(pp.CacheGlobal.cache_size)

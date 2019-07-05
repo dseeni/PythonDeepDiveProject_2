@@ -48,12 +48,9 @@ class NrsGlobalCache(OrderedDict):
     def cache_limit(self, limit):
         if self.cache_size > limit:
             while self.cache_size > limit:
-                # last=True -> FIFO remove the oldest items in the cache
+                # last=False -> FIFO removes the oldest items in the cache
                 self.popitem(last=False)
-                # self.cache_size(len(self.keys()))
-                # set maximum cache size
         self._cache_limit = limit
-        # return self._cache_limit
 
     @property
     def key_view(self):
@@ -61,8 +58,6 @@ class NrsGlobalCache(OrderedDict):
         return list(self.keys())
 
     def __missing__(self, key):
-        # if key in self.keys():
-        #     self.pop(key)
         val = self[key] = {}
         return val
 
@@ -96,7 +91,13 @@ CacheGlobal = NrsGlobalCache()
 class Poly:
 
     """
-    Poly(n, r) is a Polygon object
+    Poly(n, r) is a mutable Polygon object with n sides and radius r
+    Calculated Properties:
+        - interior angle
+        - side length
+        - apothem
+        - area
+        - perimeter
     """
     def __init__(self, n=None, r=None):
 
