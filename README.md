@@ -69,4 +69,4 @@
 
 - If desired unique random instances is not possible, check_parameters returns minimum viable parameters 
 
-![UML](https://raw.githubusercontent.com/dseeni/PDD2_Project2/f/polygons-factory/DDP_Proj2_UML.jpg?token=ABSJHRPLT3WTJDHJNF3VXCK5D3FXW)
+![UML](https://raw.githubusercontent.com/dseeni/PDD2_Project2/f/polygons-factory/DDP_Proj2_UML.jpg?token=ABSJHRJ4T7CEBEQ4ONH3UOS5D3GBQ)
