@@ -2,19 +2,19 @@
 
 ### This project contains 4 main classes:
 
-- Poly(n, r, sig)
+- Poly(n, r)
 
-- Polygons(m, r, sig)
+- Polygons(m, r)
 
 - PolyFactory(icount, clones, cloneamount, siderange, radrange, sig)
 
 - NrsGlobalCache() 
 
-## Poly(n, r, sig):
+### Poly(n, r):
 
 - n = sides
+
 - r = radius 
-- sig = significant digit precision for calculated properties
 
 **Poly Calculated Properties:**
 
@@ -31,7 +31,7 @@
 - perimeter
 
 
-## Polygons(m, r, sig):
+### Polygons(m, r, sig):
 
 - Iterable class that returns an iterator
 
@@ -40,7 +40,7 @@
 - Calculates max_efficency Polygon 
 
 
-## NrsGlobalCache():
+### NrsGlobalCache():
 - Calculated Properties are stored in a Singleton FIFO Cache: *NrsGlobalCache()*
 
 - NrsGlobalCache --> [(n,r,s)] [calculated_property] [value]
