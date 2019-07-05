@@ -54,7 +54,7 @@ def test_polygon_specific_value():
     poly12 = Pp.Poly(4, 1)
     poly13 = Pp.Poly(1000, 1)
     for i in range(9, 14):
-        eval("poly{0}.calcproperties".format(i))
+        eval("poly{0}.calcproperties()".format(i))
     assert math.isclose(poly9.apothem, 1.732, rel_tol=.001, abs_tol=.001)
     assert math.isclose(poly9.area, 10.392, rel_tol=.001, abs_tol=.001)
     assert math.isclose(poly9.perimeter, 12, rel_tol=.001, abs_tol=.001)
@@ -179,7 +179,7 @@ def test_polygon_area_value_error():
 def test_polygon_calculate_properties_method():
     # poly1 list properties
     poly1 = Pp.Poly(4, 5)
-    assert poly1.calcproperties
+    assert poly1.calcproperties()
 
 
 def test_polygon_circumradius_setter(test_poly):
@@ -267,3 +267,8 @@ def test_polygons_iterator_returns_self():
     assert id(polysiterator) == id(iter(polysiterator))
 
 
+def test_polygons_iterator_stop_iteration(test_polygons):
+    polyiterator = iter(test_polygons[0])
+    with raises(StopIteration):
+        for i in range(len(test_polygons[0])+1):
+            next(polyiterator)
