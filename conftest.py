@@ -1,7 +1,9 @@
 from pytest import fixture
-from src import WIP_p2_proj2_temp as p
+from src import poly_and_polygons as p
 from collections import OrderedDict
-from src.WIP_p2_proj2_temp import NrsGlobalCache as Ngc
+from src.poly_and_polygons import NrsGlobalCache as Ngc
+from src.polygons_factory import PolyFactory as Pf
+from random import seed
 
 
 @fixture(scope='function')
@@ -38,7 +40,6 @@ def test_polygons():
 
 
 # test_global_cache fixtures
-
 @fixture(autouse=True)
 # auto-run function fixture to clear singleton
 def reset_test_global_cache_singletons():
@@ -51,17 +52,24 @@ def test_global_cache():
     global_cache = Ngc()
     # this is the oldest item in the dictionary
     # key 1
-    global_cache[(50, 50, .1)]['apothem'] = [100]
-    global_cache[(50, 50, .1)]['area'] = [400]
+    global_cache[(50, 50)]['apothem'] = [100]
+    global_cache[(50, 50)]['area'] = [400]
 
     # key 2
-    global_cache[(60, 50, .1)]['apothem'] = [200]
-    global_cache[(60, 50, .1)]['area'] = [500]
+    global_cache[(60, 50)]['apothem'] = [200]
+    global_cache[(60, 50)]['area'] = [500]
 
     # key 3
-    global_cache[(70, 50, .1)]['apothem'] = [300]
-    global_cache[(70, 50, .1)]['area'] = [600]
+    global_cache[(70, 50)]['apothem'] = [300]
+    global_cache[(70, 50)]['area'] = [600]
 
     # this is the key 3 newest item in the dictionary
-    global_cache[(70, 50, .1)]['interior angle'] = [300]
+    global_cache[(70, 50)]['interior angle'] = [300]
     return global_cache
+
+
+@fixture(scope='function')
+def test_poly_factory():
+    seed(0)
+    polyfactory = Pf()
+    return polyfactory
