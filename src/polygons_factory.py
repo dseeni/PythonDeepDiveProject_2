@@ -18,7 +18,7 @@ class PolyFactory:
             sig = floating point precision for radrange (x,y] and float display rounding
 
             self.nrfinal = Generates randomized instances of Poly(n,r)
-            self.name = last recent Poly(n,r) object names in a list
+            self.polynames = last recent Poly(n,r) object names in a list
             self.finallist = length of the list of recently created Poly(n,r)
             self.finalcount = Total count of last generated Poly(n,r)
             self.allcalc = caculate allcalc for each instance of Poly(n,r)

@@ -4,7 +4,7 @@ def check_parameters(icount=10, clones=2, cloneamount=2, siderange=(3, 10), radr
     
     check_parameters() takes in the input from Polyfactory
 
-    (icount, clones, clneamount, siderange, radrage, sig)
+    (icount, clones, cloneamount, siderange, radrange, sig)
     and returns verified parameters.
 
     If initial randomized instances to be generated (icount) exceed the possible  unique

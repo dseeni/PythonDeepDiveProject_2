@@ -48,3 +48,23 @@
 - NrsGlobalCache.cache_limit controls the cache size
 
 - Reading or Writing to Cache causes the cached item to become the last item in the cache
+
+### PolyFactory(icount, clones, cloneamount, siderange, radrange, sig):
+    
+- Creational factory class generates randomized instances of Poly(n,r) within specified parameters
+
+- Randomized instances Poly() objects are named starting from 'poly101' and registered in the global namespace
+
+- Newly generated object names can be retrieved via PolyFactory.polynames
+
+- Any calculated property can be triggered for newly created Poly instances
+
+- See help(PolyFactory) for more information
+
+**_check_parameters():_**
+
+- Helper function for PolyFactory()
+
+- Verifies instance parameters are viable for desired randomized instances of Poly(n, r)
+
+- If desired unique random instances is not possible, check_parameters returns minimum viable parameters 
