@@ -31,7 +31,7 @@
 - perimeter
 
 
-### Polygons(m, r, sig):
+### Polygons(m, r):
 
 - Iterable class that returns an iterator
 
